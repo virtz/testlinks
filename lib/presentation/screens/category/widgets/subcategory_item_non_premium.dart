@@ -52,8 +52,8 @@ class SubCategoryItem extends StatelessWidget {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-              const    Text(
+                children: const [
+                  Text(
                     'N200',
                     style: TextStyle(
                       color: Color.fromRGBO(8, 248, 36, 1),
@@ -61,26 +61,26 @@ class SubCategoryItem extends StatelessWidget {
                       fontWeight: FontWeight.w500,
                     ),
                   ),
-                  Material(
-                    color:const Color.fromRGBO(241, 48, 46, 1),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12.0),
-                    ),
-                    child: InkWell(
-                      borderRadius: BorderRadius.circular(26.0),
-                      onTap: () {
-                        // Get.dialog(Wishlist());
-                      },
-                      child: SizedBox(
-                        width: sizeFit(true, 24.0, context),
-                        height: sizeFit(false, 24.0, context),
-                        child: const Icon(
-                          Icons.add,
-                          color: Colors.white,
-                        ),
-                      ),
-                    ),
-                  ),
+                  // Material(
+                  //   color:const Color.fromRGBO(241, 48, 46, 1),
+                  //   shape: RoundedRectangleBorder(
+                  //     borderRadius: BorderRadius.circular(12.0),
+                  //   ),
+                  //   child: InkWell(
+                  //     borderRadius: BorderRadius.circular(26.0),
+                  //     onTap: () {
+                  //       // Get.dialog(Wishlist());
+                  //     },
+                  //     child: SizedBox(
+                  //       width: sizeFit(true, 24.0, context),
+                  //       height: sizeFit(false, 24.0, context),
+                  //       child: const Icon(
+                  //         Icons.add,
+                  //         color: Colors.white,
+                  //       ),
+                  //     ),
+                  //   ),
+                  // ),
                 ],
               ),
             ),

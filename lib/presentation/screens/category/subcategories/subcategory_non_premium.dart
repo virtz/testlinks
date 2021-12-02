@@ -1,4 +1,5 @@
 import 'package:ajeo/presentation/screens/category/widgets/advert.dart';
+import 'package:ajeo/presentation/widgets/count_down_clock.dart';
 import 'package:ajeo/presentation/screens/category/widgets/sub_category_widget_premium.dart';
 import 'package:ajeo/presentation/screens/category/widgets/subcategory_item_non_premium.dart';
 import 'package:ajeo/presentation/widgets/drawer.dart';
@@ -82,7 +83,8 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                   ],
                 ),
               ),
-              const Advert(),
+              // const Advert(),
+           const    CountDownClock(),
               Padding(
                 padding: const EdgeInsets.only(
                   left: 12.0,

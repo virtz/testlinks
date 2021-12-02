@@ -1,12 +1,13 @@
-
+// ignore_for_file: missing_required_param
 
 import 'package:ajeo/presentation/screens/auth/local_widgets/textfield.dart';
 import 'package:ajeo/utils/size_fit.dart';
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Search extends StatefulWidget {
-  const Search({ Key? key }) : super(key: key);
+  const Search({Key? key}) : super(key: key);
 
   @override
   _SearchState createState() => _SearchState();
@@ -16,10 +17,9 @@ class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-         backgroundColor:const Color.fromRGBO(153, 143, 162, 1),
-         body:ListView(
-           children:[
-             Padding(
+        backgroundColor: const Color.fromRGBO(153, 143, 162, 1),
+        body: ListView(children: [
+          Padding(
             padding: EdgeInsets.only(
               left: sizeFit(true, 9.0, context),
               top: 9.0,
@@ -35,8 +35,10 @@ class _SearchState extends State<Search> {
                   ),
                   child: Row(
                     children: const [
-                       Expanded(
-                        child: TextFieldContainer(withAsterisk: null,),
+                      Expanded(
+                        child: TextFieldContainer(
+              
+                        ),
                       )
                     ],
                   ),
@@ -46,8 +48,10 @@ class _SearchState extends State<Search> {
                     left: sizeFit(true, 24.0, context),
                   ),
                   child: GestureDetector(
-                    onTap: () {},
-                    child:const Icon(
+                    onTap: () {
+                      AutoRouter.of(context).pop();
+                    },
+                    child: const Icon(
                       FontAwesomeIcons.timesCircle,
                       color: Color.fromRGBO(241, 52, 50, 1),
                       size: 15,
@@ -57,8 +61,7 @@ class _SearchState extends State<Search> {
               ],
             ),
           ),
-
-  ListView.builder(
+          ListView.builder(
             shrinkWrap: true,
             itemCount: 3,
             itemBuilder: (context, index) {
@@ -70,7 +73,7 @@ class _SearchState extends State<Search> {
                 ),
                 child: Container(
                   height: 73.0,
-                  padding:const  EdgeInsets.symmetric(vertical: 6.0),
+                  padding: const EdgeInsets.symmetric(vertical: 6.0),
                   width: sizeFit(true, 300, context),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
@@ -91,7 +94,7 @@ class _SearchState extends State<Search> {
                             children: [
                               SizedBox(
                                 width: sizeFit(true, 110.0, context),
-                                child:const  Text(
+                                child: const Text(
                                   'Eggs',
                                   style: TextStyle(
                                     color: Color.fromRGBO(49, 49, 51, 1),
@@ -100,7 +103,7 @@ class _SearchState extends State<Search> {
                                   ),
                                 ),
                               ),
-                          const    Text(
+                              const Text(
                                 '2 Dozen / Free Range Eggs',
                                 style: TextStyle(
                                   color: Color.fromRGBO(49, 49, 51, 1),
@@ -111,7 +114,7 @@ class _SearchState extends State<Search> {
                             ],
                           ),
                         ),
-                   const     SizedBox(
+                        const SizedBox(
                           height: 10.0,
                         ),
                         Row(
@@ -127,7 +130,7 @@ class _SearchState extends State<Search> {
                               ),
                             ),
                             RichText(
-                              text:const  TextSpan(
+                              text: const TextSpan(
                                 text: 'N200',
                                 style: TextStyle(
                                   color: Color.fromRGBO(8, 237, 34, 1),
@@ -184,9 +187,6 @@ class _SearchState extends State<Search> {
               );
             },
           )
-
-           ]
-         )
-    );
+        ]));
   }
 }

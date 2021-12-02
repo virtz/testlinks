@@ -11,6 +11,8 @@ import 'package:ajeo/presentation/screens/category/categories/category_view_none
 import 'package:ajeo/presentation/screens/category/categories/category_view_premium.dart';
 import 'package:ajeo/presentation/screens/category/side_bar/discount_codes.dart';
 import 'package:ajeo/presentation/screens/category/subcategories/subcategory_non_premium.dart';
+import 'package:ajeo/presentation/screens/help/help.dart';
+import 'package:ajeo/presentation/screens/help/subscriptions.dart';
 import 'package:ajeo/presentation/screens/home/home_non_premium.dart';
 import 'package:ajeo/presentation/screens/home/home_page_premium.dart';
 // import 'package:ajeo/presentation/screens/products/product_Page_unit_increase.dart';
@@ -23,6 +25,7 @@ import 'package:ajeo/presentation/screens/settings/main_settings_non_premium/set
 import 'package:ajeo/presentation/screens/settings/main_settings_premium/settings.dart';
 import 'package:ajeo/presentation/screens/splash_screen/splash_screen.dart';
 import 'package:ajeo/presentation/screens/wishlist/wish_list.dart';
+import 'package:ajeo/presentation/widgets/please_subscribe.dart';
 import 'package:ajeo/presentation/widgets/pop-ups/new_list.dart';
 import 'package:ajeo/presentation/widgets/pop-ups/review.dart';
 import 'package:ajeo/presentation/widgets/pop-ups/wish_list.dart';
@@ -114,10 +117,19 @@ import 'package:auto_route/auto_route.dart';
   AutoRoute(
     page: ProductPageUnitIncrease2,
   ),
-    AutoRoute(
+  AutoRoute(
     page: SubCategoryNonPremium,
   ),
+
+  AutoRoute(
+    page: DefaultSubscriptionPrompt,
+  ),
+   AutoRoute(
+    page: HelpScreen,
+  ),
+    AutoRoute(
+    page: Subscriptions,
+  ),
   //
-  
 ])
 class $AppRouter {}

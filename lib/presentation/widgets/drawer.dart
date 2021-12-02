@@ -83,7 +83,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   ),
                 ),
                 onTap: () {
-                  AutoRouter.of(context).pop();
+                  // AutoRouter.of(context).pop();
+                  AutoRouter.of(context).push(const Subscriptions());
                 },
               ),
               ListTile(
@@ -115,7 +116,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
                 onTap: () {
                   // Get.back();
-                  AutoRouter.of(context).pop();
+                  AutoRouter.of(context)
+                      .push(const DefaultSubscriptionPrompt());
                 },
               ),
               ListTile(
@@ -130,7 +132,10 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
                 onTap: () {
                   // Get.back();
-                  AutoRouter.of(context).pop();
+                  // AutoRouter.of(context).pop();
+                  AutoRouter.of(context)
+                      .push(const DefaultSubscriptionPrompt());
+                  // AutoRouter.of(context).push(Barcodes());
                 },
               ),
               ListTile(
@@ -145,7 +150,8 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
                 onTap: () {
                   // Get.back();
-                  AutoRouter.of(context).pop();
+                  // AutoRouter.of(context).pop();
+                  AutoRouter.of(context).push(const HelpScreen());
                 },
               ),
               ListTile(
@@ -160,7 +166,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                 ),
                 onTap: () {
                   // Get.back();
-                  AutoRouter.of(context).pop();
+                  AutoRouter.of(context).push(Review());
                 },
               ),
               ListTile(

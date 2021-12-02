@@ -16,7 +16,7 @@ class CategoryViewNonPremium extends StatefulWidget {
 
 class _CategoryViewNonPremiumState extends State<CategoryViewNonPremium>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
   TabController? tabController;
 
   @override
@@ -60,7 +60,7 @@ class _CategoryViewNonPremiumState extends State<CategoryViewNonPremium>
                             shape: BoxShape.circle,
                             color: Colors.white,
                           ),
-                          child: Icon(
+                          child:const Icon(
                             Icons.perm_identity,
                             color: kHomePageIconColor,
                           ),

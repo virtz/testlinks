@@ -13,7 +13,7 @@ class HomePagePremium extends StatefulWidget {
 }
 
 class _HomePagePremiumState extends State<HomePagePremium> {
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

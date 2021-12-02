@@ -5,7 +5,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 class Barcodes extends StatelessWidget {
   Barcodes({Key? key}) : super(key: key);
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
     return Scaffold(

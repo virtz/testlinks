@@ -57,7 +57,7 @@ class _WishListState extends State<WishList> {
                                 height: 20.0,
                               ),
                               Row(
-                                crossAxisAlignment: CrossAxisAlignment.baseline,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   Container(
                                     width: sizeFit(true, 18, context),

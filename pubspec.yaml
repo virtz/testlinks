@@ -41,10 +41,11 @@ dependencies:
   flutter_svg:
   shared_preferences:
   get_it:
-  stacked:
-  json_annotation:
-  json_serializable:
+  stacked: 
   fluttertoast:
+  json_annotation: ^4.3.0 
+  json_serializable:
+
   hive:
   fl_chart:
   hive_flutter:

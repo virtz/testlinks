@@ -5,6 +5,8 @@ import 'dart:convert';
 import 'package:ajeo/core/services/response_handler.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:stacked/stacked_annotations.dart';
+// import 'package:stacked/stacked_annotations.dart';
 
 class HttpService {
   final String _baseUrl;
@@ -13,18 +15,20 @@ class HttpService {
 
   String get baseUrl => _baseUrl;
 
-  Future<dynamic> get(String path, Map<String, dynamic>? payload) async {
+  Future<dynamic> get(String path) async {
     final String url = baseUrl + path;
     // print('Request::URL: $url');
     final response = await http
         .get(
           Uri.parse(url),
           headers: await getHeaders(),
+          // queryParam
         )
         .timeout(const Duration(seconds: 40));
     return handleResponse(response);
   }
- Future<dynamic> post(String path, Map<dynamic, dynamic> body) async {
+
+  Future<dynamic> post(String path, Map<dynamic, dynamic> body) async {
     final String url = baseUrl + path;
     print('URL:: $url, body:: ${json.encode(body)}');
 

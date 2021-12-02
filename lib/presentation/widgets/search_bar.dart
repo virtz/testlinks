@@ -22,7 +22,7 @@ class _SearchBarState extends State<SearchBar> {
           top: 10.0,
         ),
         child: Container(
-          height: sizeFit(false, 50.0, context),
+          height: sizeFit(false, 45.0, context),
           width: sizeFit(true, 358.0, context),
           decoration: BoxDecoration(
             color: Colors.white,
@@ -33,7 +33,7 @@ class _SearchBarState extends State<SearchBar> {
               'Search for prices in Lagos State',
               style: TextStyle(
                 fontFamily: 'helves',
-                fontSize: 14.0,
+                fontSize: 12.0,
                 fontWeight: FontWeight.w200,
               ),
             ),
@@ -117,7 +117,6 @@ class _SearchBarState extends State<SearchBar> {
               ),
             ),
             onTap: () {
-          
               AutoRouter.of(context).push(const Search());
             },
           ),
