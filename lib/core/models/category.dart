@@ -9,7 +9,7 @@ class CategoryModel {
   String? id;
   @JsonKey(name: "categoryname")
   String? categoryName;
-  List<SubcategoryModel>? subcategories;
+  List<SubcategoryModel>? subcategory;
   String? createdAt;
   String? updatedAt;
   CategoryModel({

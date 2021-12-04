@@ -11,6 +11,9 @@
 import 'package:auto_route/auto_route.dart' as _i31;
 import 'package:flutter/material.dart' as _i32;
 
+import '../core/models/category.dart' as _i35;
+import '../core/models/product.dart' as _i33;
+import '../core/models/subcategory.dart' as _i34;
 import '../presentation/screens/auth/auth_view/auth_view.dart' as _i3;
 import '../presentation/screens/auth/complete_account/complete_account.dart'
     as _i4;
@@ -160,8 +163,15 @@ class AppRouter extends _i31.RootStackRouter {
           routeData: routeData, child: const _i22.CategoryViewPremium());
     },
     ProductRoute.name: (routeData) {
+      final args = routeData.argsAs<ProductRouteArgs>(
+          orElse: () => const ProductRouteArgs());
       return _i31.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i23.ProductPage());
+          routeData: routeData,
+          child: _i23.ProductPage(
+              key: args.key,
+              product: args.product,
+              categoryName: args.categoryName,
+              subcaegoryName: args.subcaegoryName));
     },
     ProductRoute2.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -176,8 +186,14 @@ class AppRouter extends _i31.RootStackRouter {
           routeData: routeData, child: const _i26.ProductPageUnitIncrease2());
     },
     SubCategoryNonPremium.name: (routeData) {
+      final args = routeData.argsAs<SubCategoryNonPremiumArgs>(
+          orElse: () => const SubCategoryNonPremiumArgs());
       return _i31.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i27.SubCategoryNonPremium());
+          routeData: routeData,
+          child: _i27.SubCategoryNonPremium(
+              key: args.key,
+              subcategories: args.subcategories,
+              category: args.category));
     },
     DefaultSubscriptionPrompt.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -447,10 +463,39 @@ class CategoryViewPremium extends _i31.PageRouteInfo<void> {
 }
 
 /// generated route for [_i23.ProductPage]
-class ProductRoute extends _i31.PageRouteInfo<void> {
-  const ProductRoute() : super(name, path: '/product-page');
+class ProductRoute extends _i31.PageRouteInfo<ProductRouteArgs> {
+  ProductRoute(
+      {_i32.Key? key,
+      _i33.Product? product,
+      String? categoryName,
+      String? subcaegoryName})
+      : super(name,
+            path: '/product-page',
+            args: ProductRouteArgs(
+                key: key,
+                product: product,
+                categoryName: categoryName,
+                subcaegoryName: subcaegoryName));
 
   static const String name = 'ProductRoute';
+}
+
+class ProductRouteArgs {
+  const ProductRouteArgs(
+      {this.key, this.product, this.categoryName, this.subcaegoryName});
+
+  final _i32.Key? key;
+
+  final _i33.Product? product;
+
+  final String? categoryName;
+
+  final String? subcaegoryName;
+
+  @override
+  String toString() {
+    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName}';
+  }
 }
 
 /// generated route for [_i24.ProductPage2]
@@ -476,11 +521,34 @@ class ProductRouteUnitIncrease2 extends _i31.PageRouteInfo<void> {
 }
 
 /// generated route for [_i27.SubCategoryNonPremium]
-class SubCategoryNonPremium extends _i31.PageRouteInfo<void> {
-  const SubCategoryNonPremium()
-      : super(name, path: '/sub-category-non-premium');
+class SubCategoryNonPremium
+    extends _i31.PageRouteInfo<SubCategoryNonPremiumArgs> {
+  SubCategoryNonPremium(
+      {_i32.Key? key,
+      List<_i34.SubcategoryModel>? subcategories,
+      _i35.CategoryModel? category})
+      : super(name,
+            path: '/sub-category-non-premium',
+            args: SubCategoryNonPremiumArgs(
+                key: key, subcategories: subcategories, category: category));
 
   static const String name = 'SubCategoryNonPremium';
+}
+
+class SubCategoryNonPremiumArgs {
+  const SubCategoryNonPremiumArgs(
+      {this.key, this.subcategories, this.category});
+
+  final _i32.Key? key;
+
+  final List<_i34.SubcategoryModel>? subcategories;
+
+  final _i35.CategoryModel? category;
+
+  @override
+  String toString() {
+    return 'SubCategoryNonPremiumArgs{key: $key, subcategories: $subcategories, category: $category}';
+  }
 }
 
 /// generated route for [_i28.DefaultSubscriptionPrompt]

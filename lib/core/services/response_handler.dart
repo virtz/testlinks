@@ -17,7 +17,7 @@ handleResponse(http.Response response){
 
     return ErrorModel(body['error']);
   } catch (ex) {
-    print(ex.toString());
+    // print(ex.toString());
     return ErrorModel('Request failed');
   }
 }

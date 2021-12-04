@@ -1,6 +1,9 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/presentation/screens/home/home_view_model.dart';
+import 'package:ajeo/presentation/widgets/count_down_clock.dart';
 import 'package:ajeo/presentation/widgets/drawer.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
@@ -30,7 +33,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
       viewModelBuilder: () => HomeViewModel(),
       builder: (context, model, child) => Scaffold(
           key: scaffoldKey,
-          drawer: const MenuDrawer(),
+          // drawer: const MenuDrawer(),
           backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
           body: SafeArea(
               child: SingleChildScrollView(
@@ -38,53 +41,55 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SearchBar(),
-              InkWell(
-                onTap: () {
-                  scaffoldKey.currentState!.openDrawer();
-                },
-                child: Padding(
-                  padding: EdgeInsets.only(
-                    top: sizeFit(false, 30.0, context),
-                    left: sizeFit(true, 10.0, context),
-                  ),
-                  child: const Icon(
-                    Icons.perm_identity,
-                    color: kHomePageIconColor,
-                    size: 60,
-                  ),
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.only(
-                  top: sizeFit(false, 24.0, context),
-                ),
-                child: Container(
-                  height: sizeFit(false, 100.0, context),
-                  width: sizeFit(true, 375, context),
-                  color: const Color.fromRGBO(254, 144, 168, 1),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      left: sizeFit(true, 30.0, context),
-                      right: sizeFit(true, 44.0, context),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Text(
-                          'Trending \nItem \nPreview/AD'.toUpperCase(),
-                          style: const TextStyle(
-                            color: Colors.black,
-                            fontSize: 19.0,
-                            fontFamily: 'helves',
-                            fontWeight: FontWeight.w600,
-                          ),
-                        ),
-                        SvgPicture.asset('assets/images/downtrend.svg'),
-                      ],
-                    ),
-                  ),
-                ),
-              ),
+
+              const CountDownClock(),
+              // InkWell(
+              //   onTap: () {
+              //     scaffoldKey.currentState!.openDrawer();
+              //   },
+              //   child: Padding(
+              //     padding: EdgeInsets.only(
+              //       top: sizeFit(false, 30.0, context),
+              //       left: sizeFit(true, 10.0, context),
+              //     ),
+              //     child: const Icon(
+              //       Icons.perm_identity,
+              //       color: kHomePageIconColor,
+              //       size: 60,
+              //     ),
+              //   ),
+              // ),
+              // Padding(
+              //   padding: EdgeInsets.only(
+              //     top: sizeFit(false, 24.0, context),
+              //   ),
+              //   child: Container(
+              //     height: sizeFit(false, 100.0, context),
+              //     width: sizeFit(true, 375, context),
+              //     color: const Color.fromRGBO(254, 144, 168, 1),
+              //     child: Padding(
+              //       padding: EdgeInsets.only(
+              //         left: sizeFit(true, 30.0, context),
+              //         right: sizeFit(true, 44.0, context),
+              //       ),
+              //       child: Row(
+              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //         children: [
+              //           Text(
+              //             'Trending \nItem \nPreview/AD'.toUpperCase(),
+              //             style: const TextStyle(
+              //               color: Colors.black,
+              //               fontSize: 19.0,
+              //               fontFamily: 'helves',
+              //               fontWeight: FontWeight.w600,
+              //             ),
+              //           ),
+              //           SvgPicture.asset('assets/images/downtrend.svg'),
+              //         ],
+              //       ),
+              //     ),
+              //   ),
+              // ),
               SizedBox(
                 height: sizeFit(false, 44.0, context),
               ),
@@ -128,31 +133,32 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                         ),
                       ),
                       SizedBox(
-                        height: sizeFit(false, 120.0, context),
-                        child: cm.subcategories == null
-                            ? Container()
-                            : ListView.builder(
-                                key: UniqueKey(),
-                                padding: const EdgeInsets.only(bottom: 24.0),
-                                itemBuilder: (context, index) {
-                                  // model.getSubcategory(cm.id!);
+                        height: sizeFit(false, 200.0, context),
+                        child: model.isBusy
+                            ? CircularProgressIndicator(
+                                valueColor: AlwaysStoppedAnimation<Color>(
+                                Theme.of(context).primaryColor,
+                              ))
+                            : cm.subcategory!.isEmpty
+                                ? Center(
+                                    child: Text(
+                                        'No subcategories for category ${cm.categoryName}',
+                                        style: const TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17.0)),
+                                  )
+                                : ListView.builder(
+                                    key: UniqueKey(),
+                                    padding:
+                                        const EdgeInsets.only(bottom: 24.0),
+                                    itemBuilder: (context, index) {
+                                      // model.getSubcategory(cm.id!);
 
-                                  SubcategoryModel subCat =
-                                      cm.subcategories![index];
-                                  return Padding(
-                                    padding: EdgeInsets.only(
-                                      top: sizeFit(false, 10.0, context),
-                                      left: sizeFit(false, 20.0, context),
-                                    ),
-                                    child: Center(
-                                      child: Container(
-                                        height: size.height * 0.2,
-                                        width: size.width * 0.3,
-                                        decoration: BoxDecoration(
-                                          borderRadius:
-                                              BorderRadius.circular(14.0),
-                                          color: Colors.white,
-                                        ),
+                                      SubcategoryModel subCat =
+                                          cm.subcategory![index];
+                                      return Padding(
+                                        padding: const EdgeInsets.symmetric(
+                                            horizontal: 5, vertical: 5),
                                         child: Column(
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
@@ -162,46 +168,60 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                                 top: 7.0,
                                                 left: 7.0,
                                               ),
-                                              child: Text(
-                                                subCat.subcategoryName!,
-                                                maxLines: 2,
-                                                overflow: TextOverflow.ellipsis,
-                                                style: const TextStyle(
-                                                  fontFamily: 'helves',
-                                                  color: Color.fromRGBO(
-                                                      47, 47, 52, 1),
-                                                  fontWeight: FontWeight.w500,
+                                              child: SizedBox(
+                                                width: size.width * 0.33,
+                                                height: size.height * 0.03,
+                                                child: Text(
+                                                  subCat.subcategoryName!,
+                                                  maxLines: 1,
+                                                  textAlign: TextAlign.justify,
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  style: const TextStyle(
+                                                    fontFamily: 'helves',
+                                                    fontSize: 13.5,
+                                                    color: Color.fromRGBO(
+                                                        47, 47, 52, 1),
+                                                    fontWeight: FontWeight.w500,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                            const SizedBox(
-                                              height: 20.0,
-                                            ),
-                                            InkWell(
-                                              child: Center(
-                                                child: Image.asset(
-                                                  'assets/images/egg.png',
-                                                ),
+                                            Container(
+                                              height: size.height * 0.15,
+                                              width: size.width * 0.3,
+                                              decoration: BoxDecoration(
+                                                borderRadius:
+                                                    BorderRadius.circular(14.0),
+                                                color: Colors.white,
                                               ),
-                                              onTap: () {
-                                                // Get.to(
-                                                //   () => SubCategoryViewNonPremium(),
-                                                AutoRouter.of(context).push(
-                                                    const SubCategoryNonPremium());
-                                                //   arguments: argument,
-                                                // );
-                                              },
+                                              child: InkWell(
+                                                child: Center(
+                                                  child: Image.asset(
+                                                    'assets/images/egg.png',
+                                                  ),
+                                                ),
+                                                onTap: () {
+                                                  // Get.to(
+                                                  //   () => SubCategoryViewNonPremium(),
+                                                  AutoRouter.of(context).push(
+                                                      SubCategoryNonPremium(
+                                                          category: cm,
+                                                          subcategories:
+                                                              cm.subcategory));
+                                                  //   arguments: argument,
+                                                  // );
+                                                },
+                                              ),
                                             ),
                                           ],
                                         ),
-                                      ),
-                                    ),
-                                  );
-                                },
-                                itemCount: cm.subcategories!.length,
-                                scrollDirection: Axis.horizontal,
-                                physics: const ScrollPhysics(),
-                              ),
+                                      );
+                                    },
+                                    itemCount: cm.subcategory!.length,
+                                    scrollDirection: Axis.horizontal,
+                                    physics: const ScrollPhysics(),
+                                  ),
                       ),
                     ],
                   );

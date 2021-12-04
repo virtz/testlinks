@@ -1,11 +1,13 @@
+import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
 import 'package:ajeo/presentation/screens/products/product_page_view_model.dart';
 // import 'package:ajeo/presentation/screens/products/widgets/wish_list_button.dart';
-import 'package:ajeo/presentation/widgets/drawer.dart';
+// import 'package:ajeo/presentation/widgets/drawer.dart';
 // import 'package:ajeo/presentation/widgets/pop-ups/review.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 // import 'package:ajeo/presentation/widgets/signup_button.dart';
 import 'package:ajeo/utils/colors.dart';
+import 'package:ajeo/utils/constants.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -13,7 +15,12 @@ import 'package:flutter/material.dart';
 import 'package:stacked/stacked.dart';
 
 class ProductPage extends StatefulWidget {
-  const ProductPage({Key? key}) : super(key: key);
+  final Product? product;
+  final String? categoryName;
+  final String? subcaegoryName;
+  const ProductPage(
+      {Key? key, this.product, this.categoryName, this.subcaegoryName})
+      : super(key: key);
 
   @override
   _ProductPageState createState() => _ProductPageState();
@@ -30,11 +37,11 @@ class _ProductPageState extends State<ProductPage> {
     return ViewModelBuilder<ProductPageViewModel>.reactive(
       viewModelBuilder: () => ProductPageViewModel(),
       onModelReady: (h) {
-        h.getCategory();
+        // h.getCategory();
       },
       builder: (context, model, child) => Scaffold(
           key: scaffoldKey,
-          drawer: const MenuDrawer(),
+          // drawer: const MenuDrawer(),
           backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
           body: SafeArea(
               child: Column(
@@ -89,9 +96,9 @@ class _ProductPageState extends State<ProductPage> {
                           child: Column(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              const Text(
-                                'Eggs',
-                                style: TextStyle(
+                              Text(
+                                widget.product!.productname!,
+                                style: const TextStyle(
                                   color: Color.fromRGBO(49, 49, 51, 1.0),
                                   fontWeight: FontWeight.w600,
                                   fontSize: 25.0,
@@ -109,9 +116,9 @@ class _ProductPageState extends State<ProductPage> {
                                       // Get.off(CategoryInFocusViewNonPremium());
                                       // AutoRouter.of(context).push( CategoryViewNonPremium())
                                     },
-                                    child: const Text(
-                                      'Food and Market',
-                                      style: TextStyle(
+                                    child: Text(
+                                      widget.categoryName ?? "",
+                                      style: const TextStyle(
                                           color: Color.fromRGBO(
                                               242, 206, 207, 1.0),
                                           fontSize: 12.0,
@@ -123,9 +130,9 @@ class _ProductPageState extends State<ProductPage> {
                                       // Get.back();
                                       AutoRouter.of(context).pop();
                                     },
-                                    child: const Text(
-                                      '/Dairy and Milk',
-                                      style: TextStyle(
+                                    child: Text(
+                                      '/${widget.subcaegoryName}',
+                                      style: const TextStyle(
                                           color:
                                               Color.fromRGBO(242, 39, 35, 1.0),
                                           fontSize: 12.0,
@@ -230,25 +237,11 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Stack(
-                            children: [
-                              Image.asset(
-                                'assets/images/egg3.png',
-                                width: 128,
-                                height: 100,
-                                fit: BoxFit.fill,
-                              ),
-                              Padding(
-                                padding:
-                                    const EdgeInsets.only(left: 70, top: 22),
-                                child: Image.asset(
-                                  'assets/images/egg2.png',
-                                  width: 128,
-                                  height: 100,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ],
+                          child: Image.network(
+                            imagebaseUrl + widget.product!.productimage!,
+                            width: size.width * 0.45,
+                            height: size.height * 0.19,
+                            fit: BoxFit.fill,
                           ),
                         ),
                         const SizedBox(

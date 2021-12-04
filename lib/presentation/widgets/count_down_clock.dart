@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
 
 class CountDownClock extends StatefulWidget {
   const CountDownClock({Key? key}) : super(key: key);
@@ -12,12 +12,20 @@ class CountDownClock extends StatefulWidget {
 
 class _CountDownClockState extends State<CountDownClock> {
   Duration duration = const Duration();
-  final countDownDuration = const Duration(days: 23, hours: 4, minutes: 36);
+  var countDownDuration = const Duration(days: 23, hours: 4, minutes: 36);
+  Duration? difference;
   Timer? timer;
   bool isCountDown = true;
   @override
   void initState() {
     super.initState();
+    // difference = DateTime.now().difference(DateTime(2020, 12, 25));
+    difference = DateTime(2021, 12, 25).difference(DateTime.now());
+    countDownDuration = Duration(
+        days: difference!.inDays.remainder(31),
+        hours: difference!.inHours.remainder(24),
+        minutes: difference!.inMinutes.remainder(60),
+        seconds: difference!.inSeconds.remainder(60));
     startTimer();
     reset();
   }
@@ -26,14 +34,6 @@ class _CountDownClockState extends State<CountDownClock> {
     timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       addTime();
     });
-  }
-
-  saveCountValue(Duration duration) async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setInt('days', duration.inDays);
-    prefs.setInt('hours', duration.inHours);
-    prefs.setInt('minutes', duration.inMinutes);
-    prefs.setInt('seconds', duration.inSeconds);
   }
 
   reset() {

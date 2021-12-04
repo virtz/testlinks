@@ -17,7 +17,7 @@ class CategoryService {
     return SuccessModel(categoryList);
   }
     getSubcategories(String id) async {
-    final result = await http.get(Paths.GET_CATEGORY+"/$id/subcategory/list");
+    final result = await http.get(Paths.GET_CATEGORY+"/$id/subcategory");
     if (result is ErrorModel) {
       return ErrorModel(result.error);
     }

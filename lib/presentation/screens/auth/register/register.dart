@@ -149,21 +149,26 @@ class _RegisterState extends State<Register> {
                   // );
                   AutoRouter.of(context).push(const HomeNonPremium());
                 },
-                child: const Text(
-                  '>>>>>>>>',
-                  style: TextStyle(
-                    color: Color.fromRGBO(240, 90, 36, 1),
-                    fontSize: 30.0,
-                    fontFamily: 'helves',
-                    fontWeight: FontWeight.w600,
-                    // decoration: TextDecoration.underline,
-                  ),
+                child: Column(
+                  children: [
+                    const Text(
+                      '>>>>>>>>',
+                      style: TextStyle(
+                        color: Color.fromRGBO(240, 90, 36, 1),
+                        fontSize: 30.0,
+                        fontFamily: 'helves',
+                        fontWeight: FontWeight.w600,
+                        // decoration: TextDecoration.underline,
+                      ),
+                    ),
+                    SizedBox(
+                      height: size.height * 0.001,
+                    ),
+                    const BlinkingTextAnimation(text: 'Click Here'),
+                  ],
                 ),
               ),
-              SizedBox(
-                height: size.height * 0.001,
-              ),
-              const BlinkingTextAnimation(text: 'Click Here'),
+
               SizedBox(
                 height: size.height * 0.03,
               ),
