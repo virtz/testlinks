@@ -4,14 +4,16 @@ import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/presentation/screens/home/home_view_model.dart';
 import 'package:ajeo/presentation/widgets/count_down_clock.dart';
-import 'package:ajeo/presentation/widgets/drawer.dart';
+// import 'package:ajeo/presentation/widgets/drawer.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
-import 'package:ajeo/utils/colors.dart';
+// import 'package:ajeo/utils/colors.dart';
 import 'package:ajeo/utils/size_fit.dart';
+import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+// import 'package:flutter_svg/flutter_svg.dart';
+
 import 'package:stacked/stacked.dart';
 
 class HomeNonPremium extends StatefulWidget {
@@ -170,19 +172,38 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                               ),
                                               child: SizedBox(
                                                 width: size.width * 0.33,
-                                                height: size.height * 0.03,
-                                                child: Text(
-                                                  subCat.subcategoryName!,
-                                                  maxLines: 1,
-                                                  textAlign: TextAlign.justify,
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  style: const TextStyle(
-                                                    fontFamily: 'helves',
-                                                    fontSize: 13.5,
-                                                    color: Color.fromRGBO(
-                                                        47, 47, 52, 1),
-                                                    fontWeight: FontWeight.w500,
+                                                height: size.height * 0.05,
+                                                child: Padding(
+                                                  padding: EdgeInsets.only(
+                                                      top:
+                                                          subCat.subcategoryName!
+                                                                      .length >
+                                                                  13
+                                                              ? 0.0
+                                                              : 8.0,
+                                                      bottom:
+                                                          subCat.subcategoryName!
+                                                                      .length >
+                                                                  13
+                                                              ? 0.0
+                                                              : 8.0),
+                                                  child: Text(
+                                                    capitalize(
+                                                      subCat.subcategoryName!
+                                                    ),
+                                                    maxLines: 2,
+                                                    textAlign:
+                                                        TextAlign.justify,
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: const TextStyle(
+                                                      fontFamily: 'helves',
+                                                      fontSize: 13.5,
+                                                      color: Color.fromRGBO(
+                                                          47, 47, 52, 1),
+                                                      fontWeight:
+                                                          FontWeight.w500,
+                                                    ),
                                                   ),
                                                 ),
                                               ),

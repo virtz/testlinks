@@ -9,6 +9,7 @@ import 'package:ajeo/presentation/widgets/search_bar.dart';
 import 'package:ajeo/utils/colors.dart';
 import 'package:ajeo/utils/constants.dart';
 import 'package:ajeo/utils/size_fit.dart';
+import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 // import 'package:get/get.dart';
@@ -97,7 +98,7 @@ class _ProductPageState extends State<ProductPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                widget.product!.productname!,
+                                capitalize(widget.product!.productname!),
                                 style: const TextStyle(
                                   color: Color.fromRGBO(49, 49, 51, 1.0),
                                   fontWeight: FontWeight.w600,
