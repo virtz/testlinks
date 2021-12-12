@@ -3,6 +3,8 @@ import 'package:ajeo/presentation/widgets/blinking_text_animation.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:lottie/lottie.dart';
 
 class Register extends StatefulWidget {
   const Register({Key? key}) : super(key: key);
@@ -24,9 +26,8 @@ class _RegisterState extends State<Register> {
           gradient: LinearGradient(
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
-            stops: [0.2, 0.75],
             colors: [
-              Color.fromRGBO(242, 12, 3, 0.74),
+              Color.fromRGBO(242, 12, 3, 0.9),
               Color(0xFFFFFFFF),
             ],
           ),
@@ -55,11 +56,11 @@ class _RegisterState extends State<Register> {
               //   ),
               // ),
               SizedBox(
-                height: size.height * 0.09,
+                height: 60.h,
               ),
               Image.asset('assets/images/ajeo.png'),
               SizedBox(
-                height: size.height * 0.05,
+                height: 40.h,
               ),
               // const Text(
               //   'Sign up or Login to\n manage your Account',
@@ -71,9 +72,7 @@ class _RegisterState extends State<Register> {
               //   ),
               //   textAlign: TextAlign.center,
               // ),
-              SizedBox(
-                height: size.height * 0.05,
-              ),
+
               // Material(
               //   shape: RoundedRectangleBorder(
               //     borderRadius: BorderRadius.circular(21.0),
@@ -105,8 +104,8 @@ class _RegisterState extends State<Register> {
               //     ),
               //   ),
               // ),
-              const SizedBox(
-                height: 16.0,
+              SizedBox(
+                height: 30.0.h,
               ),
               // const Text(
               //   'Already registered? Login',
@@ -118,9 +117,7 @@ class _RegisterState extends State<Register> {
               //   ),
               //   textAlign: TextAlign.center,
               // ),
-              const SizedBox(
-                height: 16.0,
-              ),
+
               // InkWell(
               //   onTap: () {
               //     // Get.to(() => AuthView(1));
@@ -151,18 +148,14 @@ class _RegisterState extends State<Register> {
                 },
                 child: Column(
                   children: [
-                    const Text(
-                      '>>>>>>>>',
-                      style: TextStyle(
-                        color: Color.fromRGBO(240, 90, 36, 1),
-                        fontSize: 30.0,
-                        fontFamily: 'helves',
-                        fontWeight: FontWeight.w600,
-                        // decoration: TextDecoration.underline,
-                      ),
-                    ),
                     SizedBox(
-                      height: size.height * 0.001,
+                        height: 35.h,
+                        width: 300.w,
+                        child: Lottie.asset(
+                          'assets/images/arrow_next.json',
+                        )),
+                    SizedBox(
+                      height: 5.h,
                     ),
                     const BlinkingTextAnimation(text: 'Click Here'),
                   ],
@@ -170,17 +163,17 @@ class _RegisterState extends State<Register> {
               ),
 
               SizedBox(
-                height: size.height * 0.03,
+                height: 15.h,
               ),
               InkWell(
                 onTap: () {
                   // Get.to(() => HelpScreen());
                 },
-                child: const Text(
+                child: Text(
                   'HELP',
                   style: TextStyle(
-                    color: Color.fromRGBO(240, 90, 36, 1),
-                    fontSize: 20.0,
+                    color: const Color.fromRGBO(240, 90, 36, 1),
+                    fontSize: 20.0.sp,
                     fontFamily: 'helves',
                     fontWeight: FontWeight.w600,
                     // decoration: TextDecoration.underline,
@@ -189,18 +182,22 @@ class _RegisterState extends State<Register> {
               ),
 
               SizedBox(
-                height: size.height * 0.03,
+                height: 15.h,
               ),
 
-              const Text(
+              Text(
                 'ABOUT US',
                 style: TextStyle(
-                  color: Color.fromRGBO(240, 90, 36, 1),
-                  fontSize: 20.0,
+                  color: const Color.fromRGBO(240, 90, 36, 1),
+                  fontSize: 20.0.sp,
                   fontFamily: 'helves',
                   fontWeight: FontWeight.w600,
                   // decoration: TextDecoration.underline,
                 ),
+              ),
+
+              SizedBox(
+                height: 30.0.h,
               ),
             ],
           ),

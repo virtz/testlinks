@@ -1,20 +1,32 @@
+import 'dart:io';
+
 import 'package:ajeo/core/models/auth_models/error_model.dart';
 import 'package:ajeo/core/models/auth_models/success_model.dart';
 import 'package:ajeo/core/models/category.dart';
+import 'package:ajeo/core/models/price.dart';
+import 'package:ajeo/core/models/uos.dart';
+import 'package:ajeo/core/models/variety.dart';
+// import 'package:ajeo/core/models/variety.dart';
 import 'package:ajeo/core/services/category_service.dart';
 import 'package:ajeo/locator.dart';
 import 'package:ajeo/presentation/widgets/utils.dart';
+import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
 class ProductPageViewModel extends BaseViewModel {
   final CategoryService _categoryService = locator<CategoryService>();
+  PriceModel? currentUosPrice;
+
+  Variety? dropdownValue;
 
   List<CategoryModel> categories = <CategoryModel>[];
-  String? unitOfMeasurement = "Piece(s)";
+  Uos? unitOfMeasurement;
 
-  changeUnit(value) {
+  changeUnit(Uos value) {
     unitOfMeasurement = value;
+
     notifyListeners();
+    getPriceRange(unitOfMeasurement!.id!);
   }
 
   getCategory() async {
@@ -26,5 +38,29 @@ class ProductPageViewModel extends BaseViewModel {
       categories = result.data;
       notifyListeners();
     }
+  }
+
+  getPriceRange(String id) async {
+    setBusy(true);
+    final result = await _categoryService.getUosPrice(id);
+    if (result is ErrorModel) {
+      setBusy(false);
+      showErrorToast(result.error);
+    }
+    if (result is SuccessModel) {
+      setBusy(false);
+      currentUosPrice = result.data;
+      notifyListeners();
+    }
+  }
+
+  String formatPrice(int? price) {
+    // final currencyFormatter = NumberFormat.currency(name: 'NGN');
+    // return currencyFormatter.format(price);
+    if (price != null) {
+      final currencyFormatter = NumberFormat('#,##0.00', Platform.localeName);
+      return currencyFormatter.format(price);
+    }
+    return "0";
   }
 }

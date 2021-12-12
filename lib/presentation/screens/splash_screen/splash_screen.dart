@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
               colors: [
-                Color.fromRGBO(242, 12, 3, 0.74),
+                Color.fromRGBO(242, 12, 3, 0.9),
                 Color(0xFFFFFFFF),
               ],
             ),

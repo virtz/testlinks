@@ -5,6 +5,7 @@ import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubCategoryItem extends StatelessWidget {
   final String? categoryName;
@@ -16,26 +17,26 @@ class SubCategoryItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: size.width * 0.33,
-          height: size.height * 0.04,
+          width: 90.w,
+          height: 35.h,
           child: Padding(
             padding: EdgeInsets.only(
-                top: product!.productname!.length > 13 ? 0.0 : 8.0,
-                bottom: product!.productname!.length > 13 ? 0.0 : 8.0),
+              top: product!.productname!.length > 11 ? 0.0 : 15.5.w,
+            ),
             child: Text(
               capitalize(product!.productname!),
               textAlign: TextAlign.start,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
-              style: const TextStyle(
-                fontSize: 13.0,
-                color: Color.fromRGBO(49, 49, 51, 1),
+              style: TextStyle(
+                fontSize: 13.0.sp,
+                color: const Color.fromRGBO(49, 49, 51, 1),
                 fontWeight: FontWeight.w500,
                 fontFamily: 'helves',
               ),
@@ -43,29 +44,27 @@ class SubCategoryItem extends StatelessWidget {
           ),
         ),
         Container(
-          width: size.width * 0.3,
-          height: size.height * 0.15,
+          height: 80.h,
+          width: 100.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14.0),
             color: Colors.white,
           ),
           child: Column(
             children: [
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: InkWell(
-                  child:product!.productimage == null?const CircularProgressIndicator(): Image.network(
-                    imagebaseUrl + product!.productimage!,
-                    height: sizeFit(false, 70.0, context),
-                  ),
-                  onTap: () {
-                    // Get.to(() => ProductPage());
-                    AutoRouter.of(context).push(ProductRoute(
-                        product: product,
-                        subcaegoryName: subcategoryName,
-                        categoryName: categoryName));
-                  },
-                ),
+              InkWell(
+                child: product!.productimage == null
+                    ? Image.asset('assets/images/placeholder.jpg',
+                        height: 62.h, width: 70.w)
+                    : Image.network(imagebaseUrl + product!.productimage!,
+                        height: 62.h, width: 70.w),
+                onTap: () {
+                  // Get.to(() => ProductPage());
+                  AutoRouter.of(context).push(ProductRoute(
+                      product: product,
+                      subcaegoryName: subcategoryName,
+                      categoryName: categoryName));
+                },
               ),
               Align(
                 alignment: Alignment.bottomRight,
@@ -79,8 +78,7 @@ class SubCategoryItem extends StatelessWidget {
                     onTap: () {
                       // Get.dialog(Wishlist());
                     },
-                    child:
-                        const Icon(Icons.add, color: Colors.white, size: 15.0),
+                    child: Icon(Icons.add, color: Colors.white, size: 15.0.h),
                   ),
                 ),
               ),

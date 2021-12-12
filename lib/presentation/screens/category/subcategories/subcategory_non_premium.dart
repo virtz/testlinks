@@ -12,6 +12,7 @@ import 'package:ajeo/utils/colors.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubCategoryNonPremium extends StatefulWidget {
   final CategoryModel? category;
@@ -42,7 +43,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
   @override
   Widget build(BuildContext context) {
     var authColor = const Color.fromRGBO(242, 39, 35, 1);
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldKey,
       // drawer: const MenuDrawer(),
@@ -53,9 +54,9 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 7.0,
-                  right: 7.0,
+                padding:  EdgeInsets.only(
+                  left: 7.0.w,
+                  right: 7.0.w,
                 ),
                 child: Row(
                   children: [
@@ -68,8 +69,8 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                           scaffoldKey.currentState!.openDrawer();
                         },
                         child: Container(
-                          height: 34.0,
-                          width: 34.0,
+                          height: 34.0.h,
+                          width: 34.0.w,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
@@ -81,28 +82,27 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                         ),
                       ),
                     ),
-                    SizedBox(
-                      width: sizeFit(true, 10.0, context),
-                    ),
+                    SizedBox(width: 10.w),
                     const Expanded(child: SearchBar()),
                   ],
                 ),
               ),
               // const Advert(),
+              SizedBox(height: 10.h),
               const CountDownClock(),
               Padding(
-                padding: const EdgeInsets.only(
-                  left: 12.0,
-                  top: 10.0,
+                padding: EdgeInsets.only(
+                  left: 12.0.w,
+                  top: 10.0.w,
                 ),
                 child: Material(
                   child: InkWell(
                     child: Text(
                       widget.category!.categoryName!,
-                      style: const TextStyle(
+                      style: TextStyle(
                         fontFamily: 'helves',
-                        fontSize: 19.0,
-                        color: Color.fromRGBO(107, 107, 107, 1),
+                        fontSize: 19.0.sp,
+                        color: const Color.fromRGBO(107, 107, 107, 1),
                         fontWeight: FontWeight.w500,
                       ),
                     ),
@@ -130,8 +130,8 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                       .map((e) => Tab(
                             child: Text(
                               e.subcategoryName!,
-                              style: const TextStyle(
-                                fontSize: 20.0,
+                              style: TextStyle(
+                                fontSize: 20.0.sp,
                                 fontFamily: 'helves',
                                 fontWeight: FontWeight.w600,
                               ),
@@ -140,15 +140,15 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                       .toList()),
 //new henry begins here
               Padding(
-                padding: const EdgeInsets.all(12.0),
+                padding: EdgeInsets.symmetric(horizontal: 12.0.w),
                 child: SizedBox(
-                  height: sizeFit(false, 400, context),
+                  height: 400.h,
                   child: TabBarView(
                       controller: tabController,
                       children: widget.subcategories!
                           .map((e) => SingleChildScrollView(
                               child: SizedBox(
-                                  height: size.height * 0.4,
+                                  height: 400.h,
                                   child: SubCategoryWidget(
                                     products: e.product,
                                     subcategoryName: e.subcategoryName,

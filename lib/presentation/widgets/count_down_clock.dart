@@ -1,6 +1,7 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:shared_preferences/shared_preferences.dart';
 
 class CountDownClock extends StatefulWidget {
@@ -66,7 +67,7 @@ class _CountDownClockState extends State<CountDownClock> {
     var size = MediaQuery.of(context).size;
     return Container(
         color: Colors.red,
-        height: size.height * 0.3,
+        height: 200.h,
         width: size.width,
         child: Center(child: buildTime(size)));
   }
@@ -91,7 +92,7 @@ class _CountDownClockState extends State<CountDownClock> {
                   color: Colors.white,
                   fontSize: 24,
                 )),
-            SizedBox(width: size.width * 0.02),
+            SizedBox(width: 10.w),
             const Icon(Icons.watch_later_outlined, color: Colors.white)
           ],
         ),
@@ -101,7 +102,7 @@ class _CountDownClockState extends State<CountDownClock> {
           children: [
             buildTimeCard(time: days, bottom: 'DAYS', size: size),
             SizedBox(
-                width: size.width * 0.07,
+                width: 20.w,
                 child: const Center(
                   child: Text(':',
                       style: TextStyle(
@@ -112,7 +113,7 @@ class _CountDownClockState extends State<CountDownClock> {
                 )),
             buildTimeCard(time: hours, bottom: 'HRS', size: size),
             SizedBox(
-                width: size.width * 0.07,
+                width: 20.w,
                 child: const Center(
                   child: Text(':',
                       style: TextStyle(
@@ -123,13 +124,13 @@ class _CountDownClockState extends State<CountDownClock> {
                 )),
             buildTimeCard(time: minutes, bottom: 'MINS', size: size),
             SizedBox(
-                width: size.width * 0.07,
-                child: const Center(
+               width: 20.w,
+                child: Center(
                   child: Text(':',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 24.sp,
                       )),
                 )),
             buildTimeCard(time: seconds, bottom: 'SECS', size: size),
@@ -141,7 +142,7 @@ class _CountDownClockState extends State<CountDownClock> {
 
   Widget buildTimeCard({required String time, required String bottom, size}) {
     return Container(
-      height: size.height * 0.14,
+      height: 80.h,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Padding(
@@ -156,10 +157,10 @@ class _CountDownClockState extends State<CountDownClock> {
                   fontSize: 40,
                 )),
             Text(bottom,
-                style: const TextStyle(
+                style: TextStyle(
                   // fontWeight: FontWeight.bold,
                   color: Colors.red,
-                  fontSize: 20,
+                  fontSize: 20.sp,
                 ))
           ],
         ),

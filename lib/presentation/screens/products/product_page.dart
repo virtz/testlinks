@@ -1,4 +1,6 @@
 import 'package:ajeo/core/models/product.dart';
+import 'package:ajeo/core/models/uos.dart';
+import 'package:ajeo/core/models/variety.dart';
 import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
 import 'package:ajeo/presentation/screens/products/product_page_view_model.dart';
 // import 'package:ajeo/presentation/screens/products/widgets/wish_list_button.dart';
@@ -12,6 +14,7 @@ import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
 
@@ -39,6 +42,13 @@ class _ProductPageState extends State<ProductPage> {
       viewModelBuilder: () => ProductPageViewModel(),
       onModelReady: (h) {
         // h.getCategory();
+        if (widget.product!.variety!.isNotEmpty) {
+          h.dropdownValue = widget.product!.variety![0];
+          if (widget.product!.variety![0].uos!.isNotEmpty) {
+            h.unitOfMeasurement = widget.product!.variety![0].uos![0];
+            h.getPriceRange(h.unitOfMeasurement!.id!);
+          }
+        }
       },
       builder: (context, model, child) => Scaffold(
           key: scaffoldKey,
@@ -99,10 +109,10 @@ class _ProductPageState extends State<ProductPage> {
                             children: [
                               Text(
                                 capitalize(widget.product!.productname!),
-                                style: const TextStyle(
-                                  color: Color.fromRGBO(49, 49, 51, 1.0),
+                                style: TextStyle(
+                                  color: const Color.fromRGBO(49, 49, 51, 1.0),
                                   fontWeight: FontWeight.w600,
-                                  fontSize: 25.0,
+                                  fontSize: 25.sp,
                                   fontFamily: 'helves',
                                 ),
                               ),
@@ -119,10 +129,10 @@ class _ProductPageState extends State<ProductPage> {
                                     },
                                     child: Text(
                                       widget.categoryName ?? "",
-                                      style: const TextStyle(
-                                          color: Color.fromRGBO(
+                                      style: TextStyle(
+                                          color: const Color.fromRGBO(
                                               242, 206, 207, 1.0),
-                                          fontSize: 12.0,
+                                          fontSize: 12.0.sp,
                                           fontFamily: 'helves'),
                                     ),
                                   ),
@@ -133,10 +143,10 @@ class _ProductPageState extends State<ProductPage> {
                                     },
                                     child: Text(
                                       '/${widget.subcaegoryName}',
-                                      style: const TextStyle(
-                                          color:
-                                              Color.fromRGBO(242, 39, 35, 1.0),
-                                          fontSize: 12.0,
+                                      style: TextStyle(
+                                          color: const Color.fromRGBO(
+                                              242, 39, 35, 1.0),
+                                          fontSize: 12.0.sp,
                                           fontFamily: 'helves'),
                                     ),
                                   ),
@@ -154,8 +164,8 @@ class _ProductPageState extends State<ProductPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                height: 73.0,
-                                width: 140.0,
+                                height: 73.0.h,
+                                width: 140.0.w,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(16.0)),
@@ -164,24 +174,40 @@ class _ProductPageState extends State<ProductPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'N200',
-                                        style: TextStyle(
-                                          color: Color(0XFF08F824),
-                                          fontSize: 34,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'helves',
-                                        ),
-                                      ),
+                                    children: [
+                                      model.isBusy
+                                          ? CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      Theme.of(context)
+                                                          .primaryColor))
+                                          : model.currentUosPrice == null
+                                              ? const Text(
+                                                  'Please select unit of scale')
+                                              : Text(
+                                                  "\u20a6" +
+                                                      model.formatPrice(model
+                                                          .currentUosPrice!
+                                                          .minimum_price!),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    color:
+                                                        const Color(0XFF08F824),
+                                                    fontSize: 25.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: 'helves',
+                                                  ),
+                                                ),
                                       SizedBox(
-                                        height: 5,
+                                        height: 5.h,
                                       ),
                                       Text(
                                         'Bodija Market',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 12,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: 'helves',
                                           // fontWeight: FontWeight.w600,
@@ -192,8 +218,8 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                               ),
                               Container(
-                                height: 73.0,
-                                width: 140.0,
+                                height: 73.0.h,
+                                width: 140.0.w,
                                 decoration: BoxDecoration(
                                     color: Colors.white,
                                     borderRadius: BorderRadius.circular(16.0)),
@@ -202,24 +228,39 @@ class _ProductPageState extends State<ProductPage> {
                                     mainAxisAlignment: MainAxisAlignment.center,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
-                                      Text(
-                                        'N300',
-                                        style: TextStyle(
-                                          color: Color(0xFFF80808),
-                                          fontSize: 34,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'helves',
-                                        ),
-                                      ),
+                                    children: [
+                                      model.isBusy
+                                          ? CircularProgressIndicator(
+                                              valueColor:
+                                                  AlwaysStoppedAnimation<Color>(
+                                                      Theme.of(context)
+                                                          .primaryColor))
+                                          : model.currentUosPrice == null
+                                              ? const Text(
+                                                  'Please select unit of scale')
+                                              : Text(
+                                                  "\u20a6" +
+                                                      model.formatPrice(model
+                                                          .currentUosPrice!
+                                                          .maximum_price!),
+                                                  overflow:
+                                                      TextOverflow.ellipsis,
+                                                  maxLines: 1,
+                                                  style: TextStyle(
+                                                    color: Colors.red,
+                                                    fontSize: 25.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: 'helves',
+                                                  ),
+                                                ),
                                       SizedBox(
-                                        height: 5,
+                                        height: 5.h,
                                       ),
                                       Text(
                                         'Jericho',
                                         style: TextStyle(
                                           color: Colors.black,
-                                          fontSize: 12,
+                                          fontSize: 12.sp,
                                           fontWeight: FontWeight.w600,
                                           fontFamily: 'helves',
 
@@ -238,55 +279,70 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: Image.network(
-                            imagebaseUrl + widget.product!.productimage!,
-                            width: size.width * 0.45,
-                            height: size.height * 0.19,
-                            fit: BoxFit.fill,
-                          ),
+                          child: widget.product!.productimage == null
+                              ? Image.asset('assets/images/placeholder.jpg',
+                                  height: 170.h, width: 170.w)
+                              : Image.network(
+                                  imagebaseUrl + widget.product!.productimage!,
+                                  height: 170.h,
+                                  width: 170.w,
+                                  fit: BoxFit.fill,
+                                ),
                         ),
-                        const SizedBox(
-                          height: 20,
+                        SizedBox(
+                          height: 20.h,
                         ),
                         Center(
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Column(
-                                children: const [
-                                  Text(
-                                    'N250',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 32.0,
-                                        fontFamily: 'helves',
-                                        fontWeight: FontWeight.bold),
-                                  ),
+                                children: [
+                                  model.isBusy
+                                      ? CircularProgressIndicator(
+                                          valueColor: AlwaysStoppedAnimation<
+                                                  Color>(
+                                              Theme.of(context).primaryColor))
+                                      : model.currentUosPrice == null
+                                          ? const Text(
+                                              'Please select unit of scale')
+                                          : Text(
+                                              "\u20a6" +
+                                                  model.formatPrice(model
+                                                      .currentUosPrice!
+                                                      .average_price!),
+                                              style: TextStyle(
+                                                  color: Colors.black,
+                                                  fontSize: 20.0.sp,
+                                                  fontFamily: 'helves',
+                                                  fontWeight: FontWeight.bold),
+                                            ),
                                   Text(
                                     'Average Price',
                                     style: TextStyle(
                                         color: Colors.black,
-                                        fontSize: 12.0,
+                                        fontSize: 12.0.sp,
                                         fontFamily: 'helves',
                                         fontWeight: FontWeight.w500),
                                   ),
                                 ],
                               ),
-                              const Icon(
+                              Icon(
                                 Icons.import_export,
-                                color: Color.fromRGBO(241, 48, 46, 1.0),
-                                size: 32,
+                                color: const Color.fromRGBO(241, 48, 46, 1.0),
+                                size: 32.h,
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
+                        SizedBox(
+                          height: 30.h,
                         ),
                         Center(
                           child: Container(
-                            height: 41.0,
-                            width: 200.0,
+                            height: 40.h,
+                            // width: 200.0,?
+                            width: 260.w,
                             decoration: BoxDecoration(
                               borderRadius: BorderRadius.circular(11),
                               color: Colors.white,
@@ -294,8 +350,44 @@ class _ProductPageState extends State<ProductPage> {
                             child: Center(
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.center,
-                                children: const [
-                                  ProductDrop(),
+                                children: [
+                                  // ProductDrop(product: widget.product),
+                                  DropdownButton<Variety>(
+                                    value: model.dropdownValue,
+                                    icon: const Icon(
+                                      Icons.arrow_drop_down_outlined,
+                                      size: 25,
+                                      color: Color.fromRGBO(242, 39, 35, 1.0),
+                                    ),
+                                    iconSize: 24,
+                                    // elevation: 16,
+                                    style: TextStyle(
+                                      color: Colors.black,
+                                      fontSize: 16.0.sp,
+                                      fontFamily: 'helves',
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                    onChanged: (newValue) {
+                                      setState(() {
+                                        model.dropdownValue = newValue!;
+                                        model.unitOfMeasurement = null;
+                                      });
+                                    },
+                                    items: widget.product!.variety!
+                                        .map<DropdownMenuItem<Variety>>(
+                                            (Variety value) {
+                                      return DropdownMenuItem<Variety>(
+                                          value: value,
+                                          child: SizedBox(
+                                              width: size.width * 0.5.w,
+                                              child: Center(
+                                                child: Text(value.varietyname!,
+                                                    overflow:
+                                                        TextOverflow.ellipsis),
+                                              )));
+                                    }).toList(),
+                                  ),
+
                                   // Text(
                                   //   'Free Range Eggs',
                                   //   style: TextStyle(
@@ -315,18 +407,18 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ),
                         ),
-                        const SizedBox(
-                          height: 25,
+                        SizedBox(
+                          height: 25.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
                             InkWell(
-                              child: const Text(
+                              child: Text(
                                 '-',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 20,
+                                    fontSize: 20.sp,
                                     fontFamily: 'helves'),
                               ),
                               onTap: () {
@@ -335,38 +427,38 @@ class _ProductPageState extends State<ProductPage> {
                                 });
                               },
                             ),
-                            const SizedBox(
-                              width: 20,
+                            SizedBox(
+                              width: 20.h,
                             ),
                             DropdownButtonHideUnderline(
-                                child: DropdownButton<String>(
+                                child: DropdownButton<Uos>(
                                     value: model.unitOfMeasurement,
                                     icon: const Icon(
                                         Icons.arrow_drop_down_outlined,
                                         size: 20,
                                         color: Color(0xFF292039)),
                                     iconSize: 20,
-                                    style: const TextStyle(
+                                    style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 16.0,
+                                      fontSize: 16.0.sp,
                                       fontFamily: 'helves',
                                       fontWeight: FontWeight.w600,
                                     ),
                                     onChanged: (value) =>
-                                        model.changeUnit(value),
-                                    items: <String>[
-                                      'Piece(s)',
-                                      'Dozen(s)',
-                                    ].map<DropdownMenuItem<String>>(
-                                        (String value) {
-                                      return DropdownMenuItem<String>(
+                                        model.changeUnit(value!),
+                                    items: model.dropdownValue!.uos!
+                                        .map<DropdownMenuItem<Uos>>(
+                                            (Uos value) {
+                                      return DropdownMenuItem<Uos>(
                                           value: value,
                                           child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               Text("$_counter"),
                                               SizedBox(
                                                   width: size.width * 0.01),
-                                              Text(value),
+                                              Text(value.uosname!),
                                             ],
                                           ));
                                     }).toList())),
@@ -396,8 +488,9 @@ class _ProductPageState extends State<ProductPage> {
                             ),
                           ],
                         ),
-                        const SizedBox(
-                          height: 20,
+
+                        SizedBox(
+                          height: 20.h,
                         ),
                         // InkWell(
                         //   onTap: () {
@@ -413,20 +506,20 @@ class _ProductPageState extends State<ProductPage> {
                         //     ),
                         //   ),
                         // ),
-                        const SizedBox(
-                          height: 20,
+                        SizedBox(
+                          height: 20.h,
                         ),
-                        const Center(
+                        Center(
                           child: Text(
                             'Related Products',
                             style: TextStyle(
                                 color: Colors.black,
-                                fontSize: 16,
+                                fontSize: 16.sp,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
-                        const SizedBox(
-                          height: 20,
+                        SizedBox(
+                          height: 20.h,
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -434,34 +527,34 @@ class _ProductPageState extends State<ProductPage> {
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               Container(
-                                height: 143,
-                                width: 139,
+                                height: 143.h,
+                                width: 139.w,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14),
                                     color: Colors.white),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 7),
+                                  padding: EdgeInsets.only(left: 7.w),
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       Text(
                                         'Milk',
                                         style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(49, 49, 51, 1.0),
-                                            fontSize: 32.0,
+                                            color: const Color.fromRGBO(
+                                                49, 49, 51, 1.0),
+                                            fontSize: 32.0.sp,
                                             fontWeight: FontWeight.w700,
                                             fontFamily: 'helves'),
                                       ),
                                       Text(
                                         'N200',
                                         style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(8, 248, 36, 1.0),
-                                            fontSize: 22.0,
+                                            color: const Color.fromRGBO(
+                                                8, 248, 36, 1.0),
+                                            fontSize: 22.0.sp,
                                             fontWeight: FontWeight.w700,
                                             fontFamily: 'helves'),
                                       ),
@@ -470,34 +563,34 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                               ),
                               Container(
-                                height: 143,
-                                width: 139,
+                                height: 143.h,
+                                width: 139.w,
                                 decoration: BoxDecoration(
                                     borderRadius: BorderRadius.circular(14),
                                     color: Colors.white),
                                 child: Padding(
-                                  padding: const EdgeInsets.only(left: 7),
+                                  padding: EdgeInsets.only(left: 7.w),
                                   child: Column(
                                     mainAxisAlignment:
                                         MainAxisAlignment.spaceBetween,
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
-                                    children: const [
+                                    children: [
                                       Text(
                                         'Milk',
                                         style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(49, 49, 51, 1.0),
-                                            fontSize: 32.0,
+                                            color: const Color.fromRGBO(
+                                                49, 49, 51, 1.0),
+                                            fontSize: 32.0.sp,
                                             fontWeight: FontWeight.w700,
                                             fontFamily: 'helves'),
                                       ),
                                       Text(
                                         'N200',
                                         style: TextStyle(
-                                            color:
-                                                Color.fromRGBO(8, 248, 36, 1.0),
-                                            fontSize: 22.0,
+                                            color: const Color.fromRGBO(
+                                                8, 248, 36, 1.0),
+                                            fontSize: 22.0.sp,
                                             fontWeight: FontWeight.w700,
                                             fontFamily: 'helves'),
                                       ),
@@ -508,8 +601,8 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 30,
+                        SizedBox(
+                          height: 30.h,
                         ),
                         // const   Center(
                         //      child: Text(
@@ -520,9 +613,9 @@ class _ProductPageState extends State<ProductPage> {
                         //            fontWeight: FontWeight.w700),
                         //      ),
                         //    ),
-                        const SizedBox(
-                          height: 20,
-                        ),
+                        // const SizedBox(
+                        //   height: 20,
+                        // ),
                         // Column(
                         //   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                         //   crossAxisAlignment: CrossAxisAlignment.start,
@@ -581,27 +674,27 @@ class _ProductPageState extends State<ProductPage> {
                         //     ),
                         //   ],
                         // ),
-                        const SizedBox(
-                          height: 14.0,
-                        ),
+                        // const SizedBox(
+                        //   height: 14.0,
+                        // ),
                         // const Center(
                         //   child: SignUpButton1(),
                         // ),
-                        const SizedBox(
-                          height: 60.0,
+                        SizedBox(
+                          height: 60.0.h,
                         ),
                         SizedBox(
-                          height: 39,
-                          width: 35,
+                          height: 39.h,
+                          width: 35.w,
                           child: Image.asset(
                             'assets/images/ajeo.png',
-                            width: 100,
-                            height: 40,
+                            width: 100.h,
+                            height: 40.w,
                             fit: BoxFit.fill,
                           ),
                         ),
-                        const SizedBox(
-                          height: 10.0,
+                        SizedBox(
+                          height: 10.0.h,
                         ),
                       ],
                     ),

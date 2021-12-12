@@ -12,6 +12,7 @@ import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:flutter_svg/flutter_svg.dart';
 
 import 'package:stacked/stacked.dart';
@@ -92,9 +93,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
               //     ),
               //   ),
               // ),
-              SizedBox(
-                height: sizeFit(false, 44.0, context),
-              ),
+              SizedBox(height: 44.h),
               ListView.builder(
                 key: UniqueKey(),
                 shrinkWrap: true,
@@ -120,14 +119,12 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                           // );
                         },
                         child: Padding(
-                          padding: EdgeInsets.only(
-                            left: sizeFit(true, 8.0, context),
-                          ),
+                          padding: EdgeInsets.only(left: 8.w),
                           child: Text(
                             cm.categoryName!,
-                            style: const TextStyle(
-                              fontSize: 20.0,
-                              color: Color.fromRGBO(47, 47, 52, 1),
+                            style: TextStyle(
+                              fontSize: 20.0.sp,
+                              color: const Color.fromRGBO(47, 47, 52, 1),
                               fontFamily: 'helves',
                               fontWeight: FontWeight.w600,
                             ),
@@ -135,7 +132,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                         ),
                       ),
                       SizedBox(
-                        height: sizeFit(false, 200.0, context),
+                        height: 200.h,
                         child: model.isBusy
                             ? CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
@@ -145,14 +142,13 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                 ? Center(
                                     child: Text(
                                         'No subcategories for category ${cm.categoryName}',
-                                        style: const TextStyle(
+                                        style: TextStyle(
                                             color: Colors.black,
-                                            fontSize: 17.0)),
+                                            fontSize: 17.0.sp)),
                                   )
                                 : ListView.builder(
                                     key: UniqueKey(),
-                                    padding:
-                                        const EdgeInsets.only(bottom: 24.0),
+                                    padding: EdgeInsets.only(bottom: 24.0.sp),
                                     itemBuilder: (context, index) {
                                       // model.getSubcategory(cm.id!);
 
@@ -171,36 +167,28 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                                 left: 7.0,
                                               ),
                                               child: SizedBox(
-                                                width: size.width * 0.33,
-                                                height: size.height * 0.05,
+                                                width: 90.w,
+                                                height: 35.h,
                                                 child: Padding(
                                                   padding: EdgeInsets.only(
-                                                      top:
-                                                          subCat.subcategoryName!
-                                                                      .length >
-                                                                  13
-                                                              ? 0.0
-                                                              : 8.0,
-                                                      bottom:
-                                                          subCat.subcategoryName!
-                                                                      .length >
-                                                                  13
-                                                              ? 0.0
-                                                              : 8.0),
+                                                    top: subCat.subcategoryName!
+                                                                .length >
+                                                            11
+                                                        ? 0.0
+                                                        : 15.5.w,
+                                                  ),
                                                   child: Text(
-                                                    capitalize(
-                                                      subCat.subcategoryName!
-                                                    ),
+                                                    capitalize(subCat
+                                                        .subcategoryName!),
                                                     maxLines: 2,
-                                                    textAlign:
-                                                        TextAlign.justify,
                                                     overflow:
                                                         TextOverflow.ellipsis,
-                                                    style: const TextStyle(
+                                                    style: TextStyle(
                                                       fontFamily: 'helves',
-                                                      fontSize: 13.5,
-                                                      color: Color.fromRGBO(
-                                                          47, 47, 52, 1),
+                                                      fontSize: 13.5.sp,
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              47, 47, 52, 1),
                                                       fontWeight:
                                                           FontWeight.w500,
                                                     ),
@@ -209,18 +197,19 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                               ),
                                             ),
                                             Container(
-                                              height: size.height * 0.15,
-                                              width: size.width * 0.3,
+                                              height: 75.h,
+                                              width: 90.w,
                                               decoration: BoxDecoration(
                                                 borderRadius:
-                                                    BorderRadius.circular(14.0),
+                                                    BorderRadius.circular(
+                                                        14.0.r),
                                                 color: Colors.white,
                                               ),
                                               child: InkWell(
                                                 child: Center(
                                                   child: Image.asset(
-                                                    'assets/images/egg.png',
-                                                  ),
+                                                      'assets/images/egg.png',
+                                                      height: 35.h),
                                                 ),
                                                 onTap: () {
                                                   // Get.to(

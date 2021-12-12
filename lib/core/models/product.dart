@@ -1,3 +1,4 @@
+import 'package:ajeo/core/models/variety.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'product.g.dart';
@@ -8,6 +9,7 @@ class Product {
   String? id;
   String? productname;
   String? productimage;
+  List<Variety>? variety;
   String? createdAt;
   String? updatedAt;
   Product({
@@ -16,6 +18,7 @@ class Product {
     this.productimage,
     this.createdAt,
     this.updatedAt,
+    this.variety,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) =>

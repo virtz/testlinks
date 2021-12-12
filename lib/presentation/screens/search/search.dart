@@ -4,6 +4,7 @@ import 'package:ajeo/presentation/screens/auth/local_widgets/textfield.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class Search extends StatefulWidget {
@@ -27,8 +28,8 @@ class _SearchState extends State<Search> {
             child: Row(
               children: [
                 Container(
-                  height: 50,
-                  width: sizeFit(true, 318.0, context),
+                  height: 50.h,
+                  width: 318.0.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10.0),
                     color: Colors.white,
@@ -45,7 +46,7 @@ class _SearchState extends State<Search> {
                 ),
                 Padding(
                   padding: EdgeInsets.only(
-                    left: sizeFit(true, 24.0, context),
+                    left: 24.0.w,
                   ),
                   child: GestureDetector(
                     onTap: () {
@@ -67,74 +68,74 @@ class _SearchState extends State<Search> {
             itemBuilder: (context, index) {
               return Padding(
                 padding: EdgeInsets.only(
-                  left: 20.0,
-                  top: 10,
-                  right: sizeFit(true, 55.0, context),
+                  left: 20.0.w,
+                  top: 10.w,
+                  right:  20.0.w,
                 ),
                 child: Container(
-                  height: 73.0,
+                  height: 73.0.h,
                   padding: const EdgeInsets.symmetric(vertical: 6.0),
-                  width: sizeFit(true, 300, context),
+                  width:  310.w,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Colors.white,
                   ),
                   child: Padding(
                     padding: EdgeInsets.only(
-                      right: sizeFit(true, 12.0, context),
+                      right: 12.0.w,
                     ),
                     child: Column(
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                            left: sizeFit(true, 16.0, context),
+                            left:  16.0.w,
                           ),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
                               SizedBox(
-                                width: sizeFit(true, 110.0, context),
-                                child: const Text(
+                                width:  110.0.w,
+                                child:  Text(
                                   'Eggs',
                                   style: TextStyle(
-                                    color: Color.fromRGBO(49, 49, 51, 1),
+                                    color: const Color.fromRGBO(49, 49, 51, 1),
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 16.0,
+                                    fontSize: 16.0.sp,
                                   ),
                                 ),
                               ),
-                              const Text(
+                               Text(
                                 '2 Dozen / Free Range Eggs',
-                                style: TextStyle(
-                                  color: Color.fromRGBO(49, 49, 51, 1),
+                                style:  TextStyle(
+                                  color: const Color.fromRGBO(49, 49, 51, 1),
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 12.0,
+                                  fontSize: 12.0.sp,
                                 ),
                               ),
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 10.0,
+                         SizedBox(
+                          height: 10.0.h,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
                               padding: EdgeInsets.only(
-                                left: sizeFit(true, 56.0, context),
+                                left: 40.0.w,
                               ),
                               child: Image.asset(
                                 'assets/images/egg3.png',
-                                height: 25.0,
+                                height: 25.0.h,
                               ),
                             ),
                             RichText(
-                              text: const TextSpan(
+                              text:  TextSpan(
                                 text: 'N200',
                                 style: TextStyle(
-                                  color: Color.fromRGBO(8, 237, 34, 1),
-                                  fontSize: 12.0,
+                                  color:const  Color.fromRGBO(8, 237, 34, 1),
+                                  fontSize: 12.0.sp,
                                   fontWeight: FontWeight.w700,
                                   fontFamily: 'helves',
                                 ),
@@ -143,7 +144,7 @@ class _SearchState extends State<Search> {
                                     text: ' / ',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 12.0.sp,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'helves',
                                     ),
@@ -151,8 +152,8 @@ class _SearchState extends State<Search> {
                                   TextSpan(
                                     text: 'N320',
                                     style: TextStyle(
-                                      color: Color.fromRGBO(237, 8, 8, 1),
-                                      fontSize: 12.0,
+                                      color:const Color.fromRGBO(237, 8, 8, 1),
+                                      fontSize: 12.0.sp,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'helves',
                                     ),
@@ -161,7 +162,7 @@ class _SearchState extends State<Search> {
                                     text: ' / ',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 12.0.sp,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'helves',
                                     ),
@@ -170,7 +171,7 @@ class _SearchState extends State<Search> {
                                     text: 'N280',
                                     style: TextStyle(
                                       color: Colors.black,
-                                      fontSize: 12.0,
+                                      fontSize: 12.0.sp,
                                       fontWeight: FontWeight.w700,
                                       fontFamily: 'helves',
                                     ),
