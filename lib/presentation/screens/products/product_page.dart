@@ -181,21 +181,21 @@ class _ProductPageState extends State<ProductPage> {
                                                   AlwaysStoppedAnimation<Color>(
                                                       Theme.of(context)
                                                           .primaryColor))
-                                          : model.currentUosPrice == null
+                                          : model.currentUosPrice!.minimum_price == null
                                               ? const Text(
                                                   'Please select unit of scale')
                                               : Text(
                                                   "\u20a6" +
                                                       model.formatPrice(model
                                                           .currentUosPrice!
-                                                          .minimum_price!),
+                                                          .minimum_price),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
                                                   style: TextStyle(
                                                     color:
                                                         const Color(0XFF08F824),
-                                                    fontSize: 25.sp,
+                                                    fontSize: model.determineSize(model.currentUosPrice!.maximum_price!.bitLength),
                                                     fontWeight: FontWeight.w700,
                                                     fontFamily: 'helves',
                                                   ),
@@ -235,20 +235,20 @@ class _ProductPageState extends State<ProductPage> {
                                                   AlwaysStoppedAnimation<Color>(
                                                       Theme.of(context)
                                                           .primaryColor))
-                                          : model.currentUosPrice == null
+                                          : model.currentUosPrice!.maximum_price == null
                                               ? const Text(
                                                   'Please select unit of scale')
                                               : Text(
                                                   "\u20a6" +
                                                       model.formatPrice(model
                                                           .currentUosPrice!
-                                                          .maximum_price!),
+                                                          .maximum_price),
                                                   overflow:
                                                       TextOverflow.ellipsis,
                                                   maxLines: 1,
                                                   style: TextStyle(
                                                     color: Colors.red,
-                                                    fontSize: 25.sp,
+                                                    fontSize: model.determineSize(model.currentUosPrice!.maximum_price!.bitLength),
                                                     fontWeight: FontWeight.w700,
                                                     fontFamily: 'helves',
                                                   ),
@@ -303,14 +303,14 @@ class _ProductPageState extends State<ProductPage> {
                                           valueColor: AlwaysStoppedAnimation<
                                                   Color>(
                                               Theme.of(context).primaryColor))
-                                      : model.currentUosPrice == null
+                                      : model.currentUosPrice!.average_price == null
                                           ? const Text(
                                               'Please select unit of scale')
                                           : Text(
                                               "\u20a6" +
                                                   model.formatPrice(model
                                                       .currentUosPrice!
-                                                      .average_price!),
+                                                      .average_price),
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 20.0.sp,

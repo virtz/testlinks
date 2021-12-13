@@ -10,6 +10,7 @@ import 'package:ajeo/core/models/variety.dart';
 import 'package:ajeo/core/services/category_service.dart';
 import 'package:ajeo/locator.dart';
 import 'package:ajeo/presentation/widgets/utils.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'package:stacked/stacked.dart';
 
@@ -62,5 +63,19 @@ class ProductPageViewModel extends BaseViewModel {
       return currencyFormatter.format(price);
     }
     return "0";
+  }
+  double determineSize(size){
+    switch(size ){
+      case 7:
+        return 25.0.sp;
+      case 9:
+        return 20.0.sp;
+      case 11:
+        return 15.0.sp;
+      case 13:
+        return 10.5.sp;
+      default:
+      return  16.0.sp;
+    }
   }
 }
