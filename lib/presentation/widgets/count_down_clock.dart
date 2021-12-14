@@ -86,29 +86,29 @@ class _CountDownClockState extends State<CountDownClock> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            const Text("Countdown to Christmas!",
+             Text("Countdown to Christmas!",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
-                  fontSize: 24,
+                  fontSize: 24.sp,
                 )),
             SizedBox(width: 10.w),
             const Icon(Icons.watch_later_outlined, color: Colors.white)
           ],
         ),
-        SizedBox(height: size.height * 0.03),
+        SizedBox(height: 15.h),
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             buildTimeCard(time: days, bottom: 'DAYS', size: size),
             SizedBox(
                 width: 20.w,
-                child: const Center(
+                child:  Center(
                   child: Text(':',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 24.sp,
                       )),
                 )),
             buildTimeCard(time: hours, bottom: 'HRS', size: size),
@@ -142,19 +142,19 @@ class _CountDownClockState extends State<CountDownClock> {
 
   Widget buildTimeCard({required String time, required String bottom, size}) {
     return Container(
-      height: 80.h,
+      height: 85.h,
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding: const EdgeInsets.all(8.0),
+        padding:  EdgeInsets.all(8.0.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(time,
-                style: const TextStyle(
+                style:  TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.red,
-                  fontSize: 40,
+                  fontSize: 40.sp,
                 )),
             Text(bottom,
                 style: TextStyle(

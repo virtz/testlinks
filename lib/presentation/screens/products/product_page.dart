@@ -181,7 +181,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   AlwaysStoppedAnimation<Color>(
                                                       Theme.of(context)
                                                           .primaryColor))
-                                          : model.currentUosPrice!.minimum_price == null
+                                          :model.currentUosPrice ==null|| model.currentUosPrice!.minimum_price == null
                                               ? const Text(
                                                   'Please select unit of scale')
                                               : Text(
@@ -235,7 +235,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   AlwaysStoppedAnimation<Color>(
                                                       Theme.of(context)
                                                           .primaryColor))
-                                          : model.currentUosPrice!.maximum_price == null
+                                          : model.currentUosPrice==null||model.currentUosPrice!.maximum_price == null
                                               ? const Text(
                                                   'Please select unit of scale')
                                               : Text(
@@ -303,7 +303,7 @@ class _ProductPageState extends State<ProductPage> {
                                           valueColor: AlwaysStoppedAnimation<
                                                   Color>(
                                               Theme.of(context).primaryColor))
-                                      : model.currentUosPrice!.average_price == null
+                                      : model.currentUosPrice==null|| model.currentUosPrice!.average_price == null
                                           ? const Text(
                                               'Please select unit of scale')
                                           : Text(
@@ -373,7 +373,7 @@ class _ProductPageState extends State<ProductPage> {
                                         model.unitOfMeasurement = null;
                                       });
                                     },
-                                    items: widget.product!.variety!
+                                    items: widget.product?.variety!
                                         .map<DropdownMenuItem<Variety>>(
                                             (Variety value) {
                                       return DropdownMenuItem<Variety>(
@@ -446,7 +446,7 @@ class _ProductPageState extends State<ProductPage> {
                                     ),
                                     onChanged: (value) =>
                                         model.changeUnit(value!),
-                                    items: model.dropdownValue!.uos!
+                                    items: model.dropdownValue?.uos!
                                         .map<DropdownMenuItem<Uos>>(
                                             (Uos value) {
                                       return DropdownMenuItem<Uos>(
