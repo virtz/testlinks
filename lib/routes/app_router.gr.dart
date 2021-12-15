@@ -92,7 +92,7 @@ class AppRouter extends _i31.RootStackRouter {
     },
     T12SignUp_23.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
-          routeData: routeData, child: _i7.T12SignUp_23());
+          routeData: routeData, child: const _i7.T12SignUp_23());
     },
     T12SignIn_23.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -171,7 +171,8 @@ class AppRouter extends _i31.RootStackRouter {
               key: args.key,
               product: args.product,
               categoryName: args.categoryName,
-              subcaegoryName: args.subcaegoryName));
+              subcaegoryName: args.subcaegoryName,
+              products: args.products));
     },
     ProductRoute2.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -253,24 +254,27 @@ class AppRouter extends _i31.RootStackRouter {
       ];
 }
 
-/// generated route for [_i1.SplashScreen]
+/// generated route for
+/// [_i1.SplashScreen]
 class SplashScreen extends _i31.PageRouteInfo<void> {
-  const SplashScreen() : super(name, path: '/');
+  const SplashScreen() : super(SplashScreen.name, path: '/');
 
   static const String name = 'SplashScreen';
 }
 
-/// generated route for [_i2.Register]
+/// generated route for
+/// [_i2.Register]
 class Register extends _i31.PageRouteInfo<void> {
-  const Register() : super(name, path: '/Register');
+  const Register() : super(Register.name, path: '/Register');
 
   static const String name = 'Register';
 }
 
-/// generated route for [_i3.AuthView]
+/// generated route for
+/// [_i3.AuthView]
 class AuthView extends _i31.PageRouteInfo<AuthViewArgs> {
   AuthView({_i32.Key? key, int initialIndex = 0})
-      : super(name,
+      : super(AuthView.name,
             path: '/auth-view',
             args: AuthViewArgs(key: key, initialIndex: initialIndex));
 
@@ -290,108 +294,128 @@ class AuthViewArgs {
   }
 }
 
-/// generated route for [_i4.CompleteAccount]
+/// generated route for
+/// [_i4.CompleteAccount]
 class CompleteAccount extends _i31.PageRouteInfo<void> {
-  const CompleteAccount() : super(name, path: '/complete-account');
+  const CompleteAccount()
+      : super(CompleteAccount.name, path: '/complete-account');
 
   static const String name = 'CompleteAccount';
 }
 
-/// generated route for [_i5.ConfirmationPage]
+/// generated route for
+/// [_i5.ConfirmationPage]
 class ConfirmationRoute extends _i31.PageRouteInfo<void> {
-  const ConfirmationRoute() : super(name, path: '/confirmation-page');
+  const ConfirmationRoute()
+      : super(ConfirmationRoute.name, path: '/confirmation-page');
 
   static const String name = 'ConfirmationRoute';
 }
 
-/// generated route for [_i6.Subscription]
+/// generated route for
+/// [_i6.Subscription]
 class Subscription extends _i31.PageRouteInfo<void> {
-  const Subscription() : super(name, path: '/Subscription');
+  const Subscription() : super(Subscription.name, path: '/Subscription');
 
   static const String name = 'Subscription';
 }
 
-/// generated route for [_i7.T12SignUp_2]
+/// generated route for
+/// [_i7.T12SignUp_2]
 class T12SignUp_2 extends _i31.PageRouteInfo<void> {
-  const T12SignUp_2() : super(name, path: '/t12-sign-up_2');
+  const T12SignUp_2() : super(T12SignUp_2.name, path: '/t12-sign-up_2');
 
   static const String name = 'T12SignUp_2';
 }
 
-/// generated route for [_i7.T12SignUp_23]
+/// generated route for
+/// [_i7.T12SignUp_23]
 class T12SignUp_23 extends _i31.PageRouteInfo<void> {
-  const T12SignUp_23() : super(name, path: '/t12-sign-up_23');
+  const T12SignUp_23() : super(T12SignUp_23.name, path: '/t12-sign-up_23');
 
   static const String name = 'T12SignUp_23';
 }
 
-/// generated route for [_i8.T12SignIn_23]
+/// generated route for
+/// [_i8.T12SignIn_23]
 class T12SignIn_23 extends _i31.PageRouteInfo<void> {
-  const T12SignIn_23() : super(name, path: '/t12-sign-in_23');
+  const T12SignIn_23() : super(T12SignIn_23.name, path: '/t12-sign-in_23');
 
   static const String name = 'T12SignIn_23';
 }
 
-/// generated route for [_i8.T12SignIn_2]
+/// generated route for
+/// [_i8.T12SignIn_2]
 class T12SignIn_2 extends _i31.PageRouteInfo<void> {
-  const T12SignIn_2() : super(name, path: '/t12-sign-in_2');
+  const T12SignIn_2() : super(T12SignIn_2.name, path: '/t12-sign-in_2');
 
   static const String name = 'T12SignIn_2';
 }
 
-/// generated route for [_i9.SignIn]
+/// generated route for
+/// [_i9.SignIn]
 class SignIn extends _i31.PageRouteInfo<void> {
-  const SignIn() : super(name, path: '/sign-in');
+  const SignIn() : super(SignIn.name, path: '/sign-in');
 
   static const String name = 'SignIn';
 }
 
-/// generated route for [_i10.SignUp]
+/// generated route for
+/// [_i10.SignUp]
 class SignUp extends _i31.PageRouteInfo<void> {
-  const SignUp() : super(name, path: '/sign-up');
+  const SignUp() : super(SignUp.name, path: '/sign-up');
 
   static const String name = 'SignUp';
 }
 
-/// generated route for [_i11.HomeNonPremium]
+/// generated route for
+/// [_i11.HomeNonPremium]
 class HomeNonPremium extends _i31.PageRouteInfo<void> {
-  const HomeNonPremium() : super(name, path: '/home-non-premium');
+  const HomeNonPremium()
+      : super(HomeNonPremium.name, path: '/home-non-premium');
 
   static const String name = 'HomeNonPremium';
 }
 
-/// generated route for [_i12.Search]
+/// generated route for
+/// [_i12.Search]
 class Search extends _i31.PageRouteInfo<void> {
-  const Search() : super(name, path: '/Search');
+  const Search() : super(Search.name, path: '/Search');
 
   static const String name = 'Search';
 }
 
-/// generated route for [_i13.SettingsNonPremium]
+/// generated route for
+/// [_i13.SettingsNonPremium]
 class SettingsNonPremium extends _i31.PageRouteInfo<void> {
-  const SettingsNonPremium() : super(name, path: '/settings-non-premium');
+  const SettingsNonPremium()
+      : super(SettingsNonPremium.name, path: '/settings-non-premium');
 
   static const String name = 'SettingsNonPremium';
 }
 
-/// generated route for [_i14.HomePagePremium]
+/// generated route for
+/// [_i14.HomePagePremium]
 class HomeRoutePremium extends _i31.PageRouteInfo<void> {
-  const HomeRoutePremium() : super(name, path: '/home-page-premium');
+  const HomeRoutePremium()
+      : super(HomeRoutePremium.name, path: '/home-page-premium');
 
   static const String name = 'HomeRoutePremium';
 }
 
-/// generated route for [_i15.Settings]
+/// generated route for
+/// [_i15.Settings]
 class Settings extends _i31.PageRouteInfo<void> {
-  const Settings() : super(name, path: '/Settings');
+  const Settings() : super(Settings.name, path: '/Settings');
 
   static const String name = 'Settings';
 }
 
-/// generated route for [_i16.Review]
+/// generated route for
+/// [_i16.Review]
 class Review extends _i31.PageRouteInfo<ReviewArgs> {
   Review({_i32.Key? key})
-      : super(name, path: '/Review', args: ReviewArgs(key: key));
+      : super(Review.name, path: '/Review', args: ReviewArgs(key: key));
 
   static const String name = 'Review';
 }
@@ -407,10 +431,11 @@ class ReviewArgs {
   }
 }
 
-/// generated route for [_i17.Barcodes]
+/// generated route for
+/// [_i17.Barcodes]
 class Barcodes extends _i31.PageRouteInfo<BarcodesArgs> {
   Barcodes({_i32.Key? key})
-      : super(name, path: '/Barcodes', args: BarcodesArgs(key: key));
+      : super(Barcodes.name, path: '/Barcodes', args: BarcodesArgs(key: key));
 
   static const String name = 'Barcodes';
 }
@@ -426,63 +451,76 @@ class BarcodesArgs {
   }
 }
 
-/// generated route for [_i18.WishListView]
+/// generated route for
+/// [_i18.WishListView]
 class WishListView extends _i31.PageRouteInfo<void> {
-  const WishListView() : super(name, path: '/wish-list-view');
+  const WishListView() : super(WishListView.name, path: '/wish-list-view');
 
   static const String name = 'WishListView';
 }
 
-/// generated route for [_i19.WishList]
+/// generated route for
+/// [_i19.WishList]
 class WishList extends _i31.PageRouteInfo<void> {
-  const WishList() : super(name, path: '/wish-list');
+  const WishList() : super(WishList.name, path: '/wish-list');
 
   static const String name = 'WishList';
 }
 
-/// generated route for [_i20.NewList]
+/// generated route for
+/// [_i20.NewList]
 class NewList extends _i31.PageRouteInfo<void> {
-  const NewList() : super(name, path: '/new-list');
+  const NewList() : super(NewList.name, path: '/new-list');
 
   static const String name = 'NewList';
 }
 
-/// generated route for [_i21.CategoryViewNonPremium]
+/// generated route for
+/// [_i21.CategoryViewNonPremium]
 class CategoryViewNonPremium extends _i31.PageRouteInfo<void> {
   const CategoryViewNonPremium()
-      : super(name, path: '/category-view-non-premium');
+      : super(CategoryViewNonPremium.name, path: '/category-view-non-premium');
 
   static const String name = 'CategoryViewNonPremium';
 }
 
-/// generated route for [_i22.CategoryViewPremium]
+/// generated route for
+/// [_i22.CategoryViewPremium]
 class CategoryViewPremium extends _i31.PageRouteInfo<void> {
-  const CategoryViewPremium() : super(name, path: '/category-view-premium');
+  const CategoryViewPremium()
+      : super(CategoryViewPremium.name, path: '/category-view-premium');
 
   static const String name = 'CategoryViewPremium';
 }
 
-/// generated route for [_i23.ProductPage]
+/// generated route for
+/// [_i23.ProductPage]
 class ProductRoute extends _i31.PageRouteInfo<ProductRouteArgs> {
   ProductRoute(
       {_i32.Key? key,
       _i33.Product? product,
       String? categoryName,
-      String? subcaegoryName})
-      : super(name,
+      String? subcaegoryName,
+      List<_i33.Product>? products})
+      : super(ProductRoute.name,
             path: '/product-page',
             args: ProductRouteArgs(
                 key: key,
                 product: product,
                 categoryName: categoryName,
-                subcaegoryName: subcaegoryName));
+                subcaegoryName: subcaegoryName,
+                products: products));
 
   static const String name = 'ProductRoute';
 }
 
 class ProductRouteArgs {
   const ProductRouteArgs(
-      {this.key, this.product, this.categoryName, this.subcaegoryName});
+      {this.key,
+      this.product,
+      this.categoryName,
+      this.subcaegoryName,
+      this.products});
 
   final _i32.Key? key;
 
@@ -492,42 +530,50 @@ class ProductRouteArgs {
 
   final String? subcaegoryName;
 
+  final List<_i33.Product>? products;
+
   @override
   String toString() {
-    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName}';
+    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName, products: $products}';
   }
 }
 
-/// generated route for [_i24.ProductPage2]
+/// generated route for
+/// [_i24.ProductPage2]
 class ProductRoute2 extends _i31.PageRouteInfo<void> {
-  const ProductRoute2() : super(name, path: '/product-page2');
+  const ProductRoute2() : super(ProductRoute2.name, path: '/product-page2');
 
   static const String name = 'ProductRoute2';
 }
 
-/// generated route for [_i25.ProductPagePremium2]
+/// generated route for
+/// [_i25.ProductPagePremium2]
 class ProductRoutePremium2 extends _i31.PageRouteInfo<void> {
-  const ProductRoutePremium2() : super(name, path: '/product-page-premium2');
+  const ProductRoutePremium2()
+      : super(ProductRoutePremium2.name, path: '/product-page-premium2');
 
   static const String name = 'ProductRoutePremium2';
 }
 
-/// generated route for [_i26.ProductPageUnitIncrease2]
+/// generated route for
+/// [_i26.ProductPageUnitIncrease2]
 class ProductRouteUnitIncrease2 extends _i31.PageRouteInfo<void> {
   const ProductRouteUnitIncrease2()
-      : super(name, path: '/product-page-unit-increase2');
+      : super(ProductRouteUnitIncrease2.name,
+            path: '/product-page-unit-increase2');
 
   static const String name = 'ProductRouteUnitIncrease2';
 }
 
-/// generated route for [_i27.SubCategoryNonPremium]
+/// generated route for
+/// [_i27.SubCategoryNonPremium]
 class SubCategoryNonPremium
     extends _i31.PageRouteInfo<SubCategoryNonPremiumArgs> {
   SubCategoryNonPremium(
       {_i32.Key? key,
       List<_i34.SubcategoryModel>? subcategories,
       _i35.CategoryModel? category})
-      : super(name,
+      : super(SubCategoryNonPremium.name,
             path: '/sub-category-non-premium',
             args: SubCategoryNonPremiumArgs(
                 key: key, subcategories: subcategories, category: category));
@@ -551,24 +597,28 @@ class SubCategoryNonPremiumArgs {
   }
 }
 
-/// generated route for [_i28.DefaultSubscriptionPrompt]
+/// generated route for
+/// [_i28.DefaultSubscriptionPrompt]
 class DefaultSubscriptionPrompt extends _i31.PageRouteInfo<void> {
   const DefaultSubscriptionPrompt()
-      : super(name, path: '/default-subscription-prompt');
+      : super(DefaultSubscriptionPrompt.name,
+            path: '/default-subscription-prompt');
 
   static const String name = 'DefaultSubscriptionPrompt';
 }
 
-/// generated route for [_i29.HelpScreen]
+/// generated route for
+/// [_i29.HelpScreen]
 class HelpScreen extends _i31.PageRouteInfo<void> {
-  const HelpScreen() : super(name, path: '/help-screen');
+  const HelpScreen() : super(HelpScreen.name, path: '/help-screen');
 
   static const String name = 'HelpScreen';
 }
 
-/// generated route for [_i30.Subscriptions]
+/// generated route for
+/// [_i30.Subscriptions]
 class Subscriptions extends _i31.PageRouteInfo<void> {
-  const Subscriptions() : super(name, path: '/Subscriptions');
+  const Subscriptions() : super(Subscriptions.name, path: '/Subscriptions');
 
   static const String name = 'Subscriptions';
 }

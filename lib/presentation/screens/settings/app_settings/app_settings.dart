@@ -105,7 +105,7 @@ class _AppSettingsState extends State<AppSettings> {
                             onChanged: (value) {
                               setState(() {
                                 isSwitched = value;
-                                print(isSwitched);
+                                // print(isSwitched);
                               });
                             },
                             activeTrackColor: HexColor('#F22723'),

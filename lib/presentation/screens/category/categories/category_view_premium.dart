@@ -17,7 +17,7 @@ class CategoryViewPremium extends StatefulWidget {
 
 class _CategoryViewPremiumState extends State<CategoryViewPremium>
     with SingleTickerProviderStateMixin {
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
 
   TabController? tabController;
 
@@ -41,7 +41,7 @@ class _CategoryViewPremiumState extends State<CategoryViewPremium>
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Padding(
-              padding: EdgeInsets.only(
+              padding:const EdgeInsets.only(
                 left: 7.0,
                 right: 7.0,
               ),

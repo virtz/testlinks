@@ -1,3 +1,5 @@
+// ignore_for_file: avoid_unnecessary_containers
+
 import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
 import 'package:ajeo/presentation/screens/products/widgets/wish_list_button.dart';
 import 'package:ajeo/presentation/widgets/drawer.dart';
@@ -14,7 +16,7 @@ class ProductPage2 extends StatefulWidget {
 }
 
 class _ProductPage2State extends State<ProductPage2> {
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -349,7 +351,7 @@ class _ProductPage2State extends State<ProductPage2> {
                           const SizedBox(
                             height: 20,
                           ),
-                          Center(
+                        const  Center(
                             child: Text(
                               'Related Products',
                               style: TextStyle(

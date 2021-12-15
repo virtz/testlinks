@@ -32,18 +32,18 @@ class _SignUpState extends State<SignUp> {
            children: [
               Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children:const [
                     SocialButton(
                       title: 'Facebook',
                       iconData: FontAwesomeIcons.facebook,
-                      borderColor: const Color.fromRGBO(59, 89, 152, 1),
-                      buttonColor: const Color.fromRGBO(59, 89, 152, 1),
+                      borderColor:  Color.fromRGBO(59, 89, 152, 1),
+                      buttonColor:  Color.fromRGBO(59, 89, 152, 1),
                     ),
                     SocialButton(
                       title: 'Twitter',
                       iconData: FontAwesomeIcons.twitter,
-                      borderColor: const Color.fromRGBO(43, 169, 225, 1),
-                      buttonColor: const Color.fromRGBO(43, 169, 225, 1),
+                      borderColor:  Color.fromRGBO(43, 169, 225, 1),
+                      buttonColor:  Color.fromRGBO(43, 169, 225, 1),
                     ),
                   ],
                 ),
@@ -53,7 +53,7 @@ class _SignUpState extends State<SignUp> {
                 ),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
+                  children:const[
                     SocialButton(
                       title: 'Apple',
                       iconData: FontAwesomeIcons.apple,
@@ -123,14 +123,14 @@ class _SignUpState extends State<SignUp> {
                   height: 10.0,
                 ),
          const        TextFieldContainer(
-                  hintText: 'Email Address',
+                  hintText: 'Email Address', withAsterisk: null,
                 ),
           const       SizedBox(
                   height: 10.0,
                 ),
         const         TextFieldContainer(
                   hintText: 'Password',
-                  obscure: true,
+                  obscure: true, withAsterisk: null,
                 ),
             const    SizedBox(
                   height: 20.0,

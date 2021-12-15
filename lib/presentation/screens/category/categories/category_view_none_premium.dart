@@ -178,7 +178,7 @@ class _CategoryViewNonPremiumState extends State<CategoryViewNonPremium>
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
-                child: Container(
+                child: SizedBox(
                   height: sizeFit(false, 400, context),
                   child: TabBarView(
                     controller: tabController,

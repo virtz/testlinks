@@ -222,7 +222,7 @@ class _SettingsState extends State<Settings> {
                                         color: Colors.white,
                                         iconSize: 28,
                                         onPressed: () {
-                                          print("Pressed");
+                                          // print("Pressed");
                                         }),
                                     const Center(
                                       child: Text(

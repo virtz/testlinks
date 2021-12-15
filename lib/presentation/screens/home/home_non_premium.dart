@@ -7,8 +7,9 @@ import 'package:ajeo/presentation/widgets/count_down_clock.dart';
 // import 'package:ajeo/presentation/widgets/drawer.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
+import 'package:ajeo/utils/constants.dart';
 // import 'package:ajeo/utils/colors.dart';
-import 'package:ajeo/utils/size_fit.dart';
+// import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -28,7 +29,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
+    // var size = MediaQuery.of(context).size;
     return ViewModelBuilder<HomeViewModel>.reactive(
       onModelReady: (h) {
         h.getCategory();
@@ -132,7 +133,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                         ),
                       ),
                       SizedBox(
-                        height: 200.h,
+                        height: 250.h,
                         child: model.isBusy
                             ? CircularProgressIndicator(
                                 valueColor: AlwaysStoppedAnimation<Color>(
@@ -146,91 +147,121 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                             color: Colors.black,
                                             fontSize: 17.0.sp)),
                                   )
-                                : ListView.builder(
-                                    key: UniqueKey(),
-                                    padding: EdgeInsets.only(bottom: 24.0.sp),
-                                    itemBuilder: (context, index) {
-                                      // model.getSubcategory(cm.id!);
+                                : Padding(
+                                    padding: EdgeInsets.all(8.0.w),
+                                    child: ListView.builder(
+                                      key: UniqueKey(),
+                                      padding: EdgeInsets.only(bottom: 24.0.sp),
+                                      itemBuilder: (context, index) {
+                                        // model.getSubcategory(cm.id!);
 
-                                      SubcategoryModel subCat =
-                                          cm.subcategory![index];
-                                      return Padding(
-                                        padding: const EdgeInsets.symmetric(
-                                            horizontal: 5, vertical: 5),
-                                        child: Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Padding(
-                                              padding: const EdgeInsets.only(
-                                                top: 7.0,
-                                                left: 7.0,
-                                              ),
-                                              child: SizedBox(
-                                                width: 90.w,
-                                                height: 35.h,
-                                                child: Padding(
-                                                  padding: EdgeInsets.only(
-                                                    top: subCat.subcategoryName!
-                                                                .length >
-                                                            11
-                                                        ? 0.0
-                                                        : 15.5.w,
-                                                  ),
-                                                  child: Text(
-                                                    capitalize(subCat
-                                                        .subcategoryName!),
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: TextStyle(
-                                                      fontFamily: 'helves',
-                                                      fontSize: 13.5.sp,
-                                                      color:
-                                                          const Color.fromRGBO(
-                                                              47, 47, 52, 1),
-                                                      fontWeight:
-                                                          FontWeight.w500,
+                                        SubcategoryModel subCat =
+                                            cm.subcategory![index];
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 5),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 7.0,
+                                                  left: 7.0,
+                                                ),
+                                                child: SizedBox(
+                                                  width: 150.w,
+                                                  height: 35.5.h,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top:
+                                                          subCat.subcategoryName!
+                                                                      .length >
+                                                                  20
+                                                              ? 0.0
+                                                              : 15.5.w,
+                                                    ),
+                                                    child: Text(
+                                                      capitalize(subCat
+                                                          .subcategoryName!),
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        fontFamily: 'helves',
+                                                        fontSize: 13.5.sp,
+                                                        color: const Color
+                                                                .fromRGBO(
+                                                            47, 47, 52, 1),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
                                                     ),
                                                   ),
                                                 ),
                                               ),
-                                            ),
-                                            Container(
-                                              height: 75.h,
-                                              width: 90.w,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(
-                                                        14.0.r),
-                                                color: Colors.white,
-                                              ),
-                                              child: InkWell(
-                                                child: Center(
-                                                  child: Image.asset(
-                                                      'assets/images/egg.png',
-                                                      height: 35.h),
+                                              SizedBox(
+                                                height: 140.h,
+                                                width: 160.w,
+                                                child: Card(
+                                                  elevation: 5.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0.r),
+                                                  ),
+                                                  child: InkWell(
+                                                    child: Center(
+                                                      child: subCat
+                                                                  .subcategoryimage ==
+                                                              null
+                                                          ? Padding(
+                                                            padding:  EdgeInsets.all(8.0.w),
+                                                            child: Container(
+                                                               
+                                                                decoration: const BoxDecoration(
+                                                                    image: DecorationImage(
+                                                                        fit: BoxFit.cover,
+                                                                        image: AssetImage(
+                                                                          'assets/images/placeholder.jpg',
+                                                                        )))),
+                                                          )
+                                                          : Padding(
+                                                              padding:
+                                                                   EdgeInsets
+                                                                      .all(8.0.w),
+                                                              child: Container(
+                                                                  decoration: BoxDecoration(
+                                                                      image: DecorationImage(
+                                                                          fit: BoxFit.cover,
+                                                                          image: NetworkImage(
+                                                                            imagebaseUrl +
+                                                                                subCat.subcategoryimage!,
+                                                                          )))),
+                                                            ),
+                                                    ),
+                                                    onTap: () {
+                                                      // Get.to(
+                                                      //   () => SubCategoryViewNonPremium(),
+                                                      AutoRouter.of(context).push(
+                                                          SubCategoryNonPremium(
+                                                              category: cm,
+                                                              subcategories: cm
+                                                                  .subcategory));
+                                                      //   arguments: argument,
+                                                      // );
+                                                    },
+                                                  ),
                                                 ),
-                                                onTap: () {
-                                                  // Get.to(
-                                                  //   () => SubCategoryViewNonPremium(),
-                                                  AutoRouter.of(context).push(
-                                                      SubCategoryNonPremium(
-                                                          category: cm,
-                                                          subcategories:
-                                                              cm.subcategory));
-                                                  //   arguments: argument,
-                                                  // );
-                                                },
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      );
-                                    },
-                                    itemCount: cm.subcategory!.length,
-                                    scrollDirection: Axis.horizontal,
-                                    physics: const ScrollPhysics(),
+                                            ],
+                                          ),
+                                        );
+                                      },
+                                      itemCount: cm.subcategory!.length,
+                                      scrollDirection: Axis.horizontal,
+                                      physics: const ScrollPhysics(),
+                                    ),
                                   ),
                       ),
                     ],

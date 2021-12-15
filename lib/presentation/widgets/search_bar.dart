@@ -1,6 +1,6 @@
 import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:ajeo/utils/colors.dart';
-import 'package:ajeo/utils/size_fit.dart';
+// import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';

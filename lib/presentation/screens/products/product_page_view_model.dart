@@ -4,6 +4,7 @@ import 'package:ajeo/core/models/auth_models/error_model.dart';
 import 'package:ajeo/core/models/auth_models/success_model.dart';
 import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/price.dart';
+import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
 // import 'package:ajeo/core/models/variety.dart';
@@ -21,6 +22,7 @@ class ProductPageViewModel extends BaseViewModel {
   Variety? dropdownValue;
 
   List<CategoryModel> categories = <CategoryModel>[];
+  List<Product> relatedProducts = <Product>[];
   Uos? unitOfMeasurement;
 
   changeUnit(Uos value) {
@@ -64,8 +66,9 @@ class ProductPageViewModel extends BaseViewModel {
     }
     return "0";
   }
-  double determineSize(size){
-    switch(size ){
+
+  double determineSize(size) {
+    switch (size) {
       case 7:
         return 25.0.sp;
       case 9:
@@ -75,7 +78,14 @@ class ProductPageViewModel extends BaseViewModel {
       case 13:
         return 10.5.sp;
       default:
-      return  16.0.sp;
+        return 16.0.sp;
     }
+  }
+
+  getRelatedProducts(List<Product> products, String productName) {
+    relatedProducts = products
+        .where((element) => element.productname != productName)
+        .toList();
+    notifyListeners();
   }
 }

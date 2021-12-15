@@ -7,9 +7,9 @@ import 'package:ajeo/presentation/screens/category/widgets/sub_category_widget_p
 // import 'package:ajeo/presentation/widgets/drawer.dart';
 // import 'package:ajeo/presentation/widgets/drawer1.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
-import 'package:ajeo/routes/app_router.gr.dart';
+// import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:ajeo/utils/colors.dart';
-import 'package:ajeo/utils/size_fit.dart';
+// import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -54,7 +54,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
-                padding:  EdgeInsets.only(
+                padding: EdgeInsets.only(
                   left: 7.0.w,
                   right: 7.0.w,
                 ),
@@ -127,35 +127,35 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                   ),
                   unselectedLabelColor: authColor,
                   tabs: widget.subcategories!
-                      .map((e) => Tab(
-                            child: Text(
-                              e.subcategoryName!,
-                              style: TextStyle(
-                                fontSize: 20.0.sp,
-                                fontFamily: 'helves',
-                                fontWeight: FontWeight.w600,
+                      .map((e) => Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Tab(
+                              child: Text(
+                                e.subcategoryName!,
+                                style: TextStyle(
+                                  fontSize: 20.0.sp,
+                                  fontFamily: 'helves',
+                                  fontWeight: FontWeight.w600,
+                                ),
                               ),
                             ),
                           ))
                       .toList()),
 //new henry begins here
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: 12.0.w),
-                child: SizedBox(
-                  height: 400.h,
-                  child: TabBarView(
-                      controller: tabController,
-                      children: widget.subcategories!
-                          .map((e) => SingleChildScrollView(
-                              child: SizedBox(
-                                  height: 400.h,
-                                  child: SubCategoryWidget(
-                                    products: e.product,
-                                    subcategoryName: e.subcategoryName,
-                                    categoryName: widget.category!.categoryName,
-                                  ))))
-                          .toList()),
-                ),
+              SizedBox(
+                height: 500.h,
+                child: TabBarView(
+                    controller: tabController,
+                    children: widget.subcategories!
+                        .map((e) => SingleChildScrollView(
+                            child: SizedBox(
+                                height: 500.h,
+                                child: SubCategoryWidget(
+                                  products: e.product,
+                                  subcategoryName: e.subcategoryName,
+                                  categoryName: widget.category!.categoryName,
+                                ))))
+                        .toList()),
               )
             ],
           ),

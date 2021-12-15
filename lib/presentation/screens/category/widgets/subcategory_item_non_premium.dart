@@ -1,7 +1,7 @@
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:ajeo/utils/constants.dart';
-import 'package:ajeo/utils/size_fit.dart';
+// import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -11,8 +11,9 @@ class SubCategoryItem extends StatelessWidget {
   final String? categoryName;
   final String? subcategoryName;
   final Product? product;
+  final List<Product>? products;
   const SubCategoryItem(
-      {Key? key, this.product, this.categoryName, this.subcategoryName})
+      {Key? key, this.product, this.categoryName, this.subcategoryName, this.products})
       : super(key: key);
 
   @override
@@ -23,11 +24,11 @@ class SubCategoryItem extends StatelessWidget {
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         SizedBox(
-          width: 90.w,
-          height: 35.h,
+          width: 150.w,
+          height: 35.5.h,
           child: Padding(
             padding: EdgeInsets.only(
-              top: product!.productname!.length > 11 ? 0.0 : 15.5.w,
+              top: product!.productname!.length > 20 ? 0.0 : 15.5.w,
             ),
             child: Text(
               capitalize(product!.productname!),
@@ -44,45 +45,117 @@ class SubCategoryItem extends StatelessWidget {
           ),
         ),
         Container(
-          height: 80.h,
-          width: 100.w,
+          height: 130.h,
+          width: 160.w,
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(14.0),
             color: Colors.white,
           ),
-          child: Column(
-            children: [
-              InkWell(
-                child: product!.productimage == null
-                    ? Image.asset('assets/images/placeholder.jpg',
-                        height: 62.h, width: 70.w)
-                    : Image.network(imagebaseUrl + product!.productimage!,
-                        height: 62.h, width: 70.w),
-                onTap: () {
-                  // Get.to(() => ProductPage());
-                  AutoRouter.of(context).push(ProductRoute(
-                      product: product,
-                      subcaegoryName: subcategoryName,
-                      categoryName: categoryName));
-                },
-              ),
-              Align(
-                alignment: Alignment.bottomRight,
-                child: Material(
-                  color: const Color.fromRGBO(241, 48, 46, 1),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(12.0),
-                  ),
-                  child: InkWell(
-                    borderRadius: BorderRadius.circular(26.0),
-                    onTap: () {
-                      // Get.dialog(Wishlist());
-                    },
-                    child: Icon(Icons.add, color: Colors.white, size: 15.0.h),
-                  ),
+          child: Card(
+            elevation: 5.0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(10.0.r),
+            ),
+            child: Column(
+              children: [
+                InkWell(
+                  child: product!.productimage == null
+                      ? Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0.w),
+                              child: Container(
+                                  height: 100.h,
+                                  width: 140.w,
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: AssetImage(
+                                            'assets/images/placeholder.jpg',
+                                          )))),
+                            ),
+                            Positioned(
+                              top: 120,
+                              left: 100,
+                              right: 0,
+                              child: Material(
+                                color: const Color.fromRGBO(241, 48, 46, 1),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(26.0),
+                                  onTap: () {
+                                    // Get.dialog(Wishlist());
+                                  },
+                                  child: Icon(Icons.add,
+                                      color: Colors.white, size: 15.0.h),
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      : Stack(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.all(8.0.w),
+                              child: Container(
+                                  height: 100.h,
+                                  width: 140.w,
+                                  decoration: BoxDecoration(
+                                      image: DecorationImage(
+                                          fit: BoxFit.cover,
+                                          image: NetworkImage(imagebaseUrl +
+                                              product!.productimage!)))),
+                            ),
+                            Positioned(
+                              bottom: 0,
+                              // left: 100,
+                              right: 2,
+                              child: Material(
+                                color: const Color.fromRGBO(241, 48, 46, 1),
+                                shape: RoundedRectangleBorder(
+                                  borderRadius: BorderRadius.circular(12.0),
+                                ),
+                                child: InkWell(
+                                  borderRadius: BorderRadius.circular(26.0),
+                                  onTap: () {
+                                    // Get.dialog(Wishlist());
+                                  },
+                                  child: Icon(Icons.add,
+                                      color: Colors.white, size: 15.0.h),
+                                ),
+                              ),
+                            )
+                          ],
+                        ),
+                  onTap: () {
+                    // Get.to(() => ProductPage());
+                    AutoRouter.of(context).push(ProductRoute(
+                        product: product,
+                        products:products,
+                        subcaegoryName: subcategoryName,
+                        categoryName: categoryName));
+                  },
                 ),
-              ),
-            ],
+                // Align(
+                //   alignment: Alignment.bottomRight,
+                //   child: Material(
+                //     color: const Color.fromRGBO(241, 48, 46, 1),
+                //     shape: RoundedRectangleBorder(
+                //       borderRadius: BorderRadius.circular(12.0),
+                //     ),
+                //     child: InkWell(
+                //       borderRadius: BorderRadius.circular(26.0),
+                //       onTap: () {
+                //         // Get.dialog(Wishlist());
+                //       },
+                //       child: Icon(Icons.add, color: Colors.white, size: 15.0.h),
+                //     ),
+                //   ),
+                // ),
+              ],
+            ),
           ),
         ),
       ],

@@ -54,7 +54,7 @@ class SocialButton extends StatelessWidget {
               ),
             ),
             Padding(
-              padding: EdgeInsets.only(left: 12.0),
+              padding: const EdgeInsets.only(left: 12.0),
               child: FaIcon(
                 iconData,
                 color: iconColor ?? Colors.white,

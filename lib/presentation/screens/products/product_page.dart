@@ -1,8 +1,9 @@
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
-import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
+// import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
 import 'package:ajeo/presentation/screens/products/product_page_view_model.dart';
+import 'package:ajeo/presentation/widgets/line_chart_widget.dart';
 // import 'package:ajeo/presentation/screens/products/widgets/wish_list_button.dart';
 // import 'package:ajeo/presentation/widgets/drawer.dart';
 // import 'package:ajeo/presentation/widgets/pop-ups/review.dart';
@@ -13,6 +14,7 @@ import 'package:ajeo/utils/constants.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:get/get.dart';
@@ -22,8 +24,13 @@ class ProductPage extends StatefulWidget {
   final Product? product;
   final String? categoryName;
   final String? subcaegoryName;
+  final List<Product>? products;
   const ProductPage(
-      {Key? key, this.product, this.categoryName, this.subcaegoryName})
+      {Key? key,
+      this.product,
+      this.categoryName,
+      this.subcaegoryName,
+      this.products})
       : super(key: key);
 
   @override
@@ -41,6 +48,7 @@ class _ProductPageState extends State<ProductPage> {
     return ViewModelBuilder<ProductPageViewModel>.reactive(
       viewModelBuilder: () => ProductPageViewModel(),
       onModelReady: (h) {
+        h.getRelatedProducts(widget.products!, widget.product!.productname!);
         // h.getCategory();
         if (widget.product!.variety!.isNotEmpty) {
           h.dropdownValue = widget.product!.variety![0];
@@ -71,7 +79,7 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          scaffoldKey.currentState!.openDrawer();
+                          AutoRouter.of(context).pop();
                         },
                         child: Container(
                           height: 34.0,
@@ -80,8 +88,8 @@ class _ProductPageState extends State<ProductPage> {
                             shape: BoxShape.circle,
                             color: Colors.white,
                           ),
-                          child: const Icon(Icons.perm_identity,
-                              color: kHomePageIconColor, size: 40),
+                          child: const Icon(Icons.arrow_back_ios,
+                              color: kHomePageIconColor, size: 20),
                         ),
                       ),
                     ),
@@ -92,8 +100,8 @@ class _ProductPageState extends State<ProductPage> {
                   ],
                 ),
               ),
-              const SizedBox(
-                height: 12.0,
+              SizedBox(
+                height: 12.0.h,
               ),
               Expanded(
                 child: ListView(
@@ -132,7 +140,7 @@ class _ProductPageState extends State<ProductPage> {
                                       style: TextStyle(
                                           color: const Color.fromRGBO(
                                               242, 206, 207, 1.0),
-                                          fontSize: 12.0.sp,
+                                          fontSize: 13.0.sp,
                                           fontFamily: 'helves'),
                                     ),
                                   ),
@@ -141,13 +149,25 @@ class _ProductPageState extends State<ProductPage> {
                                       // Get.back();
                                       AutoRouter.of(context).pop();
                                     },
-                                    child: Text(
-                                      '/${widget.subcaegoryName}',
-                                      style: TextStyle(
-                                          color: const Color.fromRGBO(
-                                              242, 39, 35, 1.0),
-                                          fontSize: 12.0.sp,
-                                          fontFamily: 'helves'),
+                                    child: Row(
+                                      children: [
+                                        Text(
+                                          ">",
+                                          style: TextStyle(
+                                              color: const Color.fromRGBO(
+                                                  242, 39, 35, 1.0),
+                                              fontSize: 20.0.sp,
+                                              fontFamily: 'helves'),
+                                        ),
+                                        Text(
+                                          '${widget.subcaegoryName}',
+                                          style: TextStyle(
+                                              color: const Color.fromRGBO(
+                                                  242, 39, 35, 1.0),
+                                              fontSize: 14.0.sp,
+                                              fontFamily: 'helves'),
+                                        ),
+                                      ],
                                     ),
                                   ),
                                 ],
@@ -155,122 +175,154 @@ class _ProductPageState extends State<ProductPage> {
                             ],
                           ),
                         ),
-                        const SizedBox(
-                          height: 30.0,
+                        SizedBox(
+                          height: 30.0.h,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18.0),
+                          padding: EdgeInsets.symmetric(horizontal: 18.0.w),
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              Container(
+                              SizedBox(
                                 height: 73.0.h,
-                                width: 140.0.w,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      model.isBusy
-                                          ? CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Theme.of(context)
-                                                          .primaryColor))
-                                          :model.currentUosPrice ==null|| model.currentUosPrice!.minimum_price == null
-                                              ? const Text(
-                                                  'Please select unit of scale')
-                                              : Text(
-                                                  "\u20a6" +
-                                                      model.formatPrice(model
-                                                          .currentUosPrice!
-                                                          .minimum_price),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    color:
-                                                        const Color(0XFF08F824),
-                                                    fontSize: model.determineSize(model.currentUosPrice!.maximum_price!.bitLength),
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily: 'helves',
+                                width: 155.0.w,
+                                // decoration: BoxDecoration(
+                                //     color: Colors.white,
+                                //     borderRadius: BorderRadius.circular(16.0)),
+                                child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0.r),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        model.isBusy
+                                            ? CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        Theme.of(context)
+                                                            .primaryColor))
+                                            : model.currentUosPrice == null ||
+                                                    model.currentUosPrice!
+                                                            .minimum_price ==
+                                                        null
+                                                ? const Text(
+                                                    'Please select unit of scale')
+                                                : Text(
+                                                    "\u20a6" +
+                                                        model.formatPrice(model
+                                                            .currentUosPrice!
+                                                            .minimum_price),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      color: const Color(
+                                                          0XFF08F824),
+                                                      fontSize: model
+                                                          .determineSize(model
+                                                              .currentUosPrice!
+                                                              .maximum_price!
+                                                              .bitLength),
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontFamily: 'helves',
+                                                    ),
                                                   ),
-                                                ),
-                                      SizedBox(
-                                        height: 5.h,
-                                      ),
-                                      Text(
-                                        'Bodija Market',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'helves',
-                                          // fontWeight: FontWeight.w600,
+                                        SizedBox(
+                                          height: 5.h,
                                         ),
-                                      ),
-                                    ],
+                                        Text(
+                                          'Bodija Market',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'helves',
+                                            // fontWeight: FontWeight.w600,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
-                              Container(
+                              SizedBox(
                                 height: 73.0.h,
-                                width: 140.0.w,
-                                decoration: BoxDecoration(
-                                    color: Colors.white,
-                                    borderRadius: BorderRadius.circular(16.0)),
-                                child: Center(
-                                  child: Column(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      model.isBusy
-                                          ? CircularProgressIndicator(
-                                              valueColor:
-                                                  AlwaysStoppedAnimation<Color>(
-                                                      Theme.of(context)
-                                                          .primaryColor))
-                                          : model.currentUosPrice==null||model.currentUosPrice!.maximum_price == null
-                                              ? const Text(
-                                                  'Please select unit of scale')
-                                              : Text(
-                                                  "\u20a6" +
-                                                      model.formatPrice(model
-                                                          .currentUosPrice!
-                                                          .maximum_price),
-                                                  overflow:
-                                                      TextOverflow.ellipsis,
-                                                  maxLines: 1,
-                                                  style: TextStyle(
-                                                    color: Colors.red,
-                                                    fontSize: model.determineSize(model.currentUosPrice!.maximum_price!.bitLength),
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily: 'helves',
+                                width: 155.0.w,
+                                // decoration: BoxDecoration(
+                                //     color: Colors.white,
+                                //     borderRadius: BorderRadius.circular(16.0)),
+                                child: Card(
+                                  elevation: 5.0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(12.0.r),
+                                  ),
+                                  child: Center(
+                                    child: Column(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        model.isBusy
+                                            ? CircularProgressIndicator(
+                                                valueColor:
+                                                    AlwaysStoppedAnimation<
+                                                            Color>(
+                                                        Theme.of(context)
+                                                            .primaryColor))
+                                            : model.currentUosPrice == null ||
+                                                    model.currentUosPrice!
+                                                            .maximum_price ==
+                                                        null
+                                                ? const Text(
+                                                    'Please select unit of scale')
+                                                : Text(
+                                                    "\u20a6" +
+                                                        model.formatPrice(model
+                                                            .currentUosPrice!
+                                                            .maximum_price),
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    maxLines: 1,
+                                                    style: TextStyle(
+                                                      color: Colors.red,
+                                                      fontSize: model
+                                                          .determineSize(model
+                                                              .currentUosPrice!
+                                                              .maximum_price!
+                                                              .bitLength),
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontFamily: 'helves',
+                                                    ),
                                                   ),
-                                                ),
-                                      SizedBox(
-                                        height: 5.h,
-                                      ),
-                                      Text(
-                                        'Jericho',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 12.sp,
-                                          fontWeight: FontWeight.w600,
-                                          fontFamily: 'helves',
+                                        SizedBox(
+                                          height: 5.h,
+                                        ),
+                                        Text(
+                                          'Jericho',
+                                          style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 12.sp,
+                                            fontWeight: FontWeight.w600,
+                                            fontFamily: 'helves',
 
-                                          // fontWeight: FontWeight.w600,
+                                            // fontWeight: FontWeight.w600,
+                                          ),
                                         ),
-                                      ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                              )
                             ],
                           ),
                         ),
@@ -303,7 +355,10 @@ class _ProductPageState extends State<ProductPage> {
                                           valueColor: AlwaysStoppedAnimation<
                                                   Color>(
                                               Theme.of(context).primaryColor))
-                                      : model.currentUosPrice==null|| model.currentUosPrice!.average_price == null
+                                      : model.currentUosPrice == null ||
+                                              model.currentUosPrice!
+                                                      .average_price ==
+                                                  null
                                           ? const Text(
                                               'Please select unit of scale')
                                           : Text(
@@ -418,7 +473,8 @@ class _ProductPageState extends State<ProductPage> {
                                 '-',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 20.sp,
+                                    fontSize: 25.sp,
+                                    fontWeight: FontWeight.bold,
                                     fontFamily: 'helves'),
                               ),
                               onTap: () {
@@ -473,11 +529,12 @@ class _ProductPageState extends State<ProductPage> {
                               width: 20,
                             ),
                             InkWell(
-                              child: const Text(
+                              child: Text(
                                 '+',
                                 style: TextStyle(
                                     color: Colors.black,
-                                    fontSize: 20,
+                                    fontSize: 25.sp,
+                                    fontWeight: FontWeight.bold,
                                     fontFamily: 'helves'),
                               ),
                               onTap: () {
@@ -522,87 +579,371 @@ class _ProductPageState extends State<ProductPage> {
                           height: 20.h,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 20),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Container(
-                                height: 143.h,
-                                width: 139.w,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(14),
-                                    color: Colors.white),
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 7.w),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Milk',
-                                        style: TextStyle(
-                                            color: const Color.fromRGBO(
-                                                49, 49, 51, 1.0),
-                                            fontSize: 32.0.sp,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'helves'),
-                                      ),
-                                      Text(
-                                        'N200',
-                                        style: TextStyle(
-                                            color: const Color.fromRGBO(
-                                                8, 248, 36, 1.0),
-                                            fontSize: 22.0.sp,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'helves'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Container(
-                                height: 143.h,
-                                width: 139.w,
-                                decoration: BoxDecoration(
-                                    borderRadius: BorderRadius.circular(14),
-                                    color: Colors.white),
-                                child: Padding(
-                                  padding: EdgeInsets.only(left: 7.w),
-                                  child: Column(
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.spaceBetween,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Milk',
-                                        style: TextStyle(
-                                            color: const Color.fromRGBO(
-                                                49, 49, 51, 1.0),
-                                            fontSize: 32.0.sp,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'helves'),
-                                      ),
-                                      Text(
-                                        'N200',
-                                        style: TextStyle(
-                                            color: const Color.fromRGBO(
-                                                8, 248, 36, 1.0),
-                                            fontSize: 22.0.sp,
-                                            fontWeight: FontWeight.w700,
-                                            fontFamily: 'helves'),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
+                            padding: const EdgeInsets.symmetric(horizontal: 20),
+                            child: SizedBox(
+                              height: 200.h,
+                              // width: 139.w,
+                              child: ListView.separated(
+                                  separatorBuilder: (context, index) {
+                                    return SizedBox(width: 20.w);
+                                  },
+                                  shrinkWrap: true,
+                                  scrollDirection: Axis.horizontal,
+                                  itemCount: model.relatedProducts.length,
+                                  itemBuilder: (context, index) {
+                                    Product prd = model.relatedProducts[index];
+                                    return Container(
+                                        height: 143.h,
+                                        width: 139.w,
+                                        decoration: BoxDecoration(
+                                            borderRadius:
+                                                BorderRadius.circular(14),
+                                            color: Colors.white),
+                                        child: Padding(
+                                          padding: EdgeInsets.all(7.w),
+                                          child: Column(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Text(
+                                                prd.productname ?? "",
+                                                style: TextStyle(
+                                                    color: const Color.fromRGBO(
+                                                        49, 49, 51, 1.0),
+                                                    fontSize: 20.0.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: 'helves'),
+                                              ),
+                                              Text(
+                                                'N200',
+                                                style: TextStyle(
+                                                    color: const Color.fromRGBO(
+                                                        8, 248, 36, 1.0),
+                                                    fontSize: 16.0.sp,
+                                                    fontWeight: FontWeight.w700,
+                                                    fontFamily: 'helves'),
+                                              ),
+                                            ],
+                                          ),
+                                        ));
+                                  }),
+                            )),
+                        SizedBox(
+                          height: 30.h,
+                        ),
+
+                        Center(
+                          child: Text(
+                            'Price History',
+                            style: TextStyle(
+                                color: const Color.fromRGBO(9, 205, 230, 1.0),
+                                fontSize: 26.sp,
+                                fontWeight: FontWeight.w700),
+                          ),
+                        ),
+
+                        SizedBox(
+                          height: 20.h,
+                        ),
+//graph
+                        SizedBox(
+                          height: 180.0.w,
+                          width: size.width * 0.88,
+                          child: LineChartWidget(
+                            priceCoordinates: const [
+                              FlSpot(-1, 3),
+                              FlSpot(1, 2),
+                              FlSpot(3, 5),
+                              FlSpot(5, 2.5),
+                              FlSpot(7, 6),
+                              FlSpot(9, 7),
+                              FlSpot(11, 4),
                             ],
                           ),
                         ),
                         SizedBox(
-                          height: 30.h,
+                          height: 10.h,
+                        ),
+                        Text(
+                          'AJE-O Zones Price Breakdown',
+                          style: TextStyle(
+                              fontSize: 16.sp,
+                              color: Colors.black,
+                              fontWeight: FontWeight.bold),
+                        ),
+
+                        SizedBox(
+                          height: 10.h,
+                        ),
+                        Column(
+                          children: [
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.w),
+                              child: InkWell(
+                                child: Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    Text(
+                                      'Bodija Market',
+                                      style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'helves'),
+                                    ),
+                                    Text(
+                                      'N200',
+                                      style: TextStyle(
+                                          color: const Color.fromRGBO(
+                                              8, 248, 36, 1.0),
+                                          fontSize: 14.sp,
+                                          fontWeight: FontWeight.w700,
+                                          fontFamily: 'helves'),
+                                    ),
+                                  ],
+                                ),
+                                onTap: () {
+                                  // Get.to(() => Stores());
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Aleshinloye',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                  Text(
+                                    'N215',
+                                    style: TextStyle(
+                                        color: const Color.fromRGBO(
+                                            110, 192, 100, 1.0),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Mokola Market',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                  Text(
+                                    'N225',
+                                    style: TextStyle(
+                                        color: const Color.fromRGBO(
+                                            148, 206, 141, 1.0),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.sp,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Leventis',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                  Text(
+                                    'N245',
+                                    style: TextStyle(
+                                        color: const Color.fromRGBO(
+                                            245, 91, 88, 1.0),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Ring Road',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                  Text(
+                                    'N295',
+                                    style: TextStyle(
+                                        color: const Color.fromRGBO(
+                                            245, 91, 88, 1.0),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 15.h,
+                            ),
+                            Padding(
+                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
+                              child: Row(
+                                mainAxisAlignment:
+                                    MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Text(
+                                    'Jericho Market',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                  Text(
+                                    'N300',
+                                    style: TextStyle(
+                                        color: const Color.fromRGBO(
+                                            8, 248, 36, 1.0),
+                                        fontSize: 14.sp,
+                                        fontWeight: FontWeight.w700,
+                                        fontFamily: 'helves'),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 90.h,
+                            ),
+                          ],
+                        ),
+
+                        Column(
+                          children: [
+                            Text(
+                              'Prices last updated 07/20/2020 ',
+                              style: TextStyle(
+                                  color: const Color.fromRGBO(49, 49, 51, 1.0),
+                                  fontSize: 12.5.sp,
+                                  fontFamily: 'helves'),
+                            ),
+                            SizedBox(
+                              height: 10.h,
+                            ),
+                            Center(
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  Text(
+                                    '52 Week High',
+                                    style: TextStyle(
+                                      color: const Color.fromRGBO(0, 0, 0, 1.0),
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' N315 ',
+                                    style: TextStyle(
+                                      color: const Color.fromRGBO(
+                                          245, 91, 88, 1.0),
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    '| Low',
+                                    style: TextStyle(
+                                      color:
+                                          const Color.fromRGBO(49, 49, 51, 1.0),
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                  Text(
+                                    ' N185',
+                                    style: TextStyle(
+                                      color:
+                                          const Color.fromRGBO(49, 49, 51, 1.0),
+                                      fontSize: 12.sp,
+                                      fontWeight: FontWeight.w500,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            SizedBox(
+                              height: 10.0.h,
+                            ),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  'Volatility ',
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromRGBO(12, 12, 12, 1.0),
+                                    fontSize: 12.sp,
+                                    fontFamily: 'helves',
+                                    fontWeight: FontWeight.w500,
+                                  ),
+                                ),
+                                Text(
+                                  '9.8%',
+                                  style: TextStyle(
+                                    color:
+                                        const Color.fromRGBO(49, 49, 51, 1.0),
+                                    fontSize: 12.sp,
+                                    fontFamily: 'helves',
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                         // const   Center(
                         //      child: Text(
@@ -634,7 +975,8 @@ class _ProductPageState extends State<ProductPage> {
                         //     Text(
                         //       'By upgrading to a premium, you can view details',
                         //       style: TextStyle(
-                        //           color: Color.fromRGBO(194, 182, 182, 1.0),
+                        //           color: Color.fromRGBO(194, 14
+                        //2, 182, 1.0),
                         //           fontSize: 12,
                         //           fontFamily: 'helves',
                         //           fontWeight: FontWeight.w500),

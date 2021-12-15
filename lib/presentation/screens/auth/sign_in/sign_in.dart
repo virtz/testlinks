@@ -31,20 +31,20 @@ class _SignInState extends State<SignIn> {
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children:const[
                             SocialButton(
                               title: 'Facebook',
                               iconData: FontAwesomeIcons.facebook,
-                              borderColor: const Color.fromRGBO(59, 89, 152, 1),
-                              buttonColor: const Color.fromRGBO(59, 89, 152, 1),
+                              borderColor:  Color.fromRGBO(59, 89, 152, 1),
+                              buttonColor:  Color.fromRGBO(59, 89, 152, 1),
                             ),
                             SocialButton(
                               title: 'Twitter',
                               iconData: FontAwesomeIcons.twitter,
                               borderColor:
-                                  const Color.fromRGBO(43, 169, 225, 1),
+                                   Color.fromRGBO(43, 169, 225, 1),
                               buttonColor:
-                                  const Color.fromRGBO(43, 169, 225, 1),
+                                   Color.fromRGBO(43, 169, 225, 1),
                             ),
                           ],
                         ),
@@ -53,7 +53,7 @@ class _SignInState extends State<SignIn> {
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
+                          children:const [
                             SocialButton(
                               title: 'Apple',
                               iconData: FontAwesomeIcons.apple,

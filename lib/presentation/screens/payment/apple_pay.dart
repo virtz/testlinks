@@ -1,3 +1,5 @@
+// ignore_for_file: unused_field
+
 import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';

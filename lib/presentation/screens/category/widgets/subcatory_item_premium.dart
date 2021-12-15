@@ -78,7 +78,7 @@ class SubCategotyItemPremium extends StatelessWidget {
                           child: InkWell(
                             borderRadius: BorderRadius.circular(26.0),
                             onTap: () {
-                              Get.dialog(WishList());
+                              Get.dialog(const WishList());
                             },
                             child:  SizedBox(
                               width: sizeFit(true, 24.0, context),

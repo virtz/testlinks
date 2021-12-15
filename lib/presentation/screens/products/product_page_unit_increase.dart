@@ -2,7 +2,7 @@
 import 'package:ajeo/presentation/widgets/drawer.dart';
 import 'package:flutter/material.dart';
 
-import 'package:flutter/material.dart';
+
 
 class ProductPageUnitIncrease extends StatefulWidget {
   const ProductPageUnitIncrease({ Key? key }) : super(key: key);
@@ -15,9 +15,8 @@ class _ProductPageUnitIncreaseState extends State<ProductPageUnitIncrease> {
 
 
 
-    final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
-  int _counter = 2;
-
+    final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
+  
 
   @override
   Widget build(BuildContext context) {

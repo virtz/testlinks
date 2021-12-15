@@ -1,4 +1,4 @@
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, unused_field, prefer_final_fields, unused_local_variable
 
 import 'dart:async';
 
@@ -21,11 +21,11 @@ class _T12SignUp_2State extends State<T12SignUp_2> {
   FocusNode phoneNumberFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
   FocusNode nameFocus = FocusNode();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? phone;
   String? name;
   String? password;
-  bool _autoValidate = false;
+  final bool _autoValidate = false;
   bool passwordVisible = false;
   bool isLoading = false;
   bool isRemember = false;
@@ -47,13 +47,15 @@ class _T12SignUp_2State extends State<T12SignUp_2> {
         const Duration(seconds: 8),
         () => Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => T12SignUp_23()),
+              MaterialPageRoute(builder: (context) => const T12SignUp_23()),
             ));
   }
 }
 
 class T12SignUp_23 extends StatefulWidget {
   static String tag = '/T12SignUp_2';
+
+  const T12SignUp_23({Key? key}) : super(key: key);
 
   @override
   T12SignUp_23State createState() => T12SignUp_23State();

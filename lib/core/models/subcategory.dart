@@ -11,6 +11,8 @@ class SubcategoryModel {
   String? subcategoryName;
   List<Product>? product;
   String? createdAt;
+  @JsonKey(name: "subcategoryimage")
+  String? subcategoryimage;
   String? updatedAt;
   SubcategoryModel({
     this.id,

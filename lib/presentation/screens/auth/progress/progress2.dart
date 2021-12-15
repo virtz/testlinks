@@ -1,6 +1,6 @@
 
 
-// ignore_for_file: camel_case_types
+// ignore_for_file: camel_case_types, prefer_final_fields, use_key_in_widget_constructors, unused_field
 
 import 'dart:async';
 
@@ -23,7 +23,7 @@ class _T12SignIn_2State extends State<T12SignIn_2> {
     FocusNode phoneNumberFocus = FocusNode();
   FocusNode passwordFocus = FocusNode();
   FocusNode nameFocus = FocusNode();
-  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  // final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   String? phone;
   String ? name;
   String? password;
@@ -49,7 +49,7 @@ class _T12SignIn_2State extends State<T12SignIn_2> {
 
    speed() {
     Timer(
-        Duration(seconds: 4),
+const        Duration(seconds: 4),
         () => Navigator.push(
               context,
               MaterialPageRoute(builder: (context) => T12SignIn_23()),
@@ -79,6 +79,7 @@ class T12SignIn_23State extends State<T12SignIn_23> {
   bool isLoading = false;
   bool isRemember = false;
 
+@override
   void initState() {
     super.initState();
 
@@ -87,8 +88,7 @@ class T12SignIn_23State extends State<T12SignIn_23> {
 
   @override
   Widget build(BuildContext context) {
-    OutlineInputBorder border = OutlineInputBorder(
-        borderRadius: BorderRadius.circular(40.0), borderSide: BorderSide.none);
+   
     return Scaffold(
       body: InkWell(
         child: Column(
@@ -97,7 +97,7 @@ class T12SignIn_23State extends State<T12SignIn_23> {
               height: 90,
             ),
        const     Padding(
-              padding: const EdgeInsets.only(right: 180),
+              padding:  EdgeInsets.only(right: 180),
               child: Text(
                 "Signed in!",
                 style: TextStyle(color: Colors.red, height: 5, fontSize: 30),
@@ -106,13 +106,13 @@ class T12SignIn_23State extends State<T12SignIn_23> {
             Padding(
               padding: const EdgeInsets.all(30.0),
               child: FAProgressBar(
-                backgroundColor: Color(0xFFF2CECF),
+                backgroundColor:const Color(0xFFF2CECF),
                 size: 4,
                 maxValue: 100,
                 direction: Axis.horizontal,
-                animatedDuration: Duration(seconds: 1),
-                progressColor: Color(0xFFF22723),
-                changeProgressColor: Color(0xFFF2CECF),
+                animatedDuration: const Duration(seconds: 1),
+                progressColor:const Color(0xFFF22723),
+                changeProgressColor:const Color(0xFFF2CECF),
                 currentValue: 100,
               ),
             ),

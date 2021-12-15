@@ -18,7 +18,7 @@ class ProductPageUnitIncrease2 extends StatefulWidget {
 class _ProductPageUnitIncrease2State extends State<ProductPageUnitIncrease2> {
 
     int _counter = 2;
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
 
 
   @override

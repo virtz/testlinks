@@ -19,25 +19,29 @@ class SubCategoryWidget extends StatefulWidget {
 class _SubCategoryWidgetState extends State<SubCategoryWidget> {
   @override
   Widget build(BuildContext context) {
-    return GridView.builder(
-      gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-        crossAxisCount: 2,
-        crossAxisSpacing: 40,
-        mainAxisSpacing: 23,
-        childAspectRatio: 1,
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 10.0.w),
+      child: GridView.builder(
+        gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+          crossAxisCount: 2,
+          crossAxisSpacing: 30,
+          mainAxisSpacing: 15,
+          childAspectRatio: 1,
+        ),
+        itemCount: widget.products!.length,
+        itemBuilder: (context, index) {
+          Product prd = widget.products![index];
+          return GestureDetector(
+            child: SubCategoryItem(
+              product: prd,
+              products: widget.products,
+              subcategoryName: widget.subcategoryName,
+              categoryName: widget.categoryName,
+            ),
+          );
+        },
+        padding: EdgeInsets.only(bottom: 30.0.w),
       ),
-      itemCount: widget.products!.length,
-      itemBuilder: (context, index) {
-        Product prd = widget.products![index];
-        return GestureDetector(
-          child: SubCategoryItem(
-            product: prd,
-            subcategoryName: widget.subcategoryName,
-            categoryName: widget.categoryName,
-          ),
-        );
-      },
-      padding: EdgeInsets.only(bottom: 30.0.w),
     );
   }
 }

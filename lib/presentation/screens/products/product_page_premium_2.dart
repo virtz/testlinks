@@ -19,7 +19,7 @@ class ProductPagePremium2 extends StatefulWidget {
 
 class _ProductPagePremium2State extends State<ProductPagePremium2> {
   int _counter = 2;
-  final GlobalKey<ScaffoldState> scaffoldKey = new GlobalKey<ScaffoldState>();
+  final GlobalKey<ScaffoldState> scaffoldKey =  GlobalKey<ScaffoldState>();
 
   @override
   Widget build(BuildContext context) {
@@ -64,7 +64,7 @@ class _ProductPagePremium2State extends State<ProductPagePremium2> {
                   SizedBox(
                     width: sizeFit(true, 10.0, context),
                   ),
-                  Expanded(child: SearchBar()),
+                const  Expanded(child: SearchBar()),
                 ],
               ),
             ),

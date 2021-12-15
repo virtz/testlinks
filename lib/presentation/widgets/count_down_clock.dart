@@ -146,7 +146,7 @@ class _CountDownClockState extends State<CountDownClock> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding:  EdgeInsets.all(8.0.w),
+        padding:  EdgeInsets.all(7.0.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -154,13 +154,13 @@ class _CountDownClockState extends State<CountDownClock> {
                 style:  TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.red,
-                  fontSize: 40.sp,
+                  fontSize: 38.sp,
                 )),
             Text(bottom,
                 style: TextStyle(
                   // fontWeight: FontWeight.bold,
                   color: Colors.red,
-                  fontSize: 20.sp,
+                  fontSize: 18.sp,
                 ))
           ],
         ),

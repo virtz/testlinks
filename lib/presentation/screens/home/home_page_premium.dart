@@ -86,9 +86,9 @@ class _HomePagePremiumState extends State<HomePagePremium> {
                     children: [
                       InkWell(
                         onTap: () {
-                          var argument = {
-                            'initialIndex': index,
-                          };
+                          // var argument = {
+                          //   'initialIndex': index,
+                          // };
                           // Get.to(
                           //   () => CategoryInFocusViewPremium(),
                           //   arguments: argument,
@@ -109,11 +109,11 @@ class _HomePagePremiumState extends State<HomePagePremium> {
                           ),
                         ),
                       ),
-                      Container(
+                      SizedBox(
                         height: sizeFit(false, 120.0, context),
                         child: ListView.builder(
-                          padding: EdgeInsets.only(bottom: 24.0),
-                          itemBuilder: (context, int) {
+                          padding: const EdgeInsets.only(bottom: 24.0),
+                          itemBuilder: (context, index) {
                             return Padding(
                               padding: EdgeInsets.only(
                                 top: sizeFit(false, 10.0, context),
