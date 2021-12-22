@@ -3,6 +3,7 @@ import 'dart:io';
 import 'package:ajeo/core/models/auth_models/error_model.dart';
 import 'package:ajeo/core/models/auth_models/success_model.dart';
 import 'package:ajeo/core/models/category.dart';
+import 'package:ajeo/core/models/chart_model/chart_model.dart';
 import 'package:ajeo/core/models/price.dart';
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/uos.dart';
@@ -24,6 +25,37 @@ class ProductPageViewModel extends BaseViewModel {
   List<CategoryModel> categories = <CategoryModel>[];
   List<Product> relatedProducts = <Product>[];
   Uos? unitOfMeasurement;
+
+  List<ChartModel> data = [
+    ChartModel(
+      date: "13th",
+      price: 40.0,
+    ),
+    ChartModel(
+      date: "14th",
+      price: 20.0,
+    ),
+    ChartModel(
+      date: "15th",
+      price: 100.0,
+    ),
+    ChartModel(
+      date: "16th",
+      price: 150.0,
+    ),
+    ChartModel(
+      date: "17th",
+      price: 230.0,
+    ),
+    ChartModel(
+      date: "18th",
+      price: 400.0,
+    ),
+    ChartModel(
+      date: "19th",
+      price: 55.0,
+    )
+  ];
 
   changeUnit(Uos value) {
     unitOfMeasurement = value;

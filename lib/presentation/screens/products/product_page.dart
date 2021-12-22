@@ -1,24 +1,29 @@
+import 'package:ajeo/core/models/chart_model/chart_model.dart';
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
 // import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
 import 'package:ajeo/presentation/screens/products/product_page_view_model.dart';
-import 'package:ajeo/presentation/widgets/line_chart_widget.dart';
+// import 'package:ajeo/presentation/widgets/line_chart_widget.dart';
 // import 'package:ajeo/presentation/screens/products/widgets/wish_list_button.dart';
 // import 'package:ajeo/presentation/widgets/drawer.dart';
 // import 'package:ajeo/presentation/widgets/pop-ups/review.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
+import 'package:ajeo/routes/app_router.gr.dart';
 // import 'package:ajeo/presentation/widgets/signup_button.dart';
 import 'package:ajeo/utils/colors.dart';
 import 'package:ajeo/utils/constants.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
-import 'package:fl_chart/fl_chart.dart';
+// import 'package:fl_chart/fl_chart.dart';
+import 'package:syncfusion_flutter_charts/charts.dart';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
+import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class ProductPage extends StatefulWidget {
   final Product? product;
@@ -64,6 +69,7 @@ class _ProductPageState extends State<ProductPage> {
           backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
           body: SafeArea(
               child: Column(
+            mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Padding(
@@ -592,42 +598,59 @@ class _ProductPageState extends State<ProductPage> {
                                   itemCount: model.relatedProducts.length,
                                   itemBuilder: (context, index) {
                                     Product prd = model.relatedProducts[index];
-                                    return Container(
-                                        height: 143.h,
-                                        width: 139.w,
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(14),
-                                            color: Colors.white),
-                                        child: Padding(
-                                          padding: EdgeInsets.all(7.w),
-                                          child: Column(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
-                                            crossAxisAlignment:
-                                                CrossAxisAlignment.start,
-                                            children: [
-                                              Text(
-                                                prd.productname ?? "",
-                                                style: TextStyle(
-                                                    color: const Color.fromRGBO(
-                                                        49, 49, 51, 1.0),
-                                                    fontSize: 20.0.sp,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily: 'helves'),
-                                              ),
-                                              Text(
-                                                'N200',
-                                                style: TextStyle(
-                                                    color: const Color.fromRGBO(
-                                                        8, 248, 36, 1.0),
-                                                    fontSize: 16.0.sp,
-                                                    fontWeight: FontWeight.w700,
-                                                    fontFamily: 'helves'),
-                                              ),
-                                            ],
-                                          ),
-                                        ));
+                                    return GestureDetector(
+                                      onTap: () {
+                                        AutoRouter.of(context).push(
+                                            ProductRoute(
+                                                product: prd,
+                                                products: widget.products,
+                                                subcaegoryName:
+                                                    widget.subcaegoryName,
+                                                categoryName:
+                                                    widget.categoryName));
+                                      },
+                                      child: Container(
+                                          height: 143.h,
+                                          width: 139.w,
+                                          decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(14),
+                                              color: Colors.white),
+                                          child: Padding(
+                                            padding: EdgeInsets.all(7.w),
+                                            child: Column(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.start,
+                                              children: [
+                                                Text(
+                                                  prd.productname ?? "",
+                                                  style: TextStyle(
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              49, 49, 51, 1.0),
+                                                      fontSize: 16.0.sp,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontFamily: 'helves'),
+                                                ),
+                                                Text(
+                                                  'N200',
+                                                  style: TextStyle(
+                                                      color:
+                                                          const Color.fromRGBO(
+                                                              8, 248, 36, 1.0),
+                                                      fontSize: 12.0.sp,
+                                                      fontWeight:
+                                                          FontWeight.w700,
+                                                      fontFamily: 'helves'),
+                                                ),
+                                              ],
+                                            ),
+                                          )),
+                                    );
                                   }),
                             )),
                         SizedBox(
@@ -648,21 +671,56 @@ class _ProductPageState extends State<ProductPage> {
                           height: 20.h,
                         ),
 //graph
+                        // SizedBox(
+                        //   height: 180.0.w,
+                        //   width: size.width * 0.88,
+                        //   child: LineChartWidget(
+                        //     priceCoordinates: const [
+                        //       FlSpot(-1, 3),
+                        //       FlSpot(1, 2),
+                        //       FlSpot(3, 5),
+                        //       FlSpot(5, 2.5),
+                        //       FlSpot(7, 6),
+                        //       FlSpot(9, 7),
+                        //       FlSpot(11, 4),
+                        //     ],
+                        //   ),
+                        // ),
+
+                        SfCartesianChart(
+                            primaryXAxis: CategoryAxis(),
+                            title: ChartTitle(text: 'Like this'),
+                            legend: Legend(isVisible: true),
+                            tooltipBehavior: TooltipBehavior(enable: true),
+                            series: <ChartSeries<ChartModel, String>>[
+                              LineSeries<ChartModel, String>(
+                                  dataSource: model.data,
+                                  xValueMapper: (ChartModel ct, _) => ct.date,
+                                  yValueMapper: (ChartModel ct, _) => ct.price,
+                                  name: "Price",
+                                  dataLabelSettings:
+                                      const DataLabelSettings(isVisible: true))
+                            ]),
+
                         SizedBox(
-                          height: 180.0.w,
-                          width: size.width * 0.88,
-                          child: LineChartWidget(
-                            priceCoordinates: const [
-                              FlSpot(-1, 3),
-                              FlSpot(1, 2),
-                              FlSpot(3, 5),
-                              FlSpot(5, 2.5),
-                              FlSpot(7, 6),
-                              FlSpot(9, 7),
-                              FlSpot(11, 4),
-                            ],
-                          ),
-                        ),
+                            height: 50.h,
+                            child: Padding(
+                                padding: EdgeInsets.all(8.0.w),
+                                child: SfSparkLineChart.custom(
+                                  trackball: const SparkChartTrackball(
+                                      activationMode:
+                                          SparkChartActivationMode.tap),
+                                  marker: const SparkChartMarker(
+                                      displayMode:
+                                          SparkChartMarkerDisplayMode.all),
+                                  labelDisplayMode:
+                                      SparkChartLabelDisplayMode.all,
+                                  xValueMapper: (int index) =>
+                                      model.data[index].date,
+                                  yValueMapper: (int index) =>
+                                      model.data[index].price!.toInt(),
+                                  dataCount: 6,
+                                ))),
                         SizedBox(
                           height: 10.h,
                         ),
@@ -1025,14 +1083,20 @@ class _ProductPageState extends State<ProductPage> {
                         SizedBox(
                           height: 60.0.h,
                         ),
-                        SizedBox(
-                          height: 39.h,
-                          width: 35.w,
-                          child: Image.asset(
-                            'assets/images/ajeo.png',
-                            width: 100.h,
-                            height: 40.w,
-                            fit: BoxFit.fill,
+                        GestureDetector(
+                          onTap: () {
+                            AutoRouter.of(context)
+                                .replace(const HomeNonPremium());
+                          },
+                          child: SizedBox(
+                            height: 39.h,
+                            width: 35.w,
+                            child: Image.asset(
+                              'assets/images/ajeo.png',
+                              width: 100.h,
+                              height: 40.w,
+                              fit: BoxFit.fill,
+                            ),
                           ),
                         ),
                         SizedBox(

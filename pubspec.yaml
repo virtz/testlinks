@@ -57,6 +57,7 @@ dependencies:
   intl:
   # device_preview: ^0.8.0
   flutter_screenutil: ^5.0.1
+  syncfusion_flutter_charts: ^19.3.59
   # permission_handler:
 
 dev_dependencies:

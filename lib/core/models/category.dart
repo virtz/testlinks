@@ -17,6 +17,7 @@ class CategoryModel {
     this.categoryName,
     this.createdAt,
     this.updatedAt,
+    this.subcategory,
   });
 
   factory CategoryModel.fromJson(Map<String, dynamic> json) =>

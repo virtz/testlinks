@@ -20,6 +20,7 @@ class SubcategoryModel {
     this.createdAt,
     this.updatedAt,
     this.product,
+    this.subcategoryimage
   });
 
   factory SubcategoryModel.fromJson(Map<String, dynamic> json) =>
