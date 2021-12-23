@@ -2,6 +2,7 @@ import 'package:ajeo/core/models/chart_model/chart_model.dart';
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
+import 'package:ajeo/presentation/screens/auth/help_page-1/tips.dart';
 // import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
 import 'package:ajeo/presentation/screens/products/product_page_view_model.dart';
 // import 'package:ajeo/presentation/widgets/line_chart_widget.dart';
@@ -11,8 +12,10 @@ import 'package:ajeo/presentation/screens/products/product_page_view_model.dart'
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
 // import 'package:ajeo/presentation/widgets/signup_button.dart';
-import 'package:ajeo/utils/colors.dart';
+// import 'package:ajeo/utils/colors.dart';
+
 import 'package:ajeo/utils/constants.dart';
+import 'package:ajeo/utils/custon_page_route.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
@@ -55,9 +58,11 @@ class _ProductPageState extends State<ProductPage> {
       onModelReady: (h) {
         h.getRelatedProducts(widget.products!, widget.product!.productname!);
         // h.getCategory();
+        h.sortList(widget.product!.variety!);
         if (widget.product!.variety!.isNotEmpty) {
           h.dropdownValue = widget.product!.variety![0];
           if (widget.product!.variety![0].uos!.isNotEmpty) {
+            h.sortUos(widget.product!.variety![0].uos!);
             h.unitOfMeasurement = widget.product!.variety![0].uos![0];
             h.getPriceRange(h.unitOfMeasurement!.id!);
           }
@@ -85,7 +90,9 @@ class _ProductPageState extends State<ProductPage> {
                       ),
                       child: InkWell(
                         onTap: () {
-                          AutoRouter.of(context).pop();
+                          // AutoRouter.of(context).pop();
+                          Navigator.of(context)
+                              .push(CustomPageRoute(child: const Tips()));
                         },
                         child: Container(
                           height: 34.0,
@@ -94,8 +101,8 @@ class _ProductPageState extends State<ProductPage> {
                             shape: BoxShape.circle,
                             color: Colors.white,
                           ),
-                          child: const Icon(Icons.arrow_back_ios,
-                              color: kHomePageIconColor, size: 20),
+                          child: Image.asset('assets/images/light.png',
+                              width: 5.w, height: 5.h),
                         ),
                       ),
                     ),
@@ -469,87 +476,104 @@ class _ProductPageState extends State<ProductPage> {
                           ),
                         ),
                         SizedBox(
-                          height: 25.h,
+                          height: 15.h,
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            InkWell(
-                              child: Text(
-                                '-',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25.sp,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'helves'),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  if (_counter > 1) _counter--;
-                                });
-                              },
-                            ),
-                            SizedBox(
-                              width: 20.h,
-                            ),
-                            DropdownButtonHideUnderline(
-                                child: DropdownButton<Uos>(
-                                    value: model.unitOfMeasurement,
-                                    icon: const Icon(
-                                        Icons.arrow_drop_down_outlined,
-                                        size: 20,
-                                        color: Color(0xFF292039)),
-                                    iconSize: 20,
+                        Center(
+                          child: SizedBox(
+                            height: 40.h,
+                            // width: 200.0,?
+                            width: 300.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                InkWell(
+                                  child: Text(
+                                    '-',
                                     style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 16.0.sp,
-                                      fontFamily: 'helves',
-                                      fontWeight: FontWeight.w600,
-                                    ),
-                                    onChanged: (value) =>
-                                        model.changeUnit(value!),
-                                    items: model.dropdownValue?.uos!
-                                        .map<DropdownMenuItem<Uos>>(
-                                            (Uos value) {
-                                      return DropdownMenuItem<Uos>(
-                                          value: value,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Text("$_counter"),
-                                              SizedBox(
-                                                  width: size.width * 0.01),
-                                              Text(value.uosname!),
-                                            ],
-                                          ));
-                                    }).toList())),
-                            // Text(
-                            //   '$_counter Dozen',
-                            //   style: const TextStyle(
-                            //       color: Color.fromRGBO(242, 39, 35, 1.0),
-                            //       fontSize: 16,
-                            //       fontFamily: 'helves'),
-                            // ),
-                            const SizedBox(
-                              width: 20,
+                                        color: Colors.black,
+                                        fontSize: 25.sp,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'helves'),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      if (_counter > 1) _counter--;
+                                    });
+                                  },
+                                ),
+                                SizedBox(
+                                  width: 20.h,
+                                ),
+                                Expanded(
+                                  child: DropdownButtonHideUnderline(
+                                      child: Center(
+                                    child: DropdownButton<Uos>(
+                                        value: model.unitOfMeasurement,
+                                        icon: const Icon(
+                                          Icons.arrow_drop_down_outlined,
+                                          size: 25,
+                                          color:
+                                              Color.fromRGBO(242, 39, 35, 1.0),
+                                        ),
+                                        iconSize: 20,
+                                        style: TextStyle(
+                                          color: Colors.black,
+                                          fontSize: 16.0.sp,
+                                          fontFamily: 'helves',
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        onChanged: (value) =>
+                                            model.changeUnit(value!),
+                                        items: model.dropdownValue?.uos!
+                                            .map<DropdownMenuItem<Uos>>(
+                                                (Uos value) {
+                                          return DropdownMenuItem<Uos>(
+                                              value: value,
+                                              child: SizedBox(
+                                                width: 200.w,
+                                                child: Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment.center,
+                                                  children: [
+                                                    Text("$_counter"),
+                                                    SizedBox(
+                                                        width:
+                                                            size.width * 0.01),
+                                                    Text(value.uosname!),
+                                                  ],
+                                                ),
+                                              ));
+                                        }).toList()),
+                                  )),
+                                ),
+                                // Text(
+                                //   '$_counter Dozen',
+                                //   style: const TextStyle(
+                                //       color: Color.fromRGBO(242, 39, 35, 1.0),
+                                //       fontSize: 16,
+                                //       fontFamily: 'helves'),
+                                // ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                InkWell(
+                                  child: Text(
+                                    '+',
+                                    style: TextStyle(
+                                        color: Colors.black,
+                                        fontSize: 25.sp,
+                                        fontWeight: FontWeight.bold,
+                                        fontFamily: 'helves'),
+                                  ),
+                                  onTap: () {
+                                    setState(() {
+                                      _counter++;
+                                    });
+                                  },
+                                ),
+                              ],
                             ),
-                            InkWell(
-                              child: Text(
-                                '+',
-                                style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 25.sp,
-                                    fontWeight: FontWeight.bold,
-                                    fontFamily: 'helves'),
-                              ),
-                              onTap: () {
-                                setState(() {
-                                  _counter++;
-                                });
-                              },
-                            ),
-                          ],
+                          ),
                         ),
 
                         SizedBox(
@@ -569,6 +593,29 @@ class _ProductPageState extends State<ProductPage> {
                         //     ),
                         //   ),
                         // ),
+                        ExpansionTile(
+                            iconColor: Colors.red,
+                            trailing: const SizedBox.shrink(),
+                            title: Column(
+                              // crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  'Description',
+                                  style: TextStyle(
+                                      color: Colors.red,
+                                      fontSize: 16.sp,
+                                      fontWeight: FontWeight.w700),
+                                ),
+                              ],
+                            ),
+                            children: const [
+                              ListTile(
+                                  title: Text(
+                                      """Contrary to popular belief, Lorem Ipsum is not simply random text. It has roots in a piece of classical Latin literature from 45 BC, making it over 2000 years old. Richard McClintock, a Latin professor at Hampden-Sydney College in Virginia, looked up one of the more obscure Latin words, consectetur, from a Lorem Ipsum passage, and going through the cites of the word in classical literature, discovered the undoubtable source. Lorem Ipsum comes from sections 1.10.32 and 1.10.33 of "de Finibus Bonorum et Malorum" (The Extremes of Good and Evil) by Cicero, written in 45 BC. This book is a treatise on the theory of ethics, very popular during the Renaissance. The first line of Lorem Ipsum, "Lorem ipsum dolor sit amet..", comes from a line in section 1.10.32.
+
+The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for those interested. Sections 1.10.32 and 1.10.33 from "de Finibus Bonorum et Malorum" by Cicero are also reproduced in their exact original form, accompanied by English versions from the 1914 translation by H. Rackham..""",
+                                      style: TextStyle(color: Colors.grey)))
+                            ]),
                         SizedBox(
                           height: 20.h,
                         ),

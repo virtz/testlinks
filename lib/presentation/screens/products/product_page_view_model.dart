@@ -120,4 +120,15 @@ class ProductPageViewModel extends BaseViewModel {
         .toList();
     notifyListeners();
   }
+
+  sortList(List<Variety> value) {
+    value.sort((a, b) =>
+        a.varietyname!.toUpperCase().compareTo(b.varietyname!.toUpperCase()));
+    // print();
+  }
+
+  sortUos(List<Uos> value) {
+    value.sort(
+        (a, b) => a.uosname!.toUpperCase().compareTo(b.uosname!.toUpperCase()));
+  }
 }

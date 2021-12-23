@@ -24,9 +24,9 @@ class _SubCategoryWidgetState extends State<SubCategoryWidget> {
       child: GridView.builder(
         gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
           crossAxisCount: 2,
-          crossAxisSpacing: 30,
-          mainAxisSpacing: 15,
-          childAspectRatio: 1,
+          // crossAxisSpacing: 30,
+          // mainAxisSpacing: 15,
+          childAspectRatio: 0.75,
         ),
         itemCount: widget.products!.length,
         itemBuilder: (context, index) {

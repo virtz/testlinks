@@ -13,7 +13,11 @@ class SubCategoryItem extends StatelessWidget {
   final Product? product;
   final List<Product>? products;
   const SubCategoryItem(
-      {Key? key, this.product, this.categoryName, this.subcategoryName, this.products})
+      {Key? key,
+      this.product,
+      this.categoryName,
+      this.subcategoryName,
+      this.products})
       : super(key: key);
 
   @override
@@ -22,13 +26,14 @@ class SubCategoryItem extends StatelessWidget {
     return Column(
       // mainAxisAlignment: MainAxisAlignment.spaceEvenly,
       crossAxisAlignment: CrossAxisAlignment.start,
+      mainAxisSize: MainAxisSize.max,
       children: [
         SizedBox(
-          width: 150.w,
+          width: 100.w,
           height: 35.5.h,
           child: Padding(
             padding: EdgeInsets.only(
-              top: product!.productname!.length > 20 ? 0.0 : 15.5.w,
+              top: product!.productname!.length > 18 ? 0.0 : 15.5.w,
             ),
             child: Text(
               capitalize(product!.productname!),
@@ -75,9 +80,9 @@ class SubCategoryItem extends StatelessWidget {
                                           )))),
                             ),
                             Positioned(
-                              top: 120,
-                              left: 100,
-                              right: 0,
+                              bottom: 0,
+                              // left: 100,
+                              right: 2,
                               child: Material(
                                 color: const Color.fromRGBO(241, 48, 46, 1),
                                 shape: RoundedRectangleBorder(
@@ -133,31 +138,32 @@ class SubCategoryItem extends StatelessWidget {
                     // Get.to(() => ProductPage());
                     AutoRouter.of(context).push(ProductRoute(
                         product: product,
-                        products:products,
+                        products: products,
                         subcaegoryName: subcategoryName,
                         categoryName: categoryName));
                   },
                 ),
-                // Align(
-                //   alignment: Alignment.bottomRight,
-                //   child: Material(
-                //     color: const Color.fromRGBO(241, 48, 46, 1),
-                //     shape: RoundedRectangleBorder(
-                //       borderRadius: BorderRadius.circular(12.0),
-                //     ),
-                //     child: InkWell(
-                //       borderRadius: BorderRadius.circular(26.0),
-                //       onTap: () {
-                //         // Get.dialog(Wishlist());
-                //       },
-                //       child: Icon(Icons.add, color: Colors.white, size: 15.0.h),
-                //     ),
-                //   ),
-                // ),
+                //         // Align(
+                //         //   alignment: Alignment.bottomRight,
+                //         //   child: Material(
+                //         //     color: const Color.fromRGBO(241, 48, 46, 1),
+                //         //     shape: RoundedRectangleBorder(
+                //         //       borderRadius: BorderRadius.circular(12.0),
+                //         //     ),
+                //         //     child: InkWell(
+                //         //       borderRadius: BorderRadius.circular(26.0),
+                //         //       onTap: () {
+                //         //         // Get.dialog(Wishlist());
+                //         //       },
+                //         //       child: Icon(Icons.add, color: Colors.white, size: 15.0.h),
+                //         //     ),
+                //         //   ),
+                //         // ),
               ],
             ),
           ),
         ),
+        // Container(height: 130.h, width: 160.w, decoration: BoxDecoration())
       ],
     );
   }

@@ -1,5 +1,6 @@
 import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/subcategory.dart';
+import 'package:ajeo/presentation/screens/auth/help_page-1/tips.dart';
 // import 'package:ajeo/presentation/screens/category/widgets/advert.dart';
 import 'package:ajeo/presentation/widgets/count_down_clock.dart';
 import 'package:ajeo/presentation/screens/category/widgets/sub_category_widget_premium.dart';
@@ -9,6 +10,7 @@ import 'package:ajeo/presentation/screens/category/widgets/sub_category_widget_p
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 // import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:ajeo/utils/colors.dart';
+import 'package:ajeo/utils/custon_page_route.dart';
 // import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -66,19 +68,19 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                       ),
                       child: InkWell(
                         onTap: () {
-                          scaffoldKey.currentState!.openDrawer();
+                          // AutoRouter.of(context).pop();
+                          Navigator.of(context)
+                              .push(CustomPageRoute(child: const Tips()));
                         },
                         child: Container(
-                          height: 34.0.h,
-                          width: 34.0.w,
+                          height: 34.0,
+                          width: 34.0,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
                           ),
-                          child: const Icon(
-                            Icons.perm_identity,
-                            color: kHomePageIconColor,
-                          ),
+                          child: Image.asset('assets/images/light.png',
+                              width: 5.w, height: 5.h),
                         ),
                       ),
                     ),

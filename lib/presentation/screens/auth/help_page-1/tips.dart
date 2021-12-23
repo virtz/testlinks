@@ -1,0 +1,71 @@
+// ignore_for_file: prefer_const_literals_to_create_immutables
+
+import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+
+class Tips extends StatefulWidget {
+  const Tips({Key? key}) : super(key: key);
+
+  @override
+  _TipsState createState() => _TipsState();
+}
+
+class _TipsState extends State<Tips> {
+  @override
+  Widget build(BuildContext context) {
+    var size = MediaQuery.of(context).size;
+    return SafeArea(
+      child: Scaffold(
+        backgroundColor: Colors.white,
+        body: SingleChildScrollView(
+            child: Column(children: [
+          Padding(
+            padding:
+                const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
+            child: Container(
+                height: 150.h,
+                width: size.width,
+                decoration: const BoxDecoration(
+                    image: DecorationImage(
+                        image: AssetImage('assets/images/tips.png')))),
+          ),
+          SizedBox(height: 200.h),
+          // const Text('Help',
+          //     style: TextStyle(
+          //         color: Colors.grey,
+          //         fontSize: 17.5,
+          //         fontWeight: FontWeight.w600,
+          //         fontFamily: 'helves'))
+        ])),
+        bottomSheet: Container(
+            color: Colors.white,
+            height: 100.h,
+            child: Center(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(
+                    vertical: 20.0, horizontal: 15.0),
+                child: Column(crossAxisAlignment: CrossAxisAlignment.center,
+                    // mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      const Text(
+                        'Help',
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 17.5,
+                            fontWeight: FontWeight.w600,
+                            fontFamily: 'helves'),
+                      ),
+                      SizedBox(height: 10.h),
+                      const Text('About Us',
+                          style: TextStyle(
+                              color: Colors.grey,
+                              fontSize: 17.5,
+                              fontWeight: FontWeight.w600,
+                              fontFamily: 'helves'))
+                    ]),
+              ),
+            )),
+      ),
+    );
+  }
+}

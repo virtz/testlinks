@@ -137,11 +137,11 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                         height: 250.h,
                         child: model.isBusy
                             ? Center(
-                              child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                child: CircularProgressIndicator(
+                                    valueColor: AlwaysStoppedAnimation<Color>(
                                   Theme.of(context).primaryColor,
                                 )),
-                            )
+                              )
                             : cm.subcategory!.isEmpty
                                 ? Center(
                                     child: Text(
@@ -180,7 +180,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                                       top:
                                                           subCat.subcategoryName!
                                                                       .length >
-                                                                  20
+                                                                  18
                                                               ? 0.0
                                                               : 15.5.w,
                                                     ),

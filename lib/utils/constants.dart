@@ -4,7 +4,7 @@ import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
 
-const imagebaseUrl = "http://13.40.118.255/";
+const imagebaseUrl = "https://aje-o.herokuapp.com/";
 
 List<CategoryModel> categoryList = [
   CategoryModel(
