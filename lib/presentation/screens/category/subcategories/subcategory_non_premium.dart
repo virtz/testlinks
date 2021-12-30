@@ -8,8 +8,9 @@ import 'package:ajeo/presentation/screens/category/widgets/sub_category_widget_p
 // import 'package:ajeo/presentation/widgets/drawer.dart';
 // import 'package:ajeo/presentation/widgets/drawer1.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
+import 'package:ajeo/routes/app_router.gr.dart';
 // import 'package:ajeo/routes/app_router.gr.dart';
-import 'package:ajeo/utils/colors.dart';
+// import 'package:ajeo/utils/colors.dart';
 import 'package:ajeo/utils/custon_page_route.dart';
 // import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
@@ -17,9 +18,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubCategoryNonPremium extends StatefulWidget {
+  final bool isFromSearch;
   final CategoryModel? category;
+  final SubcategoryModel? subactegory;
   final List<SubcategoryModel>? subcategories;
-  const SubCategoryNonPremium({Key? key, this.subcategories, this.category})
+  const SubCategoryNonPremium(
+      {Key? key,
+      this.subcategories,
+      this.category,
+      this.isFromSearch = false,
+      this.subactegory})
       : super(key: key);
 
   @override
@@ -36,10 +44,12 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
   @override
   void initState() {
     super.initState();
-    tabController =
-        TabController(vsync: this, length: widget.subcategories!.length
-            /* initialIndex: Get.arguments['initialIndex'] ?? 0,*/
-            );
+    if (widget.subcategories != null) {
+      tabController =
+          TabController(vsync: this, length: widget.subcategories!.length
+              /* initialIndex: Get.arguments['initialIndex'] ?? 0,*/
+              );
+    }
   }
 
   @override
@@ -110,39 +120,72 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                     ),
                     onTap: () {
                       // Get.off(() => CategoryInFocusViewNonPremium());
-                      AutoRouter.of(context).pop();
+                      print(widget.isFromSearch);
+                      widget.isFromSearch
+                          ? AutoRouter.of(context).replace(HomeNonPremium(
+                              category: widget.subactegory!.category,
+                              isFromSearch: true))
+                          : AutoRouter.of(context).pop();
                     },
                   ),
                 ),
               ),
-              TabBar(
-                  isScrollable: true,
-                  controller: tabController,
-                  indicatorColor: authColor,
-                  indicatorWeight: 3.0,
-                  labelColor: authColor,
-                  indicatorSize: TabBarIndicatorSize.label,
-                  labelPadding: const EdgeInsets.only(
-                    top: 1.0,
-                    left: 15.0,
-                    right: 10.0,
-                  ),
-                  unselectedLabelColor: authColor,
-                  tabs: widget.subcategories!
-                      .map((e) => Padding(
-                            padding: const EdgeInsets.all(8.0),
-                            child: Tab(
-                              child: Text(
-                                e.subcategoryName!,
-                                style: TextStyle(
-                                  fontSize: 20.0.sp,
-                                  fontFamily: 'helves',
-                                  fontWeight: FontWeight.w600,
+              widget.isFromSearch
+                  ? Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                          Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Tab(
+                                child: Text(
+                                  widget.subactegory!.subcategoryName!,
+                                  style: TextStyle(
+                                    fontSize: 20.0.sp,
+                                    fontFamily: 'helves',
+                                    fontWeight: FontWeight.w600,
+                                    color: authColor,
+                                  ),
                                 ),
-                              ),
-                            ),
-                          ))
-                      .toList()),
+                              )),
+                          SizedBox(
+                              height: 500.h,
+                              child: SubCategoryWidget(
+                                products: widget.subactegory!.product,
+                                subcategoryName:
+                                    widget.subactegory!.subcategoryName,
+                                categoryName: widget.category!.categoryName,
+                              ))
+                        ])
+                  : TabBar(
+                      isScrollable: true,
+                      controller: tabController,
+                      indicatorColor: authColor,
+                      indicatorWeight: 3.0,
+                      labelColor: authColor,
+                      indicatorSize: TabBarIndicatorSize.label,
+                      labelPadding: const EdgeInsets.only(
+                        top: 1.0,
+                        left: 15.0,
+                        right: 10.0,
+                      ),
+                      unselectedLabelColor: authColor,
+                      tabs: widget.subcategories != null
+                          ? widget.subcategories!
+                              .map((e) => Padding(
+                                    padding: const EdgeInsets.all(8.0),
+                                    child: Tab(
+                                      child: Text(
+                                        e.subcategoryName!,
+                                        style: TextStyle(
+                                          fontSize: 20.0.sp,
+                                          fontFamily: 'helves',
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ),
+                                    ),
+                                  ))
+                              .toList()
+                          : <Tab>[]),
 //new henry begins here
               SizedBox(
                 height: 500.h,

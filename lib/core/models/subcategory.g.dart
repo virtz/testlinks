@@ -12,10 +12,14 @@ SubcategoryModel _$SubcategoryModelFromJson(Map<String, dynamic> json) =>
       subcategoryName: json['subcategoryname'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
+      category: json['category'] == null
+          ? null
+          : CategoryModel.fromJson(json['category'] as Map<String, dynamic>),
       product: (json['product'] as List<dynamic>?)
           ?.map((e) => Product.fromJson(e as Map<String, dynamic>))
           .toList(),
-    )..subcategoryimage = json['subcategoryimage'] as String?;
+      subcategoryimage: json['subcategoryimage'] as String?,
+    );
 
 Map<String, dynamic> _$SubcategoryModelToJson(SubcategoryModel instance) =>
     <String, dynamic>{
@@ -23,6 +27,7 @@ Map<String, dynamic> _$SubcategoryModelToJson(SubcategoryModel instance) =>
       'subcategoryname': instance.subcategoryName,
       'product': instance.product,
       'createdAt': instance.createdAt,
+      'category': instance.category,
       'subcategoryimage': instance.subcategoryimage,
       'updatedAt': instance.updatedAt,
     };

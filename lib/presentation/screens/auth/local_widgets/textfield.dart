@@ -14,12 +14,13 @@ class TextFieldContainer extends StatelessWidget {
   final String? initialValue;
   final hintText;
   final Color? hintTextColor;
-  final Function(String)? locationCallback;
+  final Function(String)? onChanged;
+  final Function(String)? onSubmitted;
   final TextCapitalization? textCapitalization;
   final Widget? decoration;
   final bool? withAsterisk;
 
- const TextFieldContainer(
+  const TextFieldContainer(
       {Key? key,
       this.text,
       this.controller,
@@ -32,10 +33,11 @@ class TextFieldContainer extends StatelessWidget {
       this.initialValue,
       this.hintText,
       this.hintTextColor,
-      this.locationCallback,
+      this.onChanged,
       this.textCapitalization,
       this.decoration,
-      @required this.withAsterisk})
+      @required this.withAsterisk,
+      this.onSubmitted})
       : super(key: key);
   @override
   Widget build(BuildContext context) {
@@ -62,11 +64,11 @@ class TextFieldContainer extends StatelessWidget {
         keyboardType: textInputType,
         decoration: InputDecoration(
           suffixIconConstraints:
-            const   BoxConstraints(minWidth: 2, maxHeight: 20, maxWidth: 23),
-          contentPadding:const  EdgeInsets.only(
+              const BoxConstraints(minWidth: 2, maxHeight: 20, maxWidth: 23),
+          contentPadding: const EdgeInsets.only(
             left: 12.0,
           ),
-          fillColor:const  Color.fromRGBO(249, 249, 249, 1),
+          fillColor: const Color.fromRGBO(249, 249, 249, 1),
           filled: true,
           focusedErrorBorder: const OutlineInputBorder(
             borderSide: BorderSide(
@@ -75,7 +77,7 @@ class TextFieldContainer extends StatelessWidget {
             ),
           ),
           focusedBorder: OutlineInputBorder(
-            borderSide:const  BorderSide(
+            borderSide: const BorderSide(
               color: Color.fromRGBO(240, 90, 36, 1),
               width: 1.5,
             ),
@@ -107,7 +109,7 @@ class TextFieldContainer extends StatelessWidget {
               const SizedBox(
                 width: 3,
               ),
-          labelStyle:const  TextStyle(
+          labelStyle: const TextStyle(
             height: 0.3,
             fontFamily: 'helves',
             fontSize: 12.0,
@@ -120,7 +122,11 @@ class TextFieldContainer extends StatelessWidget {
           ),
         ),
         onChanged: (value) {
-          locationCallback!(value);
+          // locationCallback!(value);
+          onChanged!(value);
+        },
+        onFieldSubmitted: (value) {
+          onSubmitted!(value);
         },
       ),
     );

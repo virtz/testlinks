@@ -12,9 +12,10 @@ CategoryModel _$CategoryModelFromJson(Map<String, dynamic> json) =>
       categoryName: json['categoryname'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
-    )..subcategory = (json['subcategory'] as List<dynamic>?)
-        ?.map((e) => SubcategoryModel.fromJson(e as Map<String, dynamic>))
-        .toList();
+      subcategory: (json['subcategory'] as List<dynamic>?)
+          ?.map((e) => SubcategoryModel.fromJson(e as Map<String, dynamic>))
+          .toList(),
+    );
 
 Map<String, dynamic> _$CategoryModelToJson(CategoryModel instance) =>
     <String, dynamic>{

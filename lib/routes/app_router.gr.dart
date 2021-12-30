@@ -11,9 +11,9 @@
 import 'package:auto_route/auto_route.dart' as _i31;
 import 'package:flutter/material.dart' as _i32;
 
-import '../core/models/category.dart' as _i35;
-import '../core/models/product.dart' as _i33;
-import '../core/models/subcategory.dart' as _i34;
+import '../core/models/category.dart' as _i33;
+import '../core/models/product.dart' as _i34;
+import '../core/models/subcategory.dart' as _i35;
 import '../presentation/screens/auth/auth_view/auth_view.dart' as _i3;
 import '../presentation/screens/auth/complete_account/complete_account.dart'
     as _i4;
@@ -111,8 +111,14 @@ class AppRouter extends _i31.RootStackRouter {
           routeData: routeData, child: const _i10.SignUp());
     },
     HomeNonPremium.name: (routeData) {
+      final args = routeData.argsAs<HomeNonPremiumArgs>(
+          orElse: () => const HomeNonPremiumArgs());
       return _i31.MaterialPageX<dynamic>(
-          routeData: routeData, child: const _i11.HomeNonPremium());
+          routeData: routeData,
+          child: _i11.HomeNonPremium(
+              key: args.key,
+              category: args.category,
+              isFromSearch: args.isFromSearch));
     },
     Search.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -172,6 +178,7 @@ class AppRouter extends _i31.RootStackRouter {
               product: args.product,
               categoryName: args.categoryName,
               subcaegoryName: args.subcaegoryName,
+              isFromSearch: args.isFromSearch,
               products: args.products));
     },
     ProductRoute2.name: (routeData) {
@@ -194,7 +201,9 @@ class AppRouter extends _i31.RootStackRouter {
           child: _i27.SubCategoryNonPremium(
               key: args.key,
               subcategories: args.subcategories,
-              category: args.category));
+              category: args.category,
+              isFromSearch: args.isFromSearch,
+              subactegory: args.subactegory));
     },
     DefaultSubscriptionPrompt.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -370,11 +379,31 @@ class SignUp extends _i31.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i11.HomeNonPremium]
-class HomeNonPremium extends _i31.PageRouteInfo<void> {
-  const HomeNonPremium()
-      : super(HomeNonPremium.name, path: '/home-non-premium');
+class HomeNonPremium extends _i31.PageRouteInfo<HomeNonPremiumArgs> {
+  HomeNonPremium(
+      {_i32.Key? key, _i33.CategoryModel? category, bool isFromSearch = false})
+      : super(HomeNonPremium.name,
+            path: '/home-non-premium',
+            args: HomeNonPremiumArgs(
+                key: key, category: category, isFromSearch: isFromSearch));
 
   static const String name = 'HomeNonPremium';
+}
+
+class HomeNonPremiumArgs {
+  const HomeNonPremiumArgs(
+      {this.key, this.category, this.isFromSearch = false});
+
+  final _i32.Key? key;
+
+  final _i33.CategoryModel? category;
+
+  final bool isFromSearch;
+
+  @override
+  String toString() {
+    return 'HomeNonPremiumArgs{key: $key, category: $category, isFromSearch: $isFromSearch}';
+  }
 }
 
 /// generated route for
@@ -498,10 +527,11 @@ class CategoryViewPremium extends _i31.PageRouteInfo<void> {
 class ProductRoute extends _i31.PageRouteInfo<ProductRouteArgs> {
   ProductRoute(
       {_i32.Key? key,
-      _i33.Product? product,
+      _i34.Product? product,
       String? categoryName,
       String? subcaegoryName,
-      List<_i33.Product>? products})
+      bool isFromSearch = false,
+      List<_i34.Product>? products})
       : super(ProductRoute.name,
             path: '/product-page',
             args: ProductRouteArgs(
@@ -509,6 +539,7 @@ class ProductRoute extends _i31.PageRouteInfo<ProductRouteArgs> {
                 product: product,
                 categoryName: categoryName,
                 subcaegoryName: subcaegoryName,
+                isFromSearch: isFromSearch,
                 products: products));
 
   static const String name = 'ProductRoute';
@@ -520,21 +551,24 @@ class ProductRouteArgs {
       this.product,
       this.categoryName,
       this.subcaegoryName,
+      this.isFromSearch = false,
       this.products});
 
   final _i32.Key? key;
 
-  final _i33.Product? product;
+  final _i34.Product? product;
 
   final String? categoryName;
 
   final String? subcaegoryName;
 
-  final List<_i33.Product>? products;
+  final bool isFromSearch;
+
+  final List<_i34.Product>? products;
 
   @override
   String toString() {
-    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName, products: $products}';
+    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName, isFromSearch: $isFromSearch, products: $products}';
   }
 }
 
@@ -571,29 +605,43 @@ class SubCategoryNonPremium
     extends _i31.PageRouteInfo<SubCategoryNonPremiumArgs> {
   SubCategoryNonPremium(
       {_i32.Key? key,
-      List<_i34.SubcategoryModel>? subcategories,
-      _i35.CategoryModel? category})
+      List<_i35.SubcategoryModel>? subcategories,
+      _i33.CategoryModel? category,
+      bool isFromSearch = false,
+      _i35.SubcategoryModel? subactegory})
       : super(SubCategoryNonPremium.name,
             path: '/sub-category-non-premium',
             args: SubCategoryNonPremiumArgs(
-                key: key, subcategories: subcategories, category: category));
+                key: key,
+                subcategories: subcategories,
+                category: category,
+                isFromSearch: isFromSearch,
+                subactegory: subactegory));
 
   static const String name = 'SubCategoryNonPremium';
 }
 
 class SubCategoryNonPremiumArgs {
   const SubCategoryNonPremiumArgs(
-      {this.key, this.subcategories, this.category});
+      {this.key,
+      this.subcategories,
+      this.category,
+      this.isFromSearch = false,
+      this.subactegory});
 
   final _i32.Key? key;
 
-  final List<_i34.SubcategoryModel>? subcategories;
+  final List<_i35.SubcategoryModel>? subcategories;
 
-  final _i35.CategoryModel? category;
+  final _i33.CategoryModel? category;
+
+  final bool isFromSearch;
+
+  final _i35.SubcategoryModel? subactegory;
 
   @override
   String toString() {
-    return 'SubCategoryNonPremiumArgs{key: $key, subcategories: $subcategories, category: $category}';
+    return 'SubCategoryNonPremiumArgs{key: $key, subcategories: $subcategories, category: $category, isFromSearch: $isFromSearch, subactegory: $subactegory}';
   }
 }
 

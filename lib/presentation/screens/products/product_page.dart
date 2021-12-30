@@ -1,5 +1,6 @@
 import 'package:ajeo/core/models/chart_model/chart_model.dart';
 import 'package:ajeo/core/models/product.dart';
+import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
 import 'package:ajeo/presentation/screens/auth/help_page-1/tips.dart';
@@ -29,6 +30,7 @@ import 'package:stacked/stacked.dart';
 import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class ProductPage extends StatefulWidget {
+  final bool isFromSearch;
   final Product? product;
   final String? categoryName;
   final String? subcaegoryName;
@@ -38,6 +40,7 @@ class ProductPage extends StatefulWidget {
       this.product,
       this.categoryName,
       this.subcaegoryName,
+      this.isFromSearch = false,
       this.products})
       : super(key: key);
 
@@ -160,7 +163,19 @@ class _ProductPageState extends State<ProductPage> {
                                   InkWell(
                                     onTap: () {
                                       // Get.back();
-                                      AutoRouter.of(context).pop();
+                                      print(widget.isFromSearch);
+
+                                      widget.isFromSearch
+                                          ? AutoRouter.of(context).push(
+                                              SubCategoryNonPremium(
+                                                  isFromSearch: true,
+                                                  category:
+                                                      widget.product!.category,
+                                                  subcategories: const <
+                                                      SubcategoryModel>[],
+                                                  subactegory: widget
+                                                      .product!.subcategory))
+                                          : AutoRouter.of(context).pop();
                                     },
                                     child: Row(
                                       children: [
@@ -296,7 +311,7 @@ class _ProductPageState extends State<ProductPage> {
                                                             .maximum_price ==
                                                         null
                                                 ? const Text(
-                                                    'Please select unit of scale')
+                                                    'Please select unit of sale')
                                                 : Text(
                                                     "\u20a6" +
                                                         model.formatPrice(model
@@ -1132,8 +1147,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                         ),
                         GestureDetector(
                           onTap: () {
-                            AutoRouter.of(context)
-                                .replace(const HomeNonPremium());
+                            AutoRouter.of(context).replace(HomeNonPremium());
                           },
                           child: SizedBox(
                             height: 39.h,

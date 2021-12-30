@@ -144,7 +144,7 @@ class _RegisterState extends State<Register> {
                   //   () => HomeViewNonPremium(),
                   //   /*binding: HomeBinding(),*/
                   // );
-                  AutoRouter.of(context).push(const HomeNonPremium());
+                  AutoRouter.of(context).push(HomeNonPremium());
                 },
                 child: Column(
                   children: [

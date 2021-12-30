@@ -1,11 +1,18 @@
-// ignore_for_file: missing_required_param
+// ignore_for_file: missing_required_param, unnecessary_null_comparison
 
+import 'package:ajeo/core/models/category.dart';
+import 'package:ajeo/core/models/product.dart';
+import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/presentation/screens/auth/local_widgets/textfield.dart';
+import 'package:ajeo/presentation/screens/search/seach_view_model.dart';
+import 'package:ajeo/routes/app_router.gr.dart';
+import 'package:ajeo/utils/constants.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
+import 'package:stacked/stacked.dart';
 
 class Search extends StatefulWidget {
   const Search({Key? key}) : super(key: key);
@@ -17,177 +24,268 @@ class Search extends StatefulWidget {
 class _SearchState extends State<Search> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        backgroundColor: const Color.fromRGBO(153, 143, 162, 1),
-        body: ListView(children: [
-          Padding(
-            padding: EdgeInsets.only(
-              left: sizeFit(true, 9.0, context),
-              top: 9.0,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  height: 50.h,
-                  width: 318.0.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10.0),
-                    color: Colors.white,
-                  ),
-                  child: Row(
-                    children: const [
-                      Expanded(
-                        child: TextFieldContainer(
-              
-                        ),
-                      )
-                    ],
-                  ),
-                ),
-                Padding(
-                  padding: EdgeInsets.only(
-                    left: 24.0.w,
-                  ),
-                  child: GestureDetector(
-                    onTap: () {
-                      AutoRouter.of(context).pop();
-                    },
-                    child: const Icon(
-                      FontAwesomeIcons.timesCircle,
-                      color: Color.fromRGBO(241, 52, 50, 1),
-                      size: 15,
+    var size = MediaQuery.of(context).size;
+    return ViewModelBuilder<SearchViewModel>.reactive(
+      // model
+      viewModelBuilder: () => SearchViewModel(),
+      onModelReady: (h) {
+        h.getCategory();
+      },
+      builder: (context, model, child) => Scaffold(
+          backgroundColor: Colors.white,
+          body: ListView(children: [
+            Padding(
+              padding: EdgeInsets.only(
+                left: sizeFit(true, 9.0, context),
+                top: 9.0,
+              ),
+              child: Row(
+                children: [
+                  Container(
+                    height: 50.h,
+                    width: 318.0.w,
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.white,
                     ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          ListView.builder(
-            shrinkWrap: true,
-            itemCount: 3,
-            itemBuilder: (context, index) {
-              return Padding(
-                padding: EdgeInsets.only(
-                  left: 20.0.w,
-                  top: 10.w,
-                  right:  20.0.w,
-                ),
-                child: Container(
-                  height: 73.0.h,
-                  padding: const EdgeInsets.symmetric(vertical: 6.0),
-                  width:  310.w,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    color: Colors.white,
-                  ),
-                  child: Padding(
-                    padding: EdgeInsets.only(
-                      right: 12.0.w,
-                    ),
-                    child: Column(
+                    child: Row(
                       children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                            left:  16.0.w,
+                        Expanded(
+                          child: TextFieldContainer(
+                            onChanged: (val) => model.search(val),
+                            onSubmitted: (val) => model.search(val),
                           ),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width:  110.0.w,
-                                child:  Text(
-                                  'Eggs',
-                                  style: TextStyle(
-                                    color: const Color.fromRGBO(49, 49, 51, 1),
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 16.0.sp,
-                                  ),
-                                ),
-                              ),
-                               Text(
-                                '2 Dozen / Free Range Eggs',
-                                style:  TextStyle(
-                                  color: const Color.fromRGBO(49, 49, 51, 1),
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 12.0.sp,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
-                         SizedBox(
-                          height: 10.0.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                left: 40.0.w,
-                              ),
-                              child: Image.asset(
-                                'assets/images/egg3.png',
-                                height: 25.0.h,
-                              ),
-                            ),
-                            RichText(
-                              text:  TextSpan(
-                                text: 'N200',
-                                style: TextStyle(
-                                  color:const  Color.fromRGBO(8, 237, 34, 1),
-                                  fontSize: 12.0.sp,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'helves',
-                                ),
-                                children: <TextSpan>[
-                                  TextSpan(
-                                    text: ' / ',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12.0.sp,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'helves',
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'N320',
-                                    style: TextStyle(
-                                      color:const Color.fromRGBO(237, 8, 8, 1),
-                                      fontSize: 12.0.sp,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'helves',
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: ' / ',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12.0.sp,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'helves',
-                                    ),
-                                  ),
-                                  TextSpan(
-                                    text: 'N280',
-                                    style: TextStyle(
-                                      color: Colors.black,
-                                      fontSize: 12.0.sp,
-                                      fontWeight: FontWeight.w700,
-                                      fontFamily: 'helves',
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
+                        )
                       ],
                     ),
                   ),
-                ),
-              );
-            },
-          )
-        ]));
+                  Padding(
+                    padding: EdgeInsets.only(
+                      left: 24.0.w,
+                    ),
+                    child: GestureDetector(
+                      onTap: () {
+                        AutoRouter.of(context).pop();
+                      },
+                      child: const Icon(
+                        FontAwesomeIcons.timesCircle,
+                        color: Color.fromRGBO(241, 52, 50, 1),
+                        size: 15,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            SizedBox(height: 20..h),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+              child: Text('In Categories',
+                  style: TextStyle(
+                      fontFamily: "helves",
+                      fontSize: 17.0,
+                      fontWeight: FontWeight.w600,
+                      color: Colors.red)),
+            ),
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              child: ListView.builder(
+                physics: const NeverScrollableScrollPhysics(),
+                shrinkWrap: true,
+                itemCount: model.filteredCategories.length,
+                itemBuilder: (context, index) {
+                  CategoryModel cm = model.filteredCategories[index];
+                  return Column(
+                    children: [
+                      GestureDetector(
+                        onTap: () {
+                          AutoRouter.of(context).replace(
+                              HomeNonPremium(category: cm, isFromSearch: true));
+                        },
+                        child: Material(
+                          elevation: 2.0,
+                          child: Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 15.0, vertical: 10),
+                              width: size.width,
+                              height: 60.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.white,
+                              ),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(cm.categoryName!,
+                                      style: const TextStyle(
+                                        fontFamily: "helves",
+                                        fontSize: 16.0,
+                                        fontWeight: FontWeight.w600,
+                                      )),
+                                  SizedBox(height: 20.h),
+                                ],
+                              )),
+                        ),
+                      ),
+                      SizedBox(height: 10.h)
+                    ],
+                  );
+                },
+              ),
+            ),
+            SizedBox(height: 20..h),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+              child: Text('In Subcategories',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: "helves",
+                      fontWeight: FontWeight.w600,
+                      color: Colors.red)),
+            ),
+            // SizedBox(height: 20..h),
+
+            Padding(
+              padding:
+                  const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: model.filtedSubcateggories.length,
+                  itemBuilder: (context, index) {
+                    SubcategoryModel scm = model.filtedSubcateggories[index];
+                    return GestureDetector(
+                      onTap: () {
+                        AutoRouter.of(context).push(SubCategoryNonPremium(
+                            isFromSearch: true,
+                            category: scm.category,
+                            subcategories: const <SubcategoryModel>[],
+                            subactegory: scm));
+                      },
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Material(
+                            elevation: 2.0,
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 10),
+                                width: size.width,
+                                height: 60.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                ),
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  children: [
+                                    Text(scm.subcategoryName!,
+                                        style: const TextStyle(
+                                          fontFamily: "helves",
+                                          fontSize: 16.0,
+                                          fontWeight: FontWeight.w600,
+                                        )),
+                                    SizedBox(height: 20.h),
+                                  ],
+                                )),
+                          ),
+                          SizedBox(height: 10.h)
+                        ],
+                      ),
+                    );
+                  }),
+            ),
+            SizedBox(height: 20..h),
+            const Padding(
+              padding: EdgeInsets.symmetric(horizontal: 15.0, vertical: 5),
+              child: Text('In Products',
+                  style: TextStyle(
+                      fontSize: 16.0,
+                      fontFamily: "helves",
+                      fontWeight: FontWeight.w600,
+                      color: Colors.red)),
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ListView.builder(
+                  shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
+                  itemCount: model.filteredProducts.length,
+                  itemBuilder: (context, index) {
+                    Product prdt = model.filteredProducts[index];
+                    return GestureDetector(
+                      onTap: () {
+                        AutoRouter.of(context).push(ProductRoute(
+                            isFromSearch: true,
+                            product: prdt,
+                            products: prdt.subcategory!.product,
+                            subcaegoryName: prdt.subcategory!.subcategoryName,
+                            categoryName: prdt.category!.categoryName));
+                      },
+                      child: Column(
+                        children: [
+                          Material(
+                            elevation: 2.0,
+                            child: Container(
+                                padding: const EdgeInsets.symmetric(
+                                    horizontal: 15.0, vertical: 10),
+                                width: size.width,
+                                height: 60.h,
+                                decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(10),
+                                  color: Colors.white,
+                                ),
+                                child: Column(
+                                  children: [
+                                    Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: [
+                                        Text(prdt.productname!,
+                                            style: const TextStyle(
+                                              fontFamily: "helves",
+                                              fontSize: 16.0,
+                                              fontWeight: FontWeight.w600,
+                                            )),
+                                        prdt.variety!.isEmpty
+                                            ? const Text("")
+                                            : Row(
+                                                children: [
+                                                  Text(
+                                                      prdt.variety![0]
+                                                              .varietyname ??
+                                                          "",
+                                                      style: const TextStyle(
+                                                          color: Colors.grey)),
+                                                  prdt.variety![0].uos!
+                                                          .isNotEmpty
+                                                      ? Text(
+                                                          "/" +
+                                                              prdt
+                                                                  .variety![0]
+                                                                  .uos![0]
+                                                                  .uosname!,
+                                                          style:
+                                                              const TextStyle(
+                                                                  color: Colors
+                                                                      .grey))
+                                                      : const Text("")
+                                                ],
+                                              )
+                                      ],
+                                    ),
+                                    SizedBox(height: 20.h),
+                                  ],
+                                )),
+                          ),
+                          SizedBox(height: 10.h)
+                        ],
+                      ),
+                    );
+                  }),
+            )
+          ])),
+    );
   }
 }

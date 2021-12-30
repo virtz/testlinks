@@ -101,7 +101,7 @@ class _MenuDrawerState extends State<MenuDrawer> {
                   // Get.back();
                   // Get.off(HomeViewNonPremium());
                   // AutoRouter.of(context).pop();
-                  AutoRouter.of(context).push(const HomeNonPremium());
+                  AutoRouter.of(context).push(HomeNonPremium());
                 },
               ),
               ListTile(
