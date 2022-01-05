@@ -12,12 +12,14 @@ class SubCategoryItem extends StatelessWidget {
   final String? subcategoryName;
   final Product? product;
   final List<Product>? products;
+  final String? subcategoryId;
   const SubCategoryItem(
       {Key? key,
       this.product,
       this.categoryName,
       this.subcategoryName,
-      this.products})
+      this.products,
+      this.subcategoryId})
       : super(key: key);
 
   @override
@@ -79,25 +81,25 @@ class SubCategoryItem extends StatelessWidget {
                                             'assets/images/placeholder.jpg',
                                           )))),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              // left: 100,
-                              right: 2,
-                              child: Material(
-                                color: const Color.fromRGBO(241, 48, 46, 1),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(26.0),
-                                  onTap: () {
-                                    // Get.dialog(Wishlist());
-                                  },
-                                  child: Icon(Icons.add,
-                                      color: Colors.white, size: 15.0.h),
-                                ),
-                              ),
-                            )
+                            // Positioned(
+                            //   bottom: 0,
+                            //   // left: 100,
+                            //   right: 2,
+                            //   child: Material(
+                            //     color: Theme.of(context).primaryColor,
+                            //     shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(12.0),
+                            //     ),
+                            //     child: InkWell(
+                            //       borderRadius: BorderRadius.circular(26.0),
+                            //       onTap: () {
+                            //         // Get.dialog(Wishlist());
+                            //       },
+                            //       child: Icon(Icons.add,
+                            //           color: Colors.white, size: 15.0.h),
+                            //     ),
+                            //   ),
+                            // )
                           ],
                         )
                       : Stack(
@@ -113,31 +115,34 @@ class SubCategoryItem extends StatelessWidget {
                                           image: NetworkImage(imagebaseUrl +
                                               product!.productimage!)))),
                             ),
-                            Positioned(
-                              bottom: 0,
-                              // left: 100,
-                              right: 2,
-                              child: Material(
-                                color: const Color.fromRGBO(241, 48, 46, 1),
-                                shape: RoundedRectangleBorder(
-                                  borderRadius: BorderRadius.circular(12.0),
-                                ),
-                                child: InkWell(
-                                  borderRadius: BorderRadius.circular(26.0),
-                                  onTap: () {
-                                    // Get.dialog(Wishlist());
-                                  },
-                                  child: Icon(Icons.add,
-                                      color: Colors.white, size: 15.0.h),
-                                ),
-                              ),
-                            )
+                            // Positioned(
+                            //   bottom: 0,
+                            //   // left: 100,
+                            //   right: 2,
+                            //   child: Material(
+                            //     color: Theme.of(context).primaryColor,
+                            //     shape: RoundedRectangleBorder(
+                            //       borderRadius: BorderRadius.circular(12.0),
+                            //     ),
+                            //     child: InkWell(
+                            //       borderRadius: BorderRadius.circular(26.0),
+                            //       onTap: () {
+                            //         // Get.dialog(Wishlist());
+                            //       },
+                            //       child: Icon(Icons.add,
+                            //           color: Colors.white, size: 15.0.h),
+                            //     ),
+                            //   ),
+                            // )
                           ],
                         ),
                   onTap: () {
                     // Get.to(() => ProductPage());
+                    // print(product!.id);
                     AutoRouter.of(context).push(ProductRoute(
                         product: product,
+                        productId: product!.id,
+                        subcategoryId: subcategoryId,
                         products: products,
                         subcaegoryName: subcategoryName,
                         categoryName: categoryName));

@@ -179,7 +179,9 @@ class AppRouter extends _i31.RootStackRouter {
               categoryName: args.categoryName,
               subcaegoryName: args.subcaegoryName,
               isFromSearch: args.isFromSearch,
-              products: args.products));
+              products: args.products,
+              productId: args.productId,
+              subcategoryId: args.subcategoryId));
     },
     ProductRoute2.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -203,7 +205,8 @@ class AppRouter extends _i31.RootStackRouter {
               subcategories: args.subcategories,
               category: args.category,
               isFromSearch: args.isFromSearch,
-              subactegory: args.subactegory));
+              subactegory: args.subactegory,
+              intialIndex: args.intialIndex));
     },
     DefaultSubscriptionPrompt.name: (routeData) {
       return _i31.MaterialPageX<dynamic>(
@@ -531,7 +534,9 @@ class ProductRoute extends _i31.PageRouteInfo<ProductRouteArgs> {
       String? categoryName,
       String? subcaegoryName,
       bool isFromSearch = false,
-      List<_i34.Product>? products})
+      List<_i34.Product>? products,
+      String? productId,
+      String? subcategoryId})
       : super(ProductRoute.name,
             path: '/product-page',
             args: ProductRouteArgs(
@@ -540,7 +545,9 @@ class ProductRoute extends _i31.PageRouteInfo<ProductRouteArgs> {
                 categoryName: categoryName,
                 subcaegoryName: subcaegoryName,
                 isFromSearch: isFromSearch,
-                products: products));
+                products: products,
+                productId: productId,
+                subcategoryId: subcategoryId));
 
   static const String name = 'ProductRoute';
 }
@@ -552,7 +559,9 @@ class ProductRouteArgs {
       this.categoryName,
       this.subcaegoryName,
       this.isFromSearch = false,
-      this.products});
+      this.products,
+      this.productId,
+      this.subcategoryId});
 
   final _i32.Key? key;
 
@@ -566,9 +575,13 @@ class ProductRouteArgs {
 
   final List<_i34.Product>? products;
 
+  final String? productId;
+
+  final String? subcategoryId;
+
   @override
   String toString() {
-    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName, isFromSearch: $isFromSearch, products: $products}';
+    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName, isFromSearch: $isFromSearch, products: $products, productId: $productId, subcategoryId: $subcategoryId}';
   }
 }
 
@@ -608,7 +621,8 @@ class SubCategoryNonPremium
       List<_i35.SubcategoryModel>? subcategories,
       _i33.CategoryModel? category,
       bool isFromSearch = false,
-      _i35.SubcategoryModel? subactegory})
+      _i35.SubcategoryModel? subactegory,
+      int? intialIndex})
       : super(SubCategoryNonPremium.name,
             path: '/sub-category-non-premium',
             args: SubCategoryNonPremiumArgs(
@@ -616,7 +630,8 @@ class SubCategoryNonPremium
                 subcategories: subcategories,
                 category: category,
                 isFromSearch: isFromSearch,
-                subactegory: subactegory));
+                subactegory: subactegory,
+                intialIndex: intialIndex));
 
   static const String name = 'SubCategoryNonPremium';
 }
@@ -627,7 +642,8 @@ class SubCategoryNonPremiumArgs {
       this.subcategories,
       this.category,
       this.isFromSearch = false,
-      this.subactegory});
+      this.subactegory,
+      this.intialIndex});
 
   final _i32.Key? key;
 
@@ -639,9 +655,11 @@ class SubCategoryNonPremiumArgs {
 
   final _i35.SubcategoryModel? subactegory;
 
+  final int? intialIndex;
+
   @override
   String toString() {
-    return 'SubCategoryNonPremiumArgs{key: $key, subcategories: $subcategories, category: $category, isFromSearch: $isFromSearch, subactegory: $subactegory}';
+    return 'SubCategoryNonPremiumArgs{key: $key, subcategories: $subcategories, category: $category, isFromSearch: $isFromSearch, subactegory: $subactegory, intialIndex: $intialIndex}';
   }
 }
 

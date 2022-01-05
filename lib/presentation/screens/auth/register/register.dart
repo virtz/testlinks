@@ -27,7 +27,7 @@ class _RegisterState extends State<Register> {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
             colors: [
-              Color.fromRGBO(242, 12, 3, 0.9),
+              Color(0xFFeb8662),
               Color(0xFFFFFFFF),
             ],
           ),
@@ -152,7 +152,7 @@ class _RegisterState extends State<Register> {
                         height: 35.h,
                         width: 300.w,
                         child: Lottie.asset(
-                          'assets/images/arrow_next.json',
+                          'assets/images/arrow_next1.json',
                         )),
                     SizedBox(
                       height: 5.h,
@@ -172,7 +172,7 @@ class _RegisterState extends State<Register> {
                 child: Text(
                   'HELP',
                   style: TextStyle(
-                    color: const Color.fromRGBO(240, 90, 36, 1),
+                    color: Theme.of(context).primaryColor,
                     fontSize: 20.0.sp,
                     fontFamily: 'helves',
                     fontWeight: FontWeight.w600,
@@ -188,7 +188,7 @@ class _RegisterState extends State<Register> {
               Text(
                 'ABOUT US',
                 style: TextStyle(
-                  color: const Color.fromRGBO(240, 90, 36, 1),
+                  color: Theme.of(context).primaryColor,
                   fontSize: 20.0.sp,
                   fontFamily: 'helves',
                   fontWeight: FontWeight.w600,

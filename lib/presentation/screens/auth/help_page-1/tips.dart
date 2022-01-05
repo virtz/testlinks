@@ -1,5 +1,6 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -19,15 +20,26 @@ class _TipsState extends State<Tips> {
         backgroundColor: Colors.white,
         body: SingleChildScrollView(
             child: Column(children: [
+          // Icon(Icons.cancel, color: Colors.red),
           Padding(
             padding:
                 const EdgeInsets.symmetric(vertical: 20.0, horizontal: 15.0),
             child: Container(
-                height: 150.h,
-                width: size.width,
-                decoration: const BoxDecoration(
-                    image: DecorationImage(
-                        image: AssetImage('assets/images/tips.png')))),
+              height: 150.h,
+              width: size.width,
+              decoration: const BoxDecoration(
+                  image: DecorationImage(
+                      image: AssetImage('assets/images/tips.png'))),
+              child: GestureDetector(
+                onTap: () {
+                  AutoRouter.of(context).pop();
+                },
+                child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Icon(Icons.cancel,
+                        color: Theme.of(context).primaryColor)),
+              ),
+            ),
           ),
           SizedBox(height: 200.h),
           // const Text('Help',

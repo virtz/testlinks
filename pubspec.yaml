@@ -45,7 +45,7 @@ dependencies:
   fluttertoast:
   json_annotation: ^4.3.0 
   json_serializable:
-
+  firebase_dynamic_links: ^4.0.3
   hive:
   fl_chart:
   hive_flutter:
@@ -55,11 +55,12 @@ dependencies:
   flutter_animation_progress_bar: ^2.0.1
   lottie: ^1.2.1
   intl:
-  
+  firebase_core: ^1.10.6
   # device_preview: ^0.8.0
   flutter_screenutil: ^5.0.1
   syncfusion_flutter_charts: ^19.3.59
-  expandable: ^5.0.1
+  # expandable: ^5.0.1
+  share_plus: ^3.0.4
   # permission_handler:
 
 dev_dependencies:

@@ -1,12 +1,14 @@
 // ignore_for_file: missing_required_param, unnecessary_null_comparison
 
+import 'dart:developer';
+
 import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/presentation/screens/auth/local_widgets/textfield.dart';
 import 'package:ajeo/presentation/screens/search/seach_view_model.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
-import 'package:ajeo/utils/constants.dart';
+// import 'package:ajeo/utils/constants.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +71,7 @@ class _SearchState extends State<Search> {
                       },
                       child: const Icon(
                         FontAwesomeIcons.timesCircle,
-                        color: Color.fromRGBO(241, 52, 50, 1),
+                        color: Color(0xFFeb8662),
                         size: 15,
                       ),
                     ),
@@ -85,7 +87,7 @@ class _SearchState extends State<Search> {
                       fontFamily: "helves",
                       fontSize: 17.0,
                       fontWeight: FontWeight.w600,
-                      color: Colors.red)),
+                      color: Color(0xFFeb8662))),
             ),
             Padding(
               padding:
@@ -100,6 +102,7 @@ class _SearchState extends State<Search> {
                     children: [
                       GestureDetector(
                         onTap: () {
+                          log(cm.toJson().toString());
                           AutoRouter.of(context).replace(
                               HomeNonPremium(category: cm, isFromSearch: true));
                         },
@@ -142,7 +145,7 @@ class _SearchState extends State<Search> {
                       fontSize: 16.0,
                       fontFamily: "helves",
                       fontWeight: FontWeight.w600,
-                      color: Colors.red)),
+                      color: Color(0xFFeb8662))),
             ),
             // SizedBox(height: 20..h),
 
@@ -204,7 +207,7 @@ class _SearchState extends State<Search> {
                       fontSize: 16.0,
                       fontFamily: "helves",
                       fontWeight: FontWeight.w600,
-                      color: Colors.red)),
+                      color: Color(0xFFeb8662))),
             ),
             Padding(
               padding: const EdgeInsets.all(8.0),
@@ -216,9 +219,12 @@ class _SearchState extends State<Search> {
                     Product prdt = model.filteredProducts[index];
                     return GestureDetector(
                       onTap: () {
+                        log(prdt.subcategory!.product.toString());
                         AutoRouter.of(context).push(ProductRoute(
                             isFromSearch: true,
                             product: prdt,
+                            productId: prdt.id,
+                            subcategoryId: prdt.subcategory!.id,
                             products: prdt.subcategory!.product,
                             subcaegoryName: prdt.subcategory!.subcategoryName,
                             categoryName: prdt.category!.categoryName));

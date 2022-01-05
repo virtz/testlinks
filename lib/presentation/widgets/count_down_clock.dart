@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'dart:async';
 
 import 'package:flutter/material.dart';
@@ -21,7 +23,7 @@ class _CountDownClockState extends State<CountDownClock> {
   void initState() {
     super.initState();
     // difference = DateTime.now().difference(DateTime(2020, 12, 25));
-    difference = DateTime(2022, 1, 1).difference(DateTime.now());
+    difference = DateTime(2022, 1, 24).difference(DateTime.now());
     countDownDuration = Duration(
         days: difference!.inDays.remainder(31),
         hours: difference!.inHours.remainder(24),
@@ -49,8 +51,9 @@ class _CountDownClockState extends State<CountDownClock> {
     final addSeconds = isCountDown ? -1 : 1;
     setState(() {
       final seconds = duration.inSeconds + addSeconds;
-      if (seconds < 0) {
-        timer?.cancel();
+      if (seconds <= 0) {
+        timer!.cancel();
+        duration = const Duration(days: 0, hours: 0, minutes: 0, seconds: 0);
       }
       duration = Duration(seconds: seconds);
     });
@@ -66,7 +69,7 @@ class _CountDownClockState extends State<CountDownClock> {
   Widget build(BuildContext context) {
     var size = MediaQuery.of(context).size;
     return Container(
-        color: Colors.red,
+        color: Theme.of(context).accentColor,
         height: 200.h,
         width: size.width,
         child: Center(child: buildTime(size)));
@@ -86,7 +89,7 @@ class _CountDownClockState extends State<CountDownClock> {
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-             Text("Countdown to Christmas!",
+            Text("Countdown to Valentine's Day!",
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
                   color: Colors.white,
@@ -103,7 +106,7 @@ class _CountDownClockState extends State<CountDownClock> {
             buildTimeCard(time: days, bottom: 'DAYS', size: size),
             SizedBox(
                 width: 20.w,
-                child:  Center(
+                child: Center(
                   child: Text(':',
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
@@ -124,7 +127,7 @@ class _CountDownClockState extends State<CountDownClock> {
                 )),
             buildTimeCard(time: minutes, bottom: 'MINS', size: size),
             SizedBox(
-               width: 20.w,
+                width: 20.w,
                 child: Center(
                   child: Text(':',
                       style: TextStyle(
@@ -146,20 +149,20 @@ class _CountDownClockState extends State<CountDownClock> {
       decoration: BoxDecoration(
           color: Colors.white, borderRadius: BorderRadius.circular(10)),
       child: Padding(
-        padding:  EdgeInsets.all(7.0.w),
+        padding: EdgeInsets.all(7.0.w),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(time,
-                style:  TextStyle(
+                style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: Colors.red,
+                  color: Theme.of(context).accentColor,
                   fontSize: 38.sp,
                 )),
             Text(bottom,
                 style: TextStyle(
                   // fontWeight: FontWeight.bold,
-                  color: Colors.red,
+                  color: Theme.of(context).accentColor,
                   fontSize: 18.sp,
                 ))
           ],

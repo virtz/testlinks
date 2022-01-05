@@ -1,4 +1,4 @@
-import 'package:ajeo/core/models/chart_model/chart_model.dart';
+// import 'package:ajeo/core/models/chart_model/chart_model.dart';
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/uos.dart';
@@ -11,6 +11,7 @@ import 'package:ajeo/presentation/screens/products/product_page_view_model.dart'
 // import 'package:ajeo/presentation/widgets/drawer.dart';
 // import 'package:ajeo/presentation/widgets/pop-ups/review.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
+import 'package:ajeo/presentation/widgets/utils.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
 // import 'package:ajeo/presentation/widgets/signup_button.dart';
 // import 'package:ajeo/utils/colors.dart';
@@ -20,19 +21,25 @@ import 'package:ajeo/utils/custon_page_route.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
+import 'package:flutter/scheduler.dart';
+// import 'package:flutter/services.dart';
+// import 'package:share_plus/share_plus.dart';
 // import 'package:fl_chart/fl_chart.dart';
-import 'package:syncfusion_flutter_charts/charts.dart';
+// import 'package:syncfusion_flutter_charts/charts.dart';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 // import 'package:get/get.dart';
 import 'package:stacked/stacked.dart';
-import 'package:syncfusion_flutter_charts/sparkcharts.dart';
+// import 'package:syncfusion_flutter_charts/sparkcharts.dart';
 
 class ProductPage extends StatefulWidget {
   final bool isFromSearch;
   final Product? product;
   final String? categoryName;
+  final String? productId;
+  final String? subcategoryId;
   final String? subcaegoryName;
   final List<Product>? products;
   const ProductPage(
@@ -41,7 +48,9 @@ class ProductPage extends StatefulWidget {
       this.categoryName,
       this.subcaegoryName,
       this.isFromSearch = false,
-      this.products})
+      this.products,
+      this.productId,
+      this.subcategoryId})
       : super(key: key);
 
   @override
@@ -51,6 +60,46 @@ class ProductPage extends StatefulWidget {
 class _ProductPageState extends State<ProductPage> {
   int _counter = 2;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
+  late NavigatorState _navigator;
+  FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
+  @override
+  void didChangeDependencies() {
+    _navigator = Navigator.of(context);
+    super.didChangeDependencies();
+  }
+
+  Future<void> initDynamicLinks() async {
+    await dynamicLinks.getInitialLink();
+
+    dynamicLinks.onLink.listen((dynamicLinkData) {
+      if (dynamicLinkData.link.pathSegments.contains('product')) {
+        // _navigator.push(MaterialPageRoute(
+        //     builder: (BuildContext context) => const ProductPage(
+
+        //     )));
+        var queryparams = dynamicLinkData.link.queryParameters;
+        print(queryparams);
+        SchedulerBinding.instance!.addPostFrameCallback((_) {
+          // AutoRouter.of(context).push();
+          _navigator.push(MaterialPageRoute(
+              builder: (BuildContext context) => ProductPage(
+                  productId: queryparams['productId'],
+                  subcategoryId: queryparams["subcategoryId"],
+                  isFromSearch: false,
+                  subcaegoryName: queryparams["subcategoryName"],
+                  categoryName: queryparams["categoryName"])));
+        });
+      }
+    }).onError((error) {
+      showErrorToast(error.message);
+    });
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    initDynamicLinks();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -59,24 +108,20 @@ class _ProductPageState extends State<ProductPage> {
     return ViewModelBuilder<ProductPageViewModel>.reactive(
       viewModelBuilder: () => ProductPageViewModel(),
       onModelReady: (h) {
-        h.getRelatedProducts(widget.products!, widget.product!.productname!);
-        // h.getCategory();
-        h.sortList(widget.product!.variety!);
-        if (widget.product!.variety!.isNotEmpty) {
-          h.dropdownValue = widget.product!.variety![0];
-          if (widget.product!.variety![0].uos!.isNotEmpty) {
-            h.sortUos(widget.product!.variety![0].uos!);
-            h.unitOfMeasurement = widget.product!.variety![0].uos![0];
-            h.getPriceRange(h.unitOfMeasurement!.id!);
-          }
-        }
+        h.getSubcategory(widget.subcategoryId, widget.productId);
+        // h.getProduct(widget.productId);
+        // h.initializeDynamicLinks(context);
+        if (h.productFetched) {}
       },
       builder: (context, model, child) => Scaffold(
           key: scaffoldKey,
           // drawer: const MenuDrawer(),
           backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
           body: SafeArea(
-              child: Column(
+              child:
+                  //  model.productFetched
+                  //     ?
+                  Column(
             mainAxisSize: MainAxisSize.max,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -89,7 +134,7 @@ class _ProductPageState extends State<ProductPage> {
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 10.0,
+                        top: 0.0,
                       ),
                       child: InkWell(
                         onTap: () {
@@ -98,14 +143,16 @@ class _ProductPageState extends State<ProductPage> {
                               .push(CustomPageRoute(child: const Tips()));
                         },
                         child: Container(
-                          height: 34.0,
-                          width: 34.0,
+                          height: 25.0.h,
+                          width: 25.0.w,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
                           ),
-                          child: Image.asset('assets/images/light.png',
-                              width: 5.w, height: 5.h),
+                          child: Image.asset('assets/images/lamp.png',
+                              width: 5.w,
+                              height: 2.h,
+                              color: Theme.of(context).primaryColor),
                         ),
                       ),
                     ),
@@ -132,7 +179,9 @@ class _ProductPageState extends State<ProductPage> {
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
                               Text(
-                                capitalize(widget.product!.productname!),
+                                model.prdt.productname == null
+                                    ? ""
+                                    : capitalize(model.prdt.productname),
                                 style: TextStyle(
                                   color: const Color.fromRGBO(49, 49, 51, 1.0),
                                   fontWeight: FontWeight.w600,
@@ -163,7 +212,7 @@ class _ProductPageState extends State<ProductPage> {
                                   InkWell(
                                     onTap: () {
                                       // Get.back();
-                                      print(widget.isFromSearch);
+                                      // print(widget.isFromSearch);
 
                                       widget.isFromSearch
                                           ? AutoRouter.of(context).push(
@@ -182,16 +231,16 @@ class _ProductPageState extends State<ProductPage> {
                                         Text(
                                           ">",
                                           style: TextStyle(
-                                              color: const Color.fromRGBO(
-                                                  242, 39, 35, 1.0),
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               fontSize: 20.0.sp,
                                               fontFamily: 'helves'),
                                         ),
                                         Text(
                                           '${widget.subcaegoryName}',
                                           style: TextStyle(
-                                              color: const Color.fromRGBO(
-                                                  242, 39, 35, 1.0),
+                                              color: Theme.of(context)
+                                                  .primaryColor,
                                               fontSize: 14.0.sp,
                                               fontFamily: 'helves'),
                                         ),
@@ -241,7 +290,7 @@ class _ProductPageState extends State<ProductPage> {
                                                             .minimum_price ==
                                                         null
                                                 ? const Text(
-                                                    'Please select unit of scale')
+                                                    'Please select unit of sale')
                                                 : Text(
                                                     "\u20a6" +
                                                         model.formatPrice(model
@@ -321,7 +370,8 @@ class _ProductPageState extends State<ProductPage> {
                                                         TextOverflow.ellipsis,
                                                     maxLines: 1,
                                                     style: TextStyle(
-                                                      color: Colors.red,
+                                                      color: Theme.of(context)
+                                                          .primaryColor,
                                                       fontSize: model
                                                           .determineSize(model
                                                               .currentUosPrice!
@@ -359,11 +409,11 @@ class _ProductPageState extends State<ProductPage> {
                         ),
                         Padding(
                           padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: widget.product!.productimage == null
+                          child: model.prdt.productimage == null
                               ? Image.asset('assets/images/placeholder.jpg',
                                   height: 170.h, width: 170.w)
                               : Image.network(
-                                  imagebaseUrl + widget.product!.productimage!,
+                                  imagebaseUrl + model.prdt.productimage!,
                                   height: 170.h,
                                   width: 170.w,
                                   fit: BoxFit.fill,
@@ -410,10 +460,29 @@ class _ProductPageState extends State<ProductPage> {
                                   ),
                                 ],
                               ),
-                              Icon(
-                                Icons.import_export,
-                                color: const Color.fromRGBO(241, 48, 46, 1.0),
-                                size: 32.h,
+                              SizedBox(width: 20.w),
+                              GestureDetector(
+                                onTap: () async {
+                                  model.createDynamicLinks(true,
+                                      productId: widget.productId,
+                                      isFromSearch: false,
+                                      subcategoryId: widget.subcategoryId,
+                                      categoryName: widget.categoryName,
+                                      context: context,
+                                      subcategoryName: widget.subcaegoryName);
+                                  // Clipboard.setData(
+                                  //     ClipboardData(text: model.linkMessage));
+                                },
+                                child: model.creatingLink
+                                    ? CircularProgressIndicator(
+                                        valueColor:
+                                            AlwaysStoppedAnimation<Color>(
+                                                Theme.of(context).primaryColor))
+                                    : Icon(
+                                        Icons.share,
+                                        color: Theme.of(context).primaryColor,
+                                        size: 32.h,
+                                      ),
                               ),
                             ],
                           ),
@@ -437,10 +506,10 @@ class _ProductPageState extends State<ProductPage> {
                                   // ProductDrop(product: widget.product),
                                   DropdownButton<Variety>(
                                     value: model.dropdownValue,
-                                    icon: const Icon(
+                                    icon: Icon(
                                       Icons.arrow_drop_down_outlined,
                                       size: 25,
-                                      color: Color.fromRGBO(242, 39, 35, 1.0),
+                                      color: Theme.of(context).primaryColor,
                                     ),
                                     iconSize: 24,
                                     // elevation: 16,
@@ -456,19 +525,22 @@ class _ProductPageState extends State<ProductPage> {
                                         model.unitOfMeasurement = null;
                                       });
                                     },
-                                    items: widget.product?.variety!
-                                        .map<DropdownMenuItem<Variety>>(
-                                            (Variety value) {
-                                      return DropdownMenuItem<Variety>(
-                                          value: value,
-                                          child: SizedBox(
-                                              width: size.width * 0.5.w,
-                                              child: Center(
-                                                child: Text(value.varietyname!,
-                                                    overflow:
-                                                        TextOverflow.ellipsis),
-                                              )));
-                                    }).toList(),
+                                    items: model.prdt.variety != null
+                                        ? model.prdt.variety!
+                                            .map<DropdownMenuItem<Variety>>(
+                                                (Variety value) {
+                                            return DropdownMenuItem<Variety>(
+                                                value: value,
+                                                child: SizedBox(
+                                                    width: size.width * 0.5.w,
+                                                    child: Center(
+                                                      child: Text(
+                                                          value.varietyname!,
+                                                          overflow: TextOverflow
+                                                              .ellipsis),
+                                                    )));
+                                          }).toList()
+                                        : null,
                                   ),
 
                                   // Text(
@@ -497,7 +569,7 @@ class _ProductPageState extends State<ProductPage> {
                           child: SizedBox(
                             height: 40.h,
                             // width: 200.0,?
-                            width: 300.w,
+                            width: 310.w,
                             child: Row(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
@@ -524,11 +596,10 @@ class _ProductPageState extends State<ProductPage> {
                                       child: Center(
                                     child: DropdownButton<Uos>(
                                         value: model.unitOfMeasurement,
-                                        icon: const Icon(
+                                        icon: Icon(
                                           Icons.arrow_drop_down_outlined,
                                           size: 25,
-                                          color:
-                                              Color.fromRGBO(242, 39, 35, 1.0),
+                                          color: Theme.of(context).primaryColor,
                                         ),
                                         iconSize: 20,
                                         style: TextStyle(
@@ -545,7 +616,7 @@ class _ProductPageState extends State<ProductPage> {
                                           return DropdownMenuItem<Uos>(
                                               value: value,
                                               child: SizedBox(
-                                                width: 200.w,
+                                                width: 190.w,
                                                 child: Row(
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
@@ -609,7 +680,7 @@ class _ProductPageState extends State<ProductPage> {
                         //   ),
                         // ),
                         ExpansionTile(
-                            iconColor: Colors.red,
+                            iconColor: Theme.of(context).primaryColor,
                             trailing: const SizedBox.shrink(),
                             title: Column(
                               // crossAxisAlignment: CrossAxisAlignment.start,
@@ -617,7 +688,7 @@ class _ProductPageState extends State<ProductPage> {
                                 Text(
                                   'Description',
                                   style: TextStyle(
-                                      color: Colors.red,
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 16.sp,
                                       fontWeight: FontWeight.w700),
                                 ),
@@ -664,8 +735,9 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                                       onTap: () {
                                         AutoRouter.of(context).push(
                                             ProductRoute(
-                                                product: prd,
-                                                products: widget.products,
+                                                productId: prd.id,
+                                                subcategoryId:
+                                                    widget.subcategoryId,
                                                 subcaegoryName:
                                                     widget.subcaegoryName,
                                                 categoryName:
@@ -749,43 +821,43 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                         //   ),
                         // ),
 
-                        SfCartesianChart(
-                            primaryXAxis: CategoryAxis(),
-                            title: ChartTitle(text: 'Like this'),
-                            legend: Legend(isVisible: true),
-                            tooltipBehavior: TooltipBehavior(enable: true),
-                            series: <ChartSeries<ChartModel, String>>[
-                              LineSeries<ChartModel, String>(
-                                  dataSource: model.data,
-                                  xValueMapper: (ChartModel ct, _) => ct.date,
-                                  yValueMapper: (ChartModel ct, _) => ct.price,
-                                  name: "Price",
-                                  dataLabelSettings:
-                                      const DataLabelSettings(isVisible: true))
-                            ]),
+                        // SfCartesianChart(
+                        //     primaryXAxis: CategoryAxis(),
+                        //     title: ChartTitle(text: 'Like this'),
+                        //     legend: Legend(isVisible: true),
+                        //     tooltipBehavior: TooltipBehavior(enable: true),
+                        //     series: <ChartSeries<ChartModel, String>>[
+                        //       LineSeries<ChartModel, String>(
+                        //           dataSource: model.data,
+                        //           xValueMapper: (ChartModel ct, _) => ct.date,
+                        //           yValueMapper: (ChartModel ct, _) => ct.price,
+                        //           name: "Price",
+                        //           dataLabelSettings:
+                        //               const DataLabelSettings(isVisible: true))
+                        //     ]),
 
-                        SizedBox(
-                            height: 50.h,
-                            child: Padding(
-                                padding: EdgeInsets.all(8.0.w),
-                                child: SfSparkLineChart.custom(
-                                  trackball: const SparkChartTrackball(
-                                      activationMode:
-                                          SparkChartActivationMode.tap),
-                                  marker: const SparkChartMarker(
-                                      displayMode:
-                                          SparkChartMarkerDisplayMode.all),
-                                  labelDisplayMode:
-                                      SparkChartLabelDisplayMode.all,
-                                  xValueMapper: (int index) =>
-                                      model.data[index].date,
-                                  yValueMapper: (int index) =>
-                                      model.data[index].price!.toInt(),
-                                  dataCount: 6,
-                                ))),
-                        SizedBox(
-                          height: 10.h,
-                        ),
+                        // SizedBox(
+                        //     height: 50.h,
+                        //     child: Padding(
+                        //         padding: EdgeInsets.all(8.0.w),
+                        //         child: SfSparkLineChart.custom(
+                        //           trackball: const SparkChartTrackball(
+                        //               activationMode:
+                        //                   SparkChartActivationMode.tap),
+                        //           marker: const SparkChartMarker(
+                        //               displayMode:
+                        //                   SparkChartMarkerDisplayMode.all),
+                        //           labelDisplayMode:
+                        //               SparkChartLabelDisplayMode.all,
+                        //           xValueMapper: (int index) =>
+                        //               model.data[index].date,
+                        //           yValueMapper: (int index) =>
+                        //               model.data[index].price!.toInt(),
+                        //           dataCount: 6,
+                        //         ))),
+                        // SizedBox(
+                        //   height: 10.h,
+                        // ),
                         Text(
                           'AJE-O Zones Price Breakdown',
                           style: TextStyle(
@@ -908,8 +980,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                                   Text(
                                     'N245',
                                     style: TextStyle(
-                                        color: const Color.fromRGBO(
-                                            245, 91, 88, 1.0),
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
                                         fontFamily: 'helves'),
@@ -937,8 +1008,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                                   Text(
                                     'N295',
                                     style: TextStyle(
-                                        color: const Color.fromRGBO(
-                                            245, 91, 88, 1.0),
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: 14.sp,
                                         fontWeight: FontWeight.w700,
                                         fontFamily: 'helves'),
@@ -1008,8 +1078,7 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                                   Text(
                                     ' N315 ',
                                     style: TextStyle(
-                                      color: const Color.fromRGBO(
-                                          245, 91, 88, 1.0),
+                                      color: Theme.of(context).primaryColor,
                                       fontSize: 12.sp,
                                       fontWeight: FontWeight.w500,
                                     ),
@@ -1169,7 +1238,14 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                 ),
               ),
             ],
-          ))),
+          )
+              // : Center(
+              //     child: CircularProgressIndicator(
+              //         valueColor: AlwaysStoppedAnimation<Color>(
+              //             Theme.of(context).primaryColor))
+
+              //             )
+              )),
     );
   }
 }

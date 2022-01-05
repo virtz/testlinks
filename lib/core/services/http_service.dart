@@ -17,7 +17,7 @@ class HttpService {
 
   Future<dynamic> get(String path) async {
     final String url = baseUrl + path;
-    // print('Request::URL: $url');
+    print('Request::URL: $url');
     final response = await http
         .get(
           Uri.parse(url),

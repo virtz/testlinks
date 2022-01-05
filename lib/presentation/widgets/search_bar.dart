@@ -1,5 +1,7 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajeo/routes/app_router.gr.dart';
-import 'package:ajeo/utils/colors.dart';
+// import 'package:ajeo/utils/colors.dart';
 // import 'package:ajeo/utils/size_fit.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,7 +40,7 @@ class _SearchBarState extends State<SearchBar> {
           ),
           leading: Icon(
             Icons.search_outlined,
-            color: kHomePageIconColor,
+            color: Theme.of(context).accentColor,
             size: 20.h,
           ),
           trailing: GestureDetector(
@@ -111,8 +113,7 @@ class _SearchBarState extends State<SearchBar> {
                 barrierColor: Colors.transparent,
               );
             },
-            child: Icon(Icons.location_on_outlined,
-                color: kHomePageIconColor, size: 20.h),
+            child: SizedBox(height: 20.h),
           ),
           onTap: () {
             AutoRouter.of(context).push(const Search());

@@ -21,7 +21,9 @@ class _BlinkingTextAnimationState extends State<BlinkingTextAnimation>
     final CurvedAnimation curve =
         CurvedAnimation(parent: controller!, curve: Curves.ease);
 
-    animation = ColorTween(begin: Colors.white, end: Colors.red).animate(curve);
+    animation =
+        ColorTween(begin: Colors.white, end:const Color(0xFFeb8662))
+            .animate(curve);
 
     animation!.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
@@ -40,12 +42,13 @@ class _BlinkingTextAnimationState extends State<BlinkingTextAnimation>
     return AnimatedBuilder(
         animation: animation!,
         builder: (BuildContext context, Widget? child) {
-          return Text(widget.text!,style: TextStyle(color:animation!.value!,fontSize: 27));
+          return Text(widget.text!,
+              style: TextStyle(color: animation!.value!, fontSize: 27));
         });
   }
 
-@override
-   dispose() {
+  @override
+  dispose() {
     controller!.dispose();
     super.dispose();
   }

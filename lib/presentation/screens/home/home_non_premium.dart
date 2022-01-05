@@ -1,13 +1,15 @@
-// ignore_for_file: avoid_unnecessary_containers
+// ignore_for_file: avoid_unnecessary_containers, deprecated_member_use
 
 import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/subcategory.dart';
+import 'package:ajeo/presentation/screens/auth/help_page-1/tips.dart';
 import 'package:ajeo/presentation/screens/home/home_view_model.dart';
 import 'package:ajeo/presentation/widgets/count_down_clock.dart';
 // import 'package:ajeo/presentation/widgets/drawer.dart';
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:ajeo/utils/constants.dart';
+import 'package:ajeo/utils/custon_page_route.dart';
 // import 'package:ajeo/utils/colors.dart';
 // import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
@@ -53,56 +55,36 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                   child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const SearchBar(),
-
+              Row(
+                children: [
+                  Padding(
+                    padding: const EdgeInsets.only(
+                      top: 0.0,
+                    ),
+                    child: InkWell(
+                      onTap: () {
+                        // AutoRouter.of(context).pop();
+                        Navigator.of(context)
+                            .push(CustomPageRoute(child: const Tips()));
+                      },
+                      child: Container(
+                        height: 25.0.h,
+                        width: 25.0.w,
+                        decoration: const BoxDecoration(
+                          shape: BoxShape.circle,
+                          color: Colors.white,
+                        ),
+                        child: Image.asset('assets/images/lamp.png',
+                            width: 5.w,
+                            height: 2.h,
+                            color: Theme.of(context).accentColor),
+                      ),
+                    ),
+                  ),
+                  const SearchBar(),
+                ],
+              ),
               const CountDownClock(),
-              // InkWell(
-              //   onTap: () {
-              //     scaffoldKey.currentState!.openDrawer();
-              //   },
-              //   child: Padding(
-              //     padding: EdgeInsets.only(
-              //       top: sizeFit(false, 30.0, context),
-              //       left: sizeFit(true, 10.0, context),
-              //     ),
-              //     child: const Icon(
-              //       Icons.perm_identity,
-              //       color: kHomePageIconColor,
-              //       size: 60,
-              //     ),
-              //   ),
-              // ),
-              // Padding(
-              //   padding: EdgeInsets.only(
-              //     top: sizeFit(false, 24.0, context),
-              //   ),
-              //   child: Container(
-              //     height: sizeFit(false, 100.0, context),
-              //     width: sizeFit(true, 375, context),
-              //     color: const Color.fromRGBO(254, 144, 168, 1),
-              //     child: Padding(
-              //       padding: EdgeInsets.only(
-              //         left: sizeFit(true, 30.0, context),
-              //         right: sizeFit(true, 44.0, context),
-              //       ),
-              //       child: Row(
-              //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              //         children: [
-              //           Text(
-              //             'Trending \nItem \nPreview/AD'.toUpperCase(),
-              //             style: const TextStyle(
-              //               color: Colors.black,
-              //               fontSize: 19.0,
-              //               fontFamily: 'helves',
-              //               fontWeight: FontWeight.w600,
-              //             ),
-              //           ),
-              //           SvgPicture.asset('assets/images/downtrend.svg'),
-              //         ],
-              //       ),
-              //     ),
-              //   ),
-              // ),
               SizedBox(height: 44.h),
               widget.isFromSearch
                   ? Column(
@@ -116,7 +98,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                               // );
                             },
                             child: Padding(
-                              padding: EdgeInsets.only(left: 8.w),
+                              padding: EdgeInsets.symmetric(horizontal: 15.w),
                               child: Text(
                                 widget.category!.categoryName!,
                                 style: TextStyle(
@@ -128,146 +110,144 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                               ),
                             ),
                           ),
+                          SizedBox(
+                            height: 250.h,
+                            child: widget.category!.subcategory!.isEmpty
+                                ? Center(
+                                    child: Text(
+                                        'No subcategories for category ${widget.category!.categoryName}',
+                                        style: TextStyle(
+                                            color: Colors.black,
+                                            fontSize: 17.0.sp)),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.all(8.0.w),
+                                    child: ListView.builder(
+                                      key: UniqueKey(),
+                                      padding: EdgeInsets.only(bottom: 24.0.sp),
+                                      itemBuilder: (context, index) {
+                                        // model.getSubcategory(cm.id!);
 
-                                SizedBox(
-                              height: 250.h,
-                              child: widget.category!.subcategory!.isEmpty
-                                      ? Center(
-                                          child: Text(
-                                              'No subcategories for category ${widget.category!.categoryName}',
-                                              style: TextStyle(
-                                                  color: Colors.black,
-                                                  fontSize: 17.0.sp)),
-                                        )
-                                      : Padding(
-                                          padding: EdgeInsets.all(8.0.w),
-                                          child: ListView.builder(
-                                            key: UniqueKey(),
-                                            padding: EdgeInsets.only(
-                                                bottom: 24.0.sp),
-                                            itemBuilder: (context, index) {
-                                              // model.getSubcategory(cm.id!);
-
-                                              SubcategoryModel subCat =
-                                                  widget.category!.subcategory![index];
-                                              return Padding(
-                                                padding:
-                                                    const EdgeInsets.symmetric(
-                                                        horizontal: 5,
-                                                        vertical: 5),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    Padding(
-                                                      padding:
-                                                          const EdgeInsets.only(
-                                                        top: 7.0,
-                                                        left: 7.0,
-                                                      ),
-                                                      child: SizedBox(
-                                                        width: 150.w,
-                                                        height: 35.5.h,
-                                                        child: Padding(
-                                                          padding:
-                                                              EdgeInsets.only(
-                                                            top: subCat.subcategoryName!
-                                                                        .length >
-                                                                    18
-                                                                ? 0.0
-                                                                : 15.5.w,
-                                                          ),
-                                                          child: Text(
-                                                            capitalize(subCat
-                                                                .subcategoryName!),
-                                                            maxLines: 2,
-                                                            overflow:
-                                                                TextOverflow
-                                                                    .ellipsis,
-                                                            style: TextStyle(
-                                                              fontFamily:
-                                                                  'helves',
-                                                              fontSize: 13.5.sp,
-                                                              color: const Color
-                                                                      .fromRGBO(
-                                                                  47,
-                                                                  47,
-                                                                  52,
-                                                                  1),
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .w500,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 140.h,
-                                                      width: 160.w,
-                                                      child: Card(
-                                                        elevation: 5.0,
-                                                        shape:
-                                                            RoundedRectangleBorder(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      10.0.r),
-                                                        ),
-                                                        child: InkWell(
-                                                          child: Center(
-                                                            child:
-                                                                subCat.subcategoryimage ==
-                                                                        null
-                                                                    ? Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(8.0.w),
-                                                                        child: Container(
-                                                                            decoration: const BoxDecoration(
-                                                                                image: DecorationImage(
-                                                                                    fit: BoxFit.cover,
-                                                                                    image: AssetImage(
-                                                                                      'assets/images/placeholder.jpg',
-                                                                                    )))),
-                                                                      )
-                                                                    : Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(8.0.w),
-                                                                        child: Container(
-                                                                            decoration: BoxDecoration(
-                                                                                image: DecorationImage(
-                                                                                    fit: BoxFit.cover,
-                                                                                    image: NetworkImage(
-                                                                                      imagebaseUrl + subCat.subcategoryimage!,
-                                                                                    )))),
-                                                                      ),
-                                                          ),
-                                                          onTap: () {
-                                                            // Get.to(
-                                                            //   () => SubCategoryViewNonPremium(),
-                                                            AutoRouter.of(
-                                                                    context)
-                                                                .push(SubCategoryNonPremium(
-                                                                    category:
-                                                                        widget.category,
-                                                                    subcategories:
-                                                                        widget.category!.subcategory));
-                                                            //   arguments: argument,
-                                                            // );
-                                                          },
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ],
+                                        SubcategoryModel subCat = widget
+                                            .category!.subcategory![index];
+                                        return Padding(
+                                          padding: const EdgeInsets.symmetric(
+                                              horizontal: 5, vertical: 5),
+                                          child: Column(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.start,
+                                            children: [
+                                              Padding(
+                                                padding: const EdgeInsets.only(
+                                                  top: 7.0,
+                                                  left: 7.0,
                                                 ),
-                                              );
-                                            },
-                                            itemCount: widget.category!.subcategory!.length,
-                                            scrollDirection: Axis.horizontal,
-                                            physics: const ScrollPhysics(),
+                                                child: SizedBox(
+                                                  width: 150.w,
+                                                  height: 35.5.h,
+                                                  child: Padding(
+                                                    padding: EdgeInsets.only(
+                                                      top:
+                                                          subCat.subcategoryName!
+                                                                      .length >
+                                                                  18
+                                                              ? 0.0
+                                                              : 15.5.w,
+                                                    ),
+                                                    child: Text(
+                                                      capitalize(subCat
+                                                          .subcategoryName!),
+                                                      maxLines: 2,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: TextStyle(
+                                                        fontFamily: 'helves',
+                                                        fontSize: 13.5.sp,
+                                                        color: const Color
+                                                                .fromRGBO(
+                                                            47, 47, 52, 1),
+                                                        fontWeight:
+                                                            FontWeight.w500,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                              ),
+                                              SizedBox(
+                                                height: 140.h,
+                                                width: 160.w,
+                                                child: Card(
+                                                  elevation: 5.0,
+                                                  shape: RoundedRectangleBorder(
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            10.0.r),
+                                                  ),
+                                                  child: InkWell(
+                                                    child: Center(
+                                                      child:
+                                                          subCat.subcategoryimage ==
+                                                                  null
+                                                              ? Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(8.0
+                                                                              .w),
+                                                                  child: Container(
+                                                                      decoration: const BoxDecoration(
+                                                                          image: DecorationImage(
+                                                                              fit: BoxFit.cover,
+                                                                              image: AssetImage(
+                                                                                'assets/images/placeholder.jpg',
+                                                                              )))),
+                                                                )
+                                                              : Padding(
+                                                                  padding:
+                                                                      EdgeInsets
+                                                                          .all(8.0
+                                                                              .w),
+                                                                  child: Container(
+                                                                      decoration: BoxDecoration(
+                                                                          image: DecorationImage(
+                                                                              fit: BoxFit.cover,
+                                                                              image: NetworkImage(
+                                                                                imagebaseUrl + subCat.subcategoryimage!,
+                                                                              )))),
+                                                                ),
+                                                    ),
+                                                    onTap: () {
+                                                      // Get.to(
+                                                      //   () => SubCategoryViewNonPremium(),
+                                                      AutoRouter.of(context).push(
+                                                          SubCategoryNonPremium(
+                                                              isFromSearch:
+                                                                  true,
+                                                              category: widget
+                                                                  .category,
+                                                              subactegory: widget
+                                                                      .category!
+                                                                      .subcategory![
+                                                                  index],
+                                                              subcategories: widget
+                                                                  .category!
+                                                                  .subcategory));
+                                                      //   arguments: argument,
+                                                      // );
+                                                    },
+                                                  ),
+                                                ),
+                                              ),
+                                            ],
                                           ),
-                                        ),
-                            ),
+                                        );
+                                      },
+                                      itemCount:
+                                          widget.category!.subcategory!.length,
+                                      scrollDirection: Axis.horizontal,
+                                      physics: const ScrollPhysics(),
+                                    ),
+                                  ),
+                          ),
                         ])
                   : ListView.builder(
                       key: UniqueKey(),
@@ -433,6 +413,11 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                                             AutoRouter.of(
                                                                     context)
                                                                 .push(SubCategoryNonPremium(
+                                                                    intialIndex:
+                                                                        index,
+                                                                    subactegory:
+                                                                        cm.subcategory![
+                                                                            index],
                                                                     category:
                                                                         cm,
                                                                     subcategories:

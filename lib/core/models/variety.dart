@@ -11,13 +11,8 @@ class Variety {
   List<Uos>? uos;
   String? createdAt;
   String? updatedAt;
-  Variety({
-    this.id,
-    this.varietyname,
-    this.createdAt,
-    this.updatedAt,
-    this.uos
-  });
+  Variety(
+      {this.id, this.varietyname, this.createdAt, this.updatedAt, this.uos});
 
   factory Variety.fromJson(Map<String, dynamic> json) =>
       _$VarietyFromJson(json);

@@ -1,3 +1,5 @@
+// ignore_for_file: deprecated_member_use
+
 import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/presentation/screens/auth/help_page-1/tips.dart';
@@ -19,6 +21,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SubCategoryNonPremium extends StatefulWidget {
   final bool isFromSearch;
+  final int? intialIndex;
   final CategoryModel? category;
   final SubcategoryModel? subactegory;
   final List<SubcategoryModel>? subcategories;
@@ -27,7 +30,8 @@ class SubCategoryNonPremium extends StatefulWidget {
       this.subcategories,
       this.category,
       this.isFromSearch = false,
-      this.subactegory})
+      this.subactegory,
+      this.intialIndex})
       : super(key: key);
 
   @override
@@ -37,24 +41,29 @@ class SubCategoryNonPremium extends StatefulWidget {
 class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
     with SingleTickerProviderStateMixin {
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
-  var authColor = const Color.fromRGBO(242, 39, 35, 1);
+  // var authColor =  Theme.of(context).primaryColor;
 
   TabController? tabController;
+  int? selectedIndex = 0;
 
   @override
   void initState() {
     super.initState();
-    if (widget.subcategories != null) {
-      tabController =
-          TabController(vsync: this, length: widget.subcategories!.length
-              /* initialIndex: Get.arguments['initialIndex'] ?? 0,*/
-              );
+    // print("subcate: ${widget.subcategories!.length}");
+    // print(widget.category!.toJson());
+    if (widget.subcategories != null || widget.subcategories!.isNotEmpty) {
+      tabController = TabController(
+          vsync: this,
+          length: widget.subcategories!.length,
+          initialIndex: widget.intialIndex ?? 0
+          /* initialIndex: Get.arguments['initialIndex'] ?? 0,*/
+          );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    var authColor = const Color.fromRGBO(242, 39, 35, 1);
+    var authColor = Theme.of(context).primaryColor;
     // var size = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldKey,
@@ -74,7 +83,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                   children: [
                     Padding(
                       padding: const EdgeInsets.only(
-                        top: 10.0,
+                        top: 0.0,
                       ),
                       child: InkWell(
                         onTap: () {
@@ -83,14 +92,16 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                               .push(CustomPageRoute(child: const Tips()));
                         },
                         child: Container(
-                          height: 34.0,
-                          width: 34.0,
+                          height: 25.0.h,
+                          width: 25.0.w,
                           decoration: const BoxDecoration(
                             shape: BoxShape.circle,
                             color: Colors.white,
                           ),
-                          child: Image.asset('assets/images/light.png',
-                              width: 5.w, height: 5.h),
+                          child: Image.asset('assets/images/lamp.png',
+                              width: 5.w,
+                              height: 2.h,
+                              color: Theme.of(context).accentColor),
                         ),
                       ),
                     ),
@@ -120,7 +131,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                     ),
                     onTap: () {
                       // Get.off(() => CategoryInFocusViewNonPremium());
-                      print(widget.isFromSearch);
+                      // print(widget.isFromSearch);
                       widget.isFromSearch
                           ? AutoRouter.of(context).replace(HomeNonPremium(
                               category: widget.subactegory!.category,
@@ -135,7 +146,10 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                           Padding(
-                              padding: const EdgeInsets.all(8.0),
+                              padding: EdgeInsets.only(
+                                left: 12.0.w,
+                                top: 10.0.w,
+                              ),
                               child: Tab(
                                 child: Text(
                                   widget.subactegory!.subcategoryName!,
@@ -150,6 +164,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                           SizedBox(
                               height: 500.h,
                               child: SubCategoryWidget(
+                                subcategoryId: widget.subactegory!.id,
                                 products: widget.subactegory!.product,
                                 subcategoryName:
                                     widget.subactegory!.subcategoryName,
@@ -157,27 +172,35 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                               ))
                         ])
                   : TabBar(
+                      indicator: UnderlineTabIndicator(
+                          borderSide: BorderSide(
+                            width: 4,
+                            color: authColor,
+                          ),
+                          insets: EdgeInsets.only(
+                              left: 7.w, right: 8.w, bottom: 0)),
                       isScrollable: true,
                       controller: tabController,
-                      indicatorColor: authColor,
-                      indicatorWeight: 3.0,
+                      indicatorColor: Theme.of(context).accentColor,
+                      indicatorWeight: 2.0,
+                      automaticIndicatorColorAdjustment: true,
                       labelColor: authColor,
                       indicatorSize: TabBarIndicatorSize.label,
-                      labelPadding: const EdgeInsets.only(
+                      labelPadding: EdgeInsets.only(
                         top: 1.0,
-                        left: 15.0,
+                        left: 7.0.w,
                         right: 10.0,
                       ),
                       unselectedLabelColor: authColor,
                       tabs: widget.subcategories != null
                           ? widget.subcategories!
                               .map((e) => Padding(
-                                    padding: const EdgeInsets.all(8.0),
+                                    padding: EdgeInsets.all(5.0.w),
                                     child: Tab(
                                       child: Text(
                                         e.subcategoryName!,
                                         style: TextStyle(
-                                          fontSize: 20.0.sp,
+                                          fontSize: 17.0.sp,
                                           fontFamily: 'helves',
                                           fontWeight: FontWeight.w600,
                                         ),
@@ -187,6 +210,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                               .toList()
                           : <Tab>[]),
 //new henry begins here
+
               SizedBox(
                 height: 500.h,
                 child: TabBarView(
@@ -197,6 +221,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                                 height: 500.h,
                                 child: SubCategoryWidget(
                                   products: e.product,
+                                  subcategoryId: widget.subactegory!.id,
                                   subcategoryName: e.subcategoryName,
                                   categoryName: widget.category!.categoryName,
                                 ))))
