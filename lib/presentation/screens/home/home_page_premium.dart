@@ -128,6 +128,7 @@ class _HomePagePremiumState extends State<HomePagePremium> {
                                     color: Colors.white,
                                   ),
                                   child: Column(
+                                
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [

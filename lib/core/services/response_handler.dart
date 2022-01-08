@@ -1,13 +1,15 @@
-
 // ignore_for_file: avoid_print
 
+import 'dart:async';
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:ajeo/core/models/auth_models/error_model.dart';
 import 'package:ajeo/core/models/auth_models/success_model.dart';
 import 'package:http/http.dart' as http;
-handleResponse(http.Response response){
- try {
+
+handleResponse(http.Response response) {
+  try {
     print(
         'ResponseCode:: ${response.statusCode},   ResponseBody:: ${response.body}');
 
@@ -17,7 +19,11 @@ handleResponse(http.Response response){
       return SuccessModel(body);
     }
 
-    return ErrorModel(body['error']);
+    return ErrorModel(body['message']);
+  } on TimeoutException catch (e) {
+    return ErrorModel(e.toString());
+  } on SocketException catch (e) {
+    return ErrorModel(e.toString());
   } catch (ex) {
     // print(ex.toString());
     return ErrorModel('Request failed');

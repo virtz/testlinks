@@ -5,4 +5,8 @@ class Paths {
   static const String GET_PRICE_RANGE = '/price/uos';
   static const String GET_SUBCATEGORY = '/subcategory';
   static const String GET_PRODUCT = '/product';
+  static const String GET_ZONES =
+      '/location/zone/state/61b3471001e636b678236fbd';
+  static const String GET_PRICE_PER_ZONE = '/price/zone';
+  static const String GET_AREAS_IN_ZONE = "/location/zone";
 }

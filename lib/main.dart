@@ -1,3 +1,4 @@
+import 'package:ajeo/core/services/dynamic_link_service.dart';
 import 'package:ajeo/locator.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -10,6 +11,7 @@ void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
   setUpLocator();
+  locator<DynamicLinkService>().initDynamicLinks();
   runApp(
     MyApp(), // Wrap your app
   );
@@ -29,10 +31,9 @@ class MyApp extends StatelessWidget {
         // locale: DevicePreview.locale(context),
         title: 'Ajeo',
         theme: ThemeData(
-          // is not restarted.
-          primaryColor: const Color(0xFFeb8662),
-          accentColor:const Color(0XFF9b2a10)
-        ),
+            // is not restarted.
+            primaryColor: const Color(0xFFeb8662),
+            accentColor: const Color(0XFF9b2a10)),
         debugShowCheckedModeBanner: false,
         routeInformationParser: _appRouter.defaultRouteParser(),
         routerDelegate: _appRouter.delegate(),

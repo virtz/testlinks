@@ -1,11 +1,15 @@
 // import 'package:ajeo/core/models/chart_model/chart_model.dart';
+// import 'dart:developer';
+
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
+import 'package:ajeo/core/models/zone.dart';
 import 'package:ajeo/presentation/screens/auth/help_page-1/tips.dart';
 // import 'package:ajeo/presentation/screens/products/dropdown/products.dart';
 import 'package:ajeo/presentation/screens/products/product_page_view_model.dart';
+import 'package:ajeo/presentation/widgets/custom_expansion_tile.dart';
 // import 'package:ajeo/presentation/widgets/line_chart_widget.dart';
 // import 'package:ajeo/presentation/screens/products/widgets/wish_list_button.dart';
 // import 'package:ajeo/presentation/widgets/drawer.dart';
@@ -69,16 +73,27 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   Future<void> initDynamicLinks() async {
-    await dynamicLinks.getInitialLink();
+    final PendingDynamicLinkData? data = await dynamicLinks.getInitialLink();
+    final Uri deepLink = data!.link;
+    if (deepLink.pathSegments.contains('product')) {
+      var queryparams = deepLink.queryParameters;
+      // print(queryparams);
+      SchedulerBinding.instance!.addPostFrameCallback((_) {
+        // AutoRouter.of(context).push();
+        _navigator.push(MaterialPageRoute(
+            builder: (BuildContext context) => ProductPage(
+                productId: queryparams['productId'],
+                subcategoryId: queryparams["subcategoryId"],
+                isFromSearch: false,
+                subcaegoryName: queryparams["subcategoryName"],
+                categoryName: queryparams["categoryName"])));
+      });
+    }
 
     dynamicLinks.onLink.listen((dynamicLinkData) {
       if (dynamicLinkData.link.pathSegments.contains('product')) {
-        // _navigator.push(MaterialPageRoute(
-        //     builder: (BuildContext context) => const ProductPage(
-
-        //     )));
         var queryparams = dynamicLinkData.link.queryParameters;
-        print(queryparams);
+        // print(queryparams);
         SchedulerBinding.instance!.addPostFrameCallback((_) {
           // AutoRouter.of(context).push();
           _navigator.push(MaterialPageRoute(
@@ -109,6 +124,7 @@ class _ProductPageState extends State<ProductPage> {
       viewModelBuilder: () => ProductPageViewModel(),
       onModelReady: (h) {
         h.getSubcategory(widget.subcategoryId, widget.productId);
+        h.getZones();
         // h.getProduct(widget.productId);
         // h.initializeDynamicLinks(context);
         if (h.productFetched) {}
@@ -632,13 +648,6 @@ class _ProductPageState extends State<ProductPage> {
                                         }).toList()),
                                   )),
                                 ),
-                                // Text(
-                                //   '$_counter Dozen',
-                                //   style: const TextStyle(
-                                //       color: Color.fromRGBO(242, 39, 35, 1.0),
-                                //       fontSize: 16,
-                                //       fontFamily: 'helves'),
-                                // ),
                                 const SizedBox(
                                   width: 20,
                                 ),
@@ -665,23 +674,17 @@ class _ProductPageState extends State<ProductPage> {
                         SizedBox(
                           height: 20.h,
                         ),
-                        // InkWell(
-                        //   onTap: () {
-                        //     Get.dialog(Review());
-                        //   },
-                        //   child: const Center(
-                        //     child: Text(
-                        //       'Price History',
-                        //       style: TextStyle(
-                        //           color: Color.fromRGBO(9, 205, 230, 1.0),
-                        //           fontSize: 16,
-                        //           fontWeight: FontWeight.w700),
-                        //     ),
-                        //   ),
-                        // ),
-                        ExpansionTile(
+
+                        CustomeExpansionTile(
                             iconColor: Theme.of(context).primaryColor,
-                            trailing: const SizedBox.shrink(),
+                            // trailing: const SizedBox.shrink(),
+                            trailing: Container(
+                                // color: Theme.of(context).primaryColor,
+                                decoration: BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    color: Theme.of(context).primaryColor),
+                                child: const Icon(Icons.arrow_drop_down,
+                                    color: Colors.white)),
                             title: Column(
                               // crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -705,98 +708,13 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                         SizedBox(
                           height: 20.h,
                         ),
-                        Center(
-                          child: Text(
-                            'Related Products',
-                            style: TextStyle(
-                                color: Colors.black,
-                                fontSize: 16.sp,
-                                fontWeight: FontWeight.w700),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 20.h,
-                        ),
-                        Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 20),
-                            child: SizedBox(
-                              height: 200.h,
-                              // width: 139.w,
-                              child: ListView.separated(
-                                  separatorBuilder: (context, index) {
-                                    return SizedBox(width: 20.w);
-                                  },
-                                  shrinkWrap: true,
-                                  scrollDirection: Axis.horizontal,
-                                  itemCount: model.relatedProducts.length,
-                                  itemBuilder: (context, index) {
-                                    Product prd = model.relatedProducts[index];
-                                    return GestureDetector(
-                                      onTap: () {
-                                        AutoRouter.of(context).push(
-                                            ProductRoute(
-                                                productId: prd.id,
-                                                subcategoryId:
-                                                    widget.subcategoryId,
-                                                subcaegoryName:
-                                                    widget.subcaegoryName,
-                                                categoryName:
-                                                    widget.categoryName));
-                                      },
-                                      child: Container(
-                                          height: 143.h,
-                                          width: 139.w,
-                                          decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(14),
-                                              color: Colors.white),
-                                          child: Padding(
-                                            padding: EdgeInsets.all(7.w),
-                                            child: Column(
-                                              mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
-                                              crossAxisAlignment:
-                                                  CrossAxisAlignment.start,
-                                              children: [
-                                                Text(
-                                                  prd.productname ?? "",
-                                                  style: TextStyle(
-                                                      color:
-                                                          const Color.fromRGBO(
-                                                              49, 49, 51, 1.0),
-                                                      fontSize: 16.0.sp,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily: 'helves'),
-                                                ),
-                                                Text(
-                                                  'N200',
-                                                  style: TextStyle(
-                                                      color:
-                                                          const Color.fromRGBO(
-                                                              8, 248, 36, 1.0),
-                                                      fontSize: 12.0.sp,
-                                                      fontWeight:
-                                                          FontWeight.w700,
-                                                      fontFamily: 'helves'),
-                                                ),
-                                              ],
-                                            ),
-                                          )),
-                                    );
-                                  }),
-                            )),
-                        SizedBox(
-                          height: 30.h,
-                        ),
 
                         Center(
                           child: Text(
-                            'Price History',
+                            'AJE-O Zones Price Breakdown',
                             style: TextStyle(
                                 color: const Color.fromRGBO(9, 205, 230, 1.0),
-                                fontSize: 26.sp,
+                                fontSize: 20.sp,
                                 fontWeight: FontWeight.w700),
                           ),
                         ),
@@ -805,245 +723,319 @@ The standard chunk of Lorem Ipsum used since the 1500s is reproduced below for t
                           height: 20.h,
                         ),
 //graph
-                        // SizedBox(
-                        //   height: 180.0.w,
-                        //   width: size.width * 0.88,
-                        //   child: LineChartWidget(
-                        //     priceCoordinates: const [
-                        //       FlSpot(-1, 3),
-                        //       FlSpot(1, 2),
-                        //       FlSpot(3, 5),
-                        //       FlSpot(5, 2.5),
-                        //       FlSpot(7, 6),
-                        //       FlSpot(9, 7),
-                        //       FlSpot(11, 4),
-                        //     ],
-                        //   ),
-                        // ),
-
-                        // SfCartesianChart(
-                        //     primaryXAxis: CategoryAxis(),
-                        //     title: ChartTitle(text: 'Like this'),
-                        //     legend: Legend(isVisible: true),
-                        //     tooltipBehavior: TooltipBehavior(enable: true),
-                        //     series: <ChartSeries<ChartModel, String>>[
-                        //       LineSeries<ChartModel, String>(
-                        //           dataSource: model.data,
-                        //           xValueMapper: (ChartModel ct, _) => ct.date,
-                        //           yValueMapper: (ChartModel ct, _) => ct.price,
-                        //           name: "Price",
-                        //           dataLabelSettings:
-                        //               const DataLabelSettings(isVisible: true))
-                        //     ]),
-
-                        // SizedBox(
-                        //     height: 50.h,
-                        //     child: Padding(
-                        //         padding: EdgeInsets.all(8.0.w),
-                        //         child: SfSparkLineChart.custom(
-                        //           trackball: const SparkChartTrackball(
-                        //               activationMode:
-                        //                   SparkChartActivationMode.tap),
-                        //           marker: const SparkChartMarker(
-                        //               displayMode:
-                        //                   SparkChartMarkerDisplayMode.all),
-                        //           labelDisplayMode:
-                        //               SparkChartLabelDisplayMode.all,
-                        //           xValueMapper: (int index) =>
-                        //               model.data[index].date,
-                        //           yValueMapper: (int index) =>
-                        //               model.data[index].price!.toInt(),
-                        //           dataCount: 6,
-                        //         ))),
-                        // SizedBox(
-                        //   height: 10.h,
-                        // ),
-                        Text(
-                          'AJE-O Zones Price Breakdown',
-                          style: TextStyle(
-                              fontSize: 16.sp,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold),
-                        ),
-
-                        SizedBox(
-                          height: 10.h,
-                        ),
                         Column(
                           children: [
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30.w),
-                              child: InkWell(
-                                child: Row(
-                                  mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      'Bodija Market',
-                                      style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'helves'),
-                                    ),
-                                    Text(
-                                      'N200',
-                                      style: TextStyle(
-                                          color: const Color.fromRGBO(
-                                              8, 248, 36, 1.0),
-                                          fontSize: 14.sp,
-                                          fontWeight: FontWeight.w700,
-                                          fontFamily: 'helves'),
-                                    ),
-                                  ],
-                                ),
-                                onTap: () {
-                                  // Get.to(() => Stores());
-                                },
-                              ),
-                            ),
                             SizedBox(
                               height: 15.h,
                             ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Aleshinloye',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                  Text(
-                                    'N215',
-                                    style: TextStyle(
-                                        color: const Color.fromRGBO(
-                                            110, 192, 100, 1.0),
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                ],
+                            SizedBox(
+                              height: 200.h,
+                              child: ListView.builder(
+                                  padding:
+                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                  shrinkWrap: true,
+                                  physics: const BouncingScrollPhysics(),
+                                  itemCount: model.zones.length,
+                                  itemBuilder: (context, index) {
+                                    Zone zone = model.zones[index];
+                                    // print(zone.priceOption?.toJson());
+                                    // log(zone.priceOption.toString());
+                                    // model.getAreasInZone(zone.id).then((value) {
+                                    //   zone.areas = value;
+                                    // });
+                                    model
+                                        .getPricePerZone(zone.id)
+                                        .then((value) {
+                                      zone.priceOption = value;
+                                    });
+                                    return Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        CustomeExpansionTile(
+                                            expandedCrossAxisAlignment:
+                                                CrossAxisAlignment.stretch,
+                                            iconColor:
+                                                Theme.of(context).primaryColor,
+                                            // trailing: const SizedBox.shrink(),
+                                            trailing: Container(
+                                                // color: Theme.of(context).primaryColor,
+                                                decoration: BoxDecoration(
+                                                    shape: BoxShape.circle,
+                                                    color: Theme.of(context)
+                                                        .primaryColor),
+                                                child: const Icon(
+                                                    Icons.arrow_drop_down,
+                                                    color: Colors.white)),
+                                            title: Row(
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment
+                                                      .spaceBetween,
+                                              children: [
+                                                SizedBox(
+                                                  width: 110.w,
+                                                  child: Text(
+                                                    zone.zonename ?? "",
+                                                    overflow:
+                                                        TextOverflow.ellipsis,
+                                                    style: TextStyle(
+                                                        color: Colors.black,
+                                                        fontSize: 14.sp,
+                                                        // fontWeight: FontWeight.w700,
+                                                        fontFamily: 'helves'),
+                                                  ),
+                                                ),
+                                                Row(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceAround,
+                                                  children: [
+                                                    Text(
+                                                      // "\u20a6${zone.priceOption?.average_zonal_price??"N/A"}",
+                                                      zone.priceOption ==
+                                                                  null ||
+                                                              zone.priceOption!
+                                                                      .lowest_zonal_price ==
+                                                                  null
+                                                          ? 'N/A'
+                                                          : "\u20a6${zone.priceOption?.average_zonal_price}",
+                                                      style: TextStyle(
+                                                          color: const Color
+                                                                  .fromRGBO(
+                                                              8, 248, 36, 1.0),
+                                                          fontSize: 12.sp,
+                                                          // fontWeight: FontWeight.w700,
+                                                          fontFamily: 'helves'),
+                                                    ),
+                                                    SizedBox(
+                                                        width: 8.w,
+                                                        height: 10.h,
+                                                        child:
+                                                            const VerticalDivider(
+                                                          color: Colors.brown,
+                                                        )),
+                                                    Text(
+                                                      zone.priceOption ==
+                                                                  null ||
+                                                              zone.priceOption!
+                                                                      .average_zonal_price ==
+                                                                  null
+                                                          ? 'N/A'
+                                                          : "\u20a6${zone.priceOption?.highest_zonal_price}",
+                                                      style: TextStyle(
+                                                          color: Colors.black,
+                                                          fontSize: 12.sp,
+                                                          // fontWeight: FontWeight.w700,
+                                                          fontFamily: 'helves'),
+                                                    ),
+                                                    SizedBox(
+                                                        width: 8.w,
+                                                        height: 10.h,
+                                                        child:
+                                                            const VerticalDivider(
+                                                          color: Colors.brown,
+                                                        )),
+                                                    Text(
+                                                      zone.priceOption ==
+                                                                  null ||
+                                                              zone.priceOption!
+                                                                      .highest_zonal_price ==
+                                                                  null
+                                                          ? 'N/A'
+                                                          : "\u20a6${zone.priceOption?.lowest_zonal_price}",
+                                                      style: TextStyle(
+                                                          color: Colors.red,
+                                                          fontSize: 12.sp,
+                                                          // fontWeight: FontWeight.w700,
+                                                          fontFamily: 'helves'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ],
+                                            ),
+                                            children: zone.areas!
+                                                .map((e) => Align(
+                                                    alignment:
+                                                        Alignment.topLeft,
+                                                    child: Padding(
+                                                      padding:
+                                                          EdgeInsets.symmetric(
+                                                              horizontal: 15.w,
+                                                              vertical: 10.w),
+                                                      child: Text(
+                                                          e.areaname ?? ""),
+                                                    )))
+                                                .toList()),
+                                        // Row(
+                                        //   mainAxisAlignment:
+                                        //       MainAxisAlignment.spaceBetween,
+                                        //   children: [
+                                        //     Text(
+                                        //       zone.zonename ?? "",
+                                        //       style: TextStyle(
+                                        //           color: Colors.black,
+                                        //           fontSize: 14.sp,
+                                        //           // fontWeight: FontWeight.w700,
+                                        //           fontFamily: 'helves'),
+                                        //     ),
+                                        //     Row(
+                                        //       mainAxisAlignment:
+                                        //           MainAxisAlignment.spaceAround,
+                                        //       children: [
+                                        //         Text(
+                                        //           // "\u20a6${zone.priceOption?.average_zonal_price??"N/A"}",
+                                        //           zone.priceOption == null ||
+                                        //                   zone.priceOption!
+                                        //                           .average_zonal_price ==
+                                        //                       null
+                                        //               ? 'N/A'
+                                        //               : "\u20a6${zone.priceOption?.average_zonal_price}",
+                                        //           style: TextStyle(
+                                        //               color: Colors.black,
+                                        //               fontSize: 12.sp,
+                                        //               // fontWeight: FontWeight.w700,
+                                        //               fontFamily: 'helves'),
+                                        //         ),
+                                        //         SizedBox(
+                                        //             width: 8.w,
+                                        //             height: 10.h,
+                                        //             child:
+                                        //                 const VerticalDivider(
+                                        //               color: Colors.brown,
+                                        //             )),
+                                        //         Text(
+                                        //           zone.priceOption == null ||
+                                        //                   zone.priceOption!
+                                        //                           .highest_zonal_price ==
+                                        //                       null
+                                        //               ? 'N/A'
+                                        //               : "\u20a6${zone.priceOption?.highest_zonal_price}",
+                                        //           style: TextStyle(
+                                        //               color: Colors.redAccent,
+                                        //               fontSize: 12.sp,
+                                        //               // fontWeight: FontWeight.w700,
+                                        //               fontFamily: 'helves'),
+                                        //         ),
+                                        //         SizedBox(
+                                        //             width: 8.w,
+                                        //             height: 10.h,
+                                        //             child:
+                                        //                 const VerticalDivider(
+                                        //               color: Colors.brown,
+                                        //             )),
+                                        //         Text(
+                                        //           zone.priceOption == null ||
+                                        //                   zone.priceOption!
+                                        //                           .lowest_zonal_price ==
+                                        //                       null
+                                        //               ? 'N/A'
+                                        //               : "\u20a6${zone.priceOption?.lowest_zonal_price}",
+                                        //           style: TextStyle(
+                                        //               color:
+                                        //                   const Color.fromRGBO(
+                                        //                       8, 248, 36, 1.0),
+                                        //               fontSize: 12.sp,
+                                        //               // fontWeight: FontWeight.w700,
+                                        //               fontFamily: 'helves'),
+                                        //         ),
+                                        //       ],
+                                        //     ),
+                                        //   ],
+                                        // ),
+                                        SizedBox(height: 10.h)
+                                      ],
+                                    );
+                                  }),
+                            ),
+                            SizedBox(
+                              height: 50.h,
+                            ),
+                            Center(
+                              child: Text(
+                                'Related Products',
+                                style: TextStyle(
+                                    color: Colors.black,
+                                    fontSize: 16.sp,
+                                    fontWeight: FontWeight.w700),
                               ),
                             ),
                             SizedBox(
-                              height: 15.h,
+                              height: 20.h,
                             ),
                             Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Mokola Market',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                  Text(
-                                    'N225',
-                                    style: TextStyle(
-                                        color: const Color.fromRGBO(
-                                            148, 206, 141, 1.0),
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                ],
-                              ),
-                            ),
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 20),
+                                child: SizedBox(
+                                  height: 200.h,
+                                  // width: 139.w,
+                                  child: ListView.separated(
+                                      separatorBuilder: (context, index) {
+                                        return SizedBox(width: 20.w);
+                                      },
+                                      shrinkWrap: true,
+                                      scrollDirection: Axis.horizontal,
+                                      itemCount: model.relatedProducts.length,
+                                      itemBuilder: (context, index) {
+                                        Product prd =
+                                            model.relatedProducts[index];
+                                        return GestureDetector(
+                                          onTap: () {
+                                            AutoRouter.of(context).push(
+                                                ProductRoute(
+                                                    productId: prd.id,
+                                                    subcategoryId:
+                                                        widget.subcategoryId,
+                                                    subcaegoryName:
+                                                        widget.subcaegoryName,
+                                                    categoryName:
+                                                        widget.categoryName));
+                                          },
+                                          child: Container(
+                                              height: 143.h,
+                                              width: 139.w,
+                                              decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(14),
+                                                  color: Colors.white),
+                                              child: Padding(
+                                                padding: EdgeInsets.all(7.w),
+                                                child: Column(
+                                                  mainAxisAlignment:
+                                                      MainAxisAlignment
+                                                          .spaceBetween,
+                                                  crossAxisAlignment:
+                                                      CrossAxisAlignment.start,
+                                                  children: [
+                                                    Text(
+                                                      prd.productname ?? "",
+                                                      style: TextStyle(
+                                                          color: const Color
+                                                                  .fromRGBO(
+                                                              49, 49, 51, 1.0),
+                                                          fontSize: 16.0.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontFamily: 'helves'),
+                                                    ),
+                                                    Text(
+                                                      'N200',
+                                                      style: TextStyle(
+                                                          color: const Color
+                                                                  .fromRGBO(
+                                                              8, 248, 36, 1.0),
+                                                          fontSize: 12.0.sp,
+                                                          fontWeight:
+                                                              FontWeight.w700,
+                                                          fontFamily: 'helves'),
+                                                    ),
+                                                  ],
+                                                ),
+                                              )),
+                                        );
+                                      }),
+                                )),
                             SizedBox(
-                              height: 15.sp,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Leventis',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                  Text(
-                                    'N245',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15.h,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Ring Road',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                  Text(
-                                    'N295',
-                                    style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                ],
-                              ),
-                            ),
-                            SizedBox(
-                              height: 15.h,
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 30.0.w),
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    'Jericho Market',
-                                    style: TextStyle(
-                                        color: Colors.black,
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                  Text(
-                                    'N300',
-                                    style: TextStyle(
-                                        color: const Color.fromRGBO(
-                                            8, 248, 36, 1.0),
-                                        fontSize: 14.sp,
-                                        fontWeight: FontWeight.w700,
-                                        fontFamily: 'helves'),
-                                  ),
-                                ],
-                              ),
+                              height: 30.h,
                             ),
                             SizedBox(
                               height: 90.h,

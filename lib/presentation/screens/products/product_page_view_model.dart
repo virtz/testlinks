@@ -1,21 +1,26 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:developer';
 import 'dart:io';
 
+import 'package:ajeo/core/models/area_model.dart';
 import 'package:ajeo/core/models/auth_models/error_model.dart';
 import 'package:ajeo/core/models/auth_models/success_model.dart';
 import 'package:ajeo/core/models/category.dart';
 import 'package:ajeo/core/models/chart_model/chart_model.dart';
 import 'package:ajeo/core/models/price.dart';
+import 'package:ajeo/core/models/price_option.dart';
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/product2.dart';
 // import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/subcategory2.dart';
 import 'package:ajeo/core/models/uos.dart';
 import 'package:ajeo/core/models/variety.dart';
+import 'package:ajeo/core/models/zone.dart';
 // import 'package:ajeo/core/models/variety.dart';
 import 'package:ajeo/core/services/category_service.dart';
 import 'package:ajeo/core/services/product_service.dart';
+import 'package:ajeo/core/services/zone_service.dart';
 import 'package:ajeo/locator.dart';
 import 'package:ajeo/presentation/widgets/utils.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
@@ -32,6 +37,7 @@ import 'package:stacked/stacked.dart';
 class ProductPageViewModel extends BaseViewModel {
   final CategoryService _categoryService = locator<CategoryService>();
   final ProductService _productService = locator<ProductService>();
+  final ZoneService _zoneService = locator<ZoneService>();
 
   PriceModel? currentUosPrice;
   bool productFetched = false;
@@ -41,9 +47,13 @@ class ProductPageViewModel extends BaseViewModel {
 
   SubcategoryModel2 subcat = SubcategoryModel2();
   Product2 prdt = Product2();
-
+  PriceOption? priceOption;
   List<CategoryModel> categories = <CategoryModel>[];
   List<Product> relatedProducts = <Product>[];
+  List<Zone> zones = <Zone>[];
+
+  List<AreaModel> areas = <AreaModel>[];
+
   Uos? unitOfMeasurement;
 
   String shortUrl = "";
@@ -217,20 +227,6 @@ class ProductPageViewModel extends BaseViewModel {
     }).onError((error) {
       showErrorToast(error.message);
     });
-    // final PendingDynamicLinkData? data = await dynamicLinks.getInitialLink();
-    // final Uri deepLink = data!.link;
-    // var queryparams = data.link.queryParameters;
-    // AutoRouter.of(context).push(ProductRoute(
-    //     product: Product(
-    //       id: queryparams['id'],
-    //       productname: queryparams['productname'],
-    //       productimage: queryparams['productimage'],
-    //       // variety: queryparams['variety'].
-    //     ),
-    //     // products: products,
-    //     isFromSearch: false,
-    //     subcaegoryName: queryparams["subcategoryName"],
-    //     categoryName: queryparams["categoryName"]));
   }
 
 //  final bool isFromSearch;
@@ -282,5 +278,62 @@ class ProductPageViewModel extends BaseViewModel {
     await Share.share(linkMessage,
         subject: "subject",
         sharePositionOrigin: box!.localToGlobal(Offset.zero) & box.size);
+  }
+
+  getZones() async {
+    final result = await _zoneService.getZones();
+    if (result is ErrorModel) {
+      showErrorToast(result.error);
+    }
+    zones = result.data;
+    notifyListeners();
+    // for (var zone in zones) {
+    //   getPricePerZone(zone.id);
+    //   log("from prodcut_view_Model :::: ${priceOption!.toJson()}");
+    //   zone.priceOption = priceOption;
+    //   notifyListeners();
+    // }
+    // notifyListeners();
+    for (var zone in zones) {
+      zone.areas = <AreaModel>[];
+      getAreasInZone(zone.id).then((value) {
+        zone.areas = value;
+        notifyListeners();
+        log(zone.areas.toString());
+        if (zone.areas == null) {
+          zone.areas = <AreaModel>[];
+          notifyListeners();
+        }
+        notifyListeners();
+      });
+    }
+  }
+
+  Future<PriceOption> getPricePerZone(String? zoneId) async {
+    final result = await _zoneService.getPricePerZone(zoneId!);
+    if (result is ErrorModel) {
+      // showErrorToast(result.error);
+      // return ErrorModel(result.error;)
+    }
+    if (result is SuccessModel) {
+      // priceOption = result.data;
+
+      // notifyListeners();
+      return result.data;
+    }
+    return result.data;
+  }
+
+  Future<List<AreaModel>> getAreasInZone(String? id) async {
+    final result = await _zoneService.getAreasInZone(id);
+    if (result is ErrorModel) {
+      showErrorToast(result.error);
+    }
+    if (result is SuccessModel) {
+      areas = result.data;
+      notifyListeners();
+      return result.data;
+    }
+    return result.data;
   }
 }

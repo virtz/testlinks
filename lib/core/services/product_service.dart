@@ -2,7 +2,7 @@ import 'package:ajeo/core/models/auth_models/error_model.dart';
 import 'package:ajeo/core/models/auth_models/success_model.dart';
 
 import 'package:ajeo/core/models/product2.dart';
-import 'package:ajeo/core/models/subcategory.dart';
+// import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/subcategory2.dart';
 import 'package:ajeo/core/services/index.dart';
 import 'package:ajeo/utils/paths.dart';
