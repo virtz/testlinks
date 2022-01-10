@@ -24,6 +24,7 @@ import 'package:ajeo/presentation/screens/search/search.dart';
 import 'package:ajeo/presentation/screens/settings/main_settings_non_premium/settings_non_premium.dart';
 import 'package:ajeo/presentation/screens/settings/main_settings_premium/settings.dart';
 import 'package:ajeo/presentation/screens/splash_screen/splash_screen.dart';
+import 'package:ajeo/presentation/screens/walkthrough/walkthrough.dart';
 import 'package:ajeo/presentation/screens/wishlist/wish_list.dart';
 import 'package:ajeo/presentation/widgets/please_subscribe.dart';
 import 'package:ajeo/presentation/widgets/pop-ups/new_list.dart';
@@ -129,6 +130,9 @@ import 'package:auto_route/auto_route.dart';
   ),
     AutoRoute(
     page: Subscriptions,
+  ),
+      AutoRoute(
+    page: Walkthrough,
   ),
   //
 ])

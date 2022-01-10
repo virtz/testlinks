@@ -23,7 +23,7 @@ class _CountDownClockState extends State<CountDownClock> {
   void initState() {
     super.initState();
     // difference = DateTime.now().difference(DateTime(2020, 12, 25));
-    difference = DateTime(2022, 1, 24).difference(DateTime.now());
+    difference = DateTime(2022, 10, 14).difference(DateTime.now());
     countDownDuration = Duration(
         days: difference!.inDays.remainder(31),
         hours: difference!.inHours.remainder(24),

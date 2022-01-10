@@ -22,7 +22,7 @@ class SplashScreen extends StatelessWidget {
         body: GestureDetector(
           onTap: () {
             // Get.offAllNamed(Routes.REGISTER);
-            AutoRouter.of(context).push(const Register());
+            // AutoRouter.of(context).push(const Register());
           },
           child: Container(
             decoration: const BoxDecoration(
