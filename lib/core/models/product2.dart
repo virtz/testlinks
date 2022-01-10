@@ -1,4 +1,5 @@
 import 'package:ajeo/core/models/category.dart';
+import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/variety.dart';
 import 'package:json_annotation/json_annotation.dart';
 
@@ -10,8 +11,9 @@ class Product2 {
   String? id;
   String? productname;
   String? productimage;
+   String? productdescription;
   CategoryModel? category;
-  String? subcategory;
+  SubcategoryModel? subcategory;
   List<Variety>? variety;
   String? createdAt;
   String? updatedAt;
@@ -22,6 +24,7 @@ class Product2 {
     this.subcategory,
     this.createdAt,
     this.updatedAt,
+    this.productdescription,
     this.category,
     this.variety,
   });

@@ -14,6 +14,7 @@ Product _$ProductFromJson(Map<String, dynamic> json) => Product(
           ? null
           : SubcategoryModel.fromJson(
               json['subcategory'] as Map<String, dynamic>),
+      productdescription: json['productdescription'] as String?,
       createdAt: json['createdAt'] as String?,
       updatedAt: json['updatedAt'] as String?,
       category: json['category'] == null
@@ -28,6 +29,7 @@ Map<String, dynamic> _$ProductToJson(Product instance) => <String, dynamic>{
       '_id': instance.id,
       'productname': instance.productname,
       'productimage': instance.productimage,
+      'productdescription': instance.productdescription,
       'category': instance.category,
       'subcategory': instance.subcategory,
       'variety': instance.variety,

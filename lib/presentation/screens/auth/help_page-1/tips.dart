@@ -1,8 +1,10 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:ajeo/utils/constants.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_html/flutter_html.dart';
 
 class Tips extends StatefulWidget {
   const Tips({Key? key}) : super(key: key);
@@ -41,7 +43,19 @@ class _TipsState extends State<Tips> {
               ),
             ),
           ),
-          SizedBox(height: 200.h),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 15.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text("Getting Started",
+                    style: TextStyle(
+                        fontSize: 18.sp, fontWeight: FontWeight.w700)),
+                SizedBox(height: 5.h),
+                Html(data: htmlData),
+              ],
+            ),
+          ),
           // const Text('Help',
           //     style: TextStyle(
           //         color: Colors.grey,

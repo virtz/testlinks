@@ -7,7 +7,7 @@ import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
-class SubCategoryItem extends StatelessWidget {
+class SubCategoryItem extends StatefulWidget {
   final String? categoryName;
   final String? subcategoryName;
   final Product? product;
@@ -23,6 +23,11 @@ class SubCategoryItem extends StatelessWidget {
       : super(key: key);
 
   @override
+  State<SubCategoryItem> createState() => _SubCategoryItemState();
+}
+
+class _SubCategoryItemState extends State<SubCategoryItem> {
+  @override
   Widget build(BuildContext context) {
     // var size = MediaQuery.of(context).size;
     return Column(
@@ -31,14 +36,14 @@ class SubCategoryItem extends StatelessWidget {
       mainAxisSize: MainAxisSize.max,
       children: [
         SizedBox(
-          width: 100.w,
+          width: 130.w,
           height: 35.5.h,
           child: Padding(
             padding: EdgeInsets.only(
-              top: product!.productname!.length > 18 ? 0.0 : 15.5.w,
+              top: widget.product!.productname!.length > 15 ? 0.0 : 15.5.w,
             ),
             child: Text(
-              capitalize(product!.productname!),
+              capitalize(widget.product!.productname!),
               textAlign: TextAlign.start,
               overflow: TextOverflow.ellipsis,
               maxLines: 2,
@@ -66,7 +71,7 @@ class SubCategoryItem extends StatelessWidget {
             child: Column(
               children: [
                 InkWell(
-                  child: product!.productimage == null
+                  child: widget.product!.productimage == null
                       ? Stack(
                           children: [
                             Padding(
@@ -113,7 +118,7 @@ class SubCategoryItem extends StatelessWidget {
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: NetworkImage(imagebaseUrl +
-                                              product!.productimage!)))),
+                                              widget.product!.productimage!)))),
                             ),
                             // Positioned(
                             //   bottom: 0,
@@ -140,12 +145,12 @@ class SubCategoryItem extends StatelessWidget {
                     // Get.to(() => ProductPage());
                     // print(product!.id);
                     AutoRouter.of(context).push(ProductRoute(
-                        product: product,
-                        productId: product!.id,
-                        subcategoryId: subcategoryId,
-                        products: products,
-                        subcaegoryName: subcategoryName,
-                        categoryName: categoryName));
+                        product: widget.product,
+                        productId: widget.product!.id,
+                        subcategoryId: widget.subcategoryId,
+                        products: widget.products,
+                        subcaegoryName: widget.subcategoryName,
+                        categoryName: widget.categoryName));
                   },
                 ),
                 //         // Align(

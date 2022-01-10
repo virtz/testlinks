@@ -31,3 +31,18 @@ List<CategoryModel> categoryList = [
       ],
       createdAt: 'dmadmamdlsmda'),
 ];
+
+const htmlData = """<p>  
+<ol>
+<li>Click anywhere and just start typing.</li>
+<li>Hit the / to see all the types of content you can create - headers,videos, sub pages </li>
+<li>Highlight any text and use the menu that pops up to style your writing however you like</li>
+<li>See the -- to the lefy of this checkbox on hover? Click and drag to move this line</li>
+<li>Click anywhere and just start typing.</li>
+<li>Click anywhere and just start typing.</li>
+<li>Invite your teammates to work with your in Settings & Members.</li>
+<li>Click anywhere and just start typing.</li>
+<li>Click anywhere and just start typing.</li>
+<li>Click anywhere and just start typing.</li>
+</ol>
+</p>""";

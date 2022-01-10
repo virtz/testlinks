@@ -101,8 +101,8 @@ class ProductPageViewModel extends BaseViewModel {
       setBusy(false);
       subcat = result.data;
       // print(subcat);
-      getProduct(productId);
       notifyListeners();
+      await getProduct(productId);
     }
   }
 
@@ -116,10 +116,9 @@ class ProductPageViewModel extends BaseViewModel {
     if (result is SuccessModel) {
       setBusy(false);
       prdt = result.data;
-      // print(prdt);
-      productFetched = true;
       notifyListeners();
-      getRelatedProducts(subcat.product!, prdt.productname!);
+      getRelatedProducts(subcat.product!, prdt.productname!, prdt.id!);
+        getRelatedProducts(subcat.product!, prdt.productname!, prdt.id!);
       sortList(prdt.variety!);
       if (prdt.variety!.isNotEmpty) {
         dropdownValue = prdt.variety![0];
@@ -192,12 +191,15 @@ class ProductPageViewModel extends BaseViewModel {
     }
   }
 
-  getRelatedProducts(List<Product> products, String productName) {
+  getRelatedProducts(
+      List<Product> products, String productName, String productId) {
     relatedProducts = products
-        .where((element) => element.productname != productName)
+        .where((element) =>
+            element.productname != productName && element.id != productId)
         .toList();
     // print(relatedProducts);
     notifyListeners();
+    
   }
 
   sortList(List<Variety> value) {

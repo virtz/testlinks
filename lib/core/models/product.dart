@@ -11,6 +11,7 @@ class Product {
   String? id;
   String? productname;
   String? productimage;
+  String? productdescription;
   CategoryModel? category;
   SubcategoryModel? subcategory;
   List<Variety>? variety;
@@ -21,6 +22,7 @@ class Product {
     this.productname,
     this.productimage,
     this.subcategory,
+    this.productdescription,
     this.createdAt,
     this.updatedAt,
     this.category,

@@ -6,9 +6,7 @@ import 'package:ajeo/presentation/screens/auth/help_page-1/tips.dart';
 // import 'package:ajeo/presentation/screens/category/widgets/advert.dart';
 import 'package:ajeo/presentation/widgets/count_down_clock.dart';
 import 'package:ajeo/presentation/screens/category/widgets/sub_category_widget_premium.dart';
-// import 'package:ajeo/presentation/screens/category/widgets/subcategory_item_non_premium.dart';
-// import 'package:ajeo/presentation/widgets/drawer.dart';
-// import 'package:ajeo/presentation/widgets/drawer1.dart';
+
 import 'package:ajeo/presentation/widgets/search_bar.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
 // import 'package:ajeo/routes/app_router.gr.dart';
@@ -221,7 +219,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                                 height: 500.h,
                                 child: SubCategoryWidget(
                                   products: e.product,
-                                  subcategoryId: widget.subactegory!.id,
+                                  subcategoryId:e.id,
                                   subcategoryName: e.subcategoryName,
                                   categoryName: widget.category!.categoryName,
                                 ))))
