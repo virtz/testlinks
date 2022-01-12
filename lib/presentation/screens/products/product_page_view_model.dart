@@ -118,7 +118,7 @@ class ProductPageViewModel extends BaseViewModel {
       prdt = result.data;
       notifyListeners();
       getRelatedProducts(subcat.product!, prdt.productname!, prdt.id!);
-        getRelatedProducts(subcat.product!, prdt.productname!, prdt.id!);
+      getRelatedProducts(subcat.product!, prdt.productname!, prdt.id!);
       sortList(prdt.variety!);
       if (prdt.variety!.isNotEmpty) {
         dropdownValue = prdt.variety![0];
@@ -166,7 +166,7 @@ class ProductPageViewModel extends BaseViewModel {
     }
   }
 
-  String formatPrice(int? price) {
+  String formatPrice(var price) {
     // final currencyFormatter = NumberFormat.currency(name: 'NGN');
     // return currencyFormatter.format(price);
     if (price != null) {
@@ -199,7 +199,6 @@ class ProductPageViewModel extends BaseViewModel {
         .toList();
     // print(relatedProducts);
     notifyListeners();
-    
   }
 
   sortList(List<Variety> value) {
@@ -311,8 +310,9 @@ class ProductPageViewModel extends BaseViewModel {
     }
   }
 
-  Future<PriceOption> getPricePerZone(String? zoneId) async {
-    final result = await _zoneService.getPricePerZone(zoneId!);
+  Future<PriceOption> getPricePerZone(
+      String? zoneId, String areaId, String uosId) async {
+    final result = await _zoneService.getPricePerZone(zoneId!, areaId, uosId);
     if (result is ErrorModel) {
       // showErrorToast(result.error);
       // return ErrorModel(result.error;)
@@ -321,6 +321,7 @@ class ProductPageViewModel extends BaseViewModel {
       // priceOption = result.data;
 
       // notifyListeners();
+      print(result.data);
       return result.data;
     }
     return result.data;

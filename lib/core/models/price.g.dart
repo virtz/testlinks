@@ -9,7 +9,7 @@ part of 'price.dart';
 PriceModel _$PriceModelFromJson(Map<String, dynamic> json) => PriceModel(
       status: json['status'] as String?,
       maximum_price: json['Maximum Price'] as int?,
-      average_price: json['Average Price'] as int?,
+      average_price: (json['Average Price'] as num?)?.toDouble(),
       minimum_price: json['Minimum Price'] as int?,
     );
 

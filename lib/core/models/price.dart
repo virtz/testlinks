@@ -12,7 +12,7 @@ class PriceModel {
   @JsonKey(name:"Maximum Price")
   int? maximum_price;
     @JsonKey(name:"Average Price")
-  int? average_price;
+  double? average_price;
     @JsonKey(name:"Minimum Price")
   int? minimum_price;
 

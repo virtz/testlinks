@@ -424,17 +424,20 @@ class _ProductPageState extends State<ProductPage> {
                           height: 34.0,
                         ),
                         Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 18),
-                          child: model.prdt.productimage == null
-                              ? Image.asset('assets/images/placeholder.jpg',
-                                  height: 170.h, width: 170.w)
-                              : Image.network(
-                                  imagebaseUrl + model.prdt.productimage!,
-                                  height: 170.h,
-                                  width: 170.w,
-                                  fit: BoxFit.fill,
-                                ),
-                        ),
+                            padding: const EdgeInsets.symmetric(horizontal: 18),
+                            child:
+                                //Todo:product image
+                                // model.prdt.productimage == null
+                                //     ?
+                                Image.asset('assets/images/red.png',
+                                    height: 170.h, width: 170.w)
+                            // : Image.network(
+                            //     imagebaseUrl + model.prdt.productimage!,
+                            //     height: 170.h,
+                            //     width: 170.w,
+                            //     fit: BoxFit.fill,
+                            //   ),
+                            ),
                         SizedBox(
                           height: 20.h,
                         ),
@@ -697,11 +700,12 @@ class _ProductPageState extends State<ProductPage> {
                                 ),
                               ],
                             ),
-                            children:  [
+                            children: [
                               ListTile(
                                   title: Text(
-                                     model.prdt.productdescription??"",
-                                      style: TextStyle(color: Colors.grey)))
+                                      model.prdt.productdescription ?? "",
+                                      style:
+                                          const TextStyle(color: Colors.grey)))
                             ]),
                         SizedBox(
                           height: 20.h,
@@ -741,11 +745,18 @@ class _ProductPageState extends State<ProductPage> {
                                     // model.getAreasInZone(zone.id).then((value) {
                                     //   zone.areas = value;
                                     // });
-                                    model
-                                        .getPricePerZone(zone.id)
-                                        .then((value) {
-                                      zone.priceOption = value;
-                                    });
+                                    if (zone.areas != null &&
+                                        zone.areas!.isNotEmpty) {
+                                      model
+                                          .getPricePerZone(
+                                              zone.id,
+                                              zone.areas![0].id!,
+                                              model.unitOfMeasurement!.id!)
+                                          .then((value) {
+                                        zone.priceOption = value;
+                                      });
+                                    }
+
                                     return Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
@@ -796,7 +807,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                       .lowest_zonal_price ==
                                                                   null
                                                           ? 'N/A'
-                                                          : "\u20a6${zone.priceOption?.average_zonal_price}",
+                                                          : "\u20a6${zone.priceOption?.lowest_zonal_price!.toStringAsFixed(0)}",
                                                       style: TextStyle(
                                                           color: const Color
                                                                   .fromRGBO(
@@ -819,7 +830,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                       .average_zonal_price ==
                                                                   null
                                                           ? 'N/A'
-                                                          : "\u20a6${zone.priceOption?.highest_zonal_price}",
+                                                          : "\u20a6${zone.priceOption?.average_zonal_price!.toStringAsFixed(0)}",
                                                       style: TextStyle(
                                                           color: Colors.black,
                                                           fontSize: 12.sp,
@@ -840,7 +851,7 @@ class _ProductPageState extends State<ProductPage> {
                                                                       .highest_zonal_price ==
                                                                   null
                                                           ? 'N/A'
-                                                          : "\u20a6${zone.priceOption?.lowest_zonal_price}",
+                                                          : "\u20a6${zone.priceOption?.highest_zonal_price}",
                                                       style: TextStyle(
                                                           color: Colors.red,
                                                           fontSize: 12.sp,

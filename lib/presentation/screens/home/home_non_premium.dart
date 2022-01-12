@@ -251,10 +251,10 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                         ])
                   : model.isBusy
                       ? Center(
-                        child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                                Theme.of(context).primaryColor)),
-                      )
+                          child: CircularProgressIndicator(
+                              valueColor: AlwaysStoppedAnimation<Color>(
+                                  Theme.of(context).primaryColor)),
+                        )
                       : ListView.builder(
                           key: UniqueKey(),
                           shrinkWrap: true,
@@ -393,32 +393,37 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                                             ),
                                                             child: InkWell(
                                                               child: Center(
-                                                                child: subCat
-                                                                            .subcategoryimage ==
-                                                                        null
-                                                                    ? Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(8.0.w),
-                                                                        child: Container(
-                                                                            decoration: const BoxDecoration(
-                                                                                image: DecorationImage(
-                                                                                    fit: BoxFit.cover,
-                                                                                    image: AssetImage(
-                                                                                      'assets/images/placeholder.jpg',
-                                                                                    )))),
-                                                                      )
-                                                                    : Padding(
-                                                                        padding:
-                                                                            EdgeInsets.all(8.0.w),
-                                                                        child: Container(
-                                                                            decoration: BoxDecoration(
-                                                                                image: DecorationImage(
-                                                                                    fit: BoxFit.cover,
-                                                                                    image: NetworkImage(
-                                                                                      imagebaseUrl + subCat.subcategoryimage!,
-                                                                                    )))),
-                                                                      ),
-                                                              ),
+                                                                  child:
+                                                                      //TODO: SUBCAT IMAGE
+                                                                      // subCat
+                                                                      //             .subcategoryimage ==
+                                                                      //         null
+                                                                      //     ?
+                                                                      Padding(
+                                                                padding:
+                                                                    EdgeInsets
+                                                                        .all(8.0
+                                                                            .w),
+                                                                child: Container(
+                                                                    decoration: const BoxDecoration(
+                                                                        image: DecorationImage(
+                                                                            fit: BoxFit.cover,
+                                                                            image: AssetImage(
+                                                                              'assets/images/subcat.jpeg',
+                                                                            )))),
+                                                              )
+                                                                  // : Padding(
+                                                                  //     padding:
+                                                                  //         EdgeInsets.all(8.0.w),
+                                                                  //     child: Container(
+                                                                  //         decoration: BoxDecoration(
+                                                                  //             image: DecorationImage(
+                                                                  //                 fit: BoxFit.cover,
+                                                                  //                 image: NetworkImage(
+                                                                  //                   imagebaseUrl + subCat.subcategoryimage!,
+                                                                  //                 )))),
+                                                                  //   ),
+                                                                  ),
                                                               onTap: () {
                                                                 // Get.to(
                                                                 //   () => SubCategoryViewNonPremium(),

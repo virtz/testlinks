@@ -1,6 +1,7 @@
 import 'package:ajeo/presentation/screens/auth/auth_view/auth_view.dart';
 import 'package:ajeo/presentation/screens/auth/complete_account/complete_account.dart';
 import 'package:ajeo/presentation/screens/auth/confirmation_page/confirmation_page.dart';
+import 'package:ajeo/presentation/screens/auth/help_page-1/about_us.dart';
 import 'package:ajeo/presentation/screens/auth/help_page-1/help_page.dart';
 import 'package:ajeo/presentation/screens/auth/progress/progress.dart';
 import 'package:ajeo/presentation/screens/auth/progress/progress2.dart';
@@ -46,9 +47,7 @@ import 'package:auto_route/auto_route.dart';
   AutoRoute(
     page: ConfirmationPage,
   ),
-  AutoRoute(
-    page: Subscription,
-  ),
+
   AutoRoute(
     page: T12SignUp_2,
   ),
@@ -133,6 +132,13 @@ import 'package:auto_route/auto_route.dart';
   ),
       AutoRoute(
     page: Walkthrough,
+  ),
+
+      AutoRoute(
+    page: HelpPage,
+  ),
+      AutoRoute(
+    page: AboutUs,
   ),
   //
 ])

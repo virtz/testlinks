@@ -9,7 +9,7 @@ class PriceOption {
   int? highest_zonal_price;
   int? lowest_zonal_price;
   @JsonKey(name: "Average_zonal_price")
-  int? average_zonal_price;
+  double? average_zonal_price;
   PriceOption({
     this.highest_zonal_price,
     this.lowest_zonal_price,

@@ -39,9 +39,7 @@ class _FourthWalkthroughState extends State<FourthWalkthrough> {
                   //               fontSize: 17.sp,
                   //               fontWeight: FontWeight.w700)),
                   //     )),
-                  SizedBox(
-                    height: 60.h,
-                  ),
+
                   Text('Find Comprehensive Pricing',
                       style: TextStyle(
                           color: Theme.of(context).accentColor,
@@ -52,7 +50,9 @@ class _FourthWalkthroughState extends State<FourthWalkthrough> {
                           color: Theme.of(context).accentColor,
                           fontSize: 20.sp,
                           fontWeight: FontWeight.w700)),
-                  Image.asset('assets/images/Group_1124.png'),
+                  SizedBox(
+                      height: 300.h,
+                      child: Image.asset('assets/images/Group_1124.png')),
                   SizedBox(
                     height: 30.h,
                   ),

@@ -21,16 +21,19 @@ class ZoneService {
     }
   }
 
-  getPricePerZone(String zoneId) async {
-    final result = await http.get(Paths.GET_PRICE_PER_ZONE + "/$zoneId");
+//localhost:4000/api/price/zone/:zoneId/:areaId/:uosId
+  getPricePerZone(String zoneId,String areaId,String uosId) async {
+    final result = await http.get(Paths.GET_PRICE_PER_ZONE + "/$zoneId/$areaId/$uosId");
     if (result is ErrorModel) {
       return ErrorModel(result.error);
     }
     if (result is SuccessModel) {
-      var data = result.data['price_options'];
+      var data = result.data['ZonalPriceOptions'];
       // print(" fron zone service ::::$data");
-      PriceOption po = PriceOption.fromJson(data);
+      if(result.data !=null){
+        PriceOption po = PriceOption.fromJson(data);
       return SuccessModel(po);
+      }
     }
   }
 

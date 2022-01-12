@@ -23,7 +23,7 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 60.h,
+                    height: 50.h,
                   ),
                   Align(
                       alignment: Alignment.topRight,
@@ -38,7 +38,7 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                                 fontWeight: FontWeight.w700)),
                       )),
                   SizedBox(
-                    height: 60.h,
+                    height: 50.h,
                   ),
                   Text('Pick From A Number Of',
                       style: TextStyle(
@@ -53,7 +53,9 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                   SizedBox(
                     height: 10.h,
                   ),
-                  Image.asset('assets/images/Group_1125.png'),
+                  SizedBox(
+                    height:300.h,
+                    child: Image.asset('assets/images/Group_1125.png')),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -62,7 +64,11 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize: 17.sp,
-                          fontWeight: FontWeight.w500))
+                          fontWeight: FontWeight.w500)),
+                          
+                              SizedBox(
+                    height: 30.h,
+                  ),
                 ])));
   }
 }

@@ -23,7 +23,7 @@ class _SecondWalkthroughState extends State<SecondWalkthrough> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(
-                    height: 60.h,
+                    height: 50.h,
                   ),
                   Align(
                       alignment: Alignment.topRight,
@@ -38,7 +38,7 @@ class _SecondWalkthroughState extends State<SecondWalkthrough> {
                                 fontWeight: FontWeight.w700)),
                       )),
                   SizedBox(
-                    height: 60.h,
+                    height: 50.h,
                   ),
                   Text('Explore Our Detailed',
                       style: TextStyle(
@@ -50,7 +50,9 @@ class _SecondWalkthroughState extends State<SecondWalkthrough> {
                           color: Theme.of(context).accentColor,
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w700)),
-                  Image.asset('assets/images/Group_1126.png'),
+                  SizedBox(
+                     height: 300.h,
+                    child: Image.asset('assets/images/Group_1126.png')),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -59,7 +61,11 @@ class _SecondWalkthroughState extends State<SecondWalkthrough> {
                       style: TextStyle(
                           color: Colors.grey,
                           fontSize: 17.sp,
-                          fontWeight: FontWeight.w500))
+                          fontWeight: FontWeight.w500)),
+
+                         SizedBox(
+                    height: 30.h,
+                  ),
                 ])));
   }
 }

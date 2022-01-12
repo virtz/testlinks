@@ -1,5 +1,7 @@
 // ignore_for_file: prefer_const_literals_to_create_immutables
 
+import 'package:ajeo/presentation/widgets/social_handles_widget.dart';
+import 'package:ajeo/routes/app_router.gr.dart';
 import 'package:ajeo/utils/constants.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
@@ -65,7 +67,7 @@ class _TipsState extends State<Tips> {
         ])),
         bottomSheet: Container(
             color: Colors.white,
-            height: 100.h,
+            height: 150.h,
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -73,21 +75,33 @@ class _TipsState extends State<Tips> {
                 child: Column(crossAxisAlignment: CrossAxisAlignment.center,
                     // mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      const Text(
-                        'Help',
-                        style: TextStyle(
-                            color: Colors.grey,
-                            fontSize: 17.5,
-                            fontWeight: FontWeight.w600,
-                            fontFamily: 'helves'),
-                      ),
-                      SizedBox(height: 10.h),
-                      const Text('About Us',
+                      GestureDetector(
+                        onTap: () {
+                          AutoRouter.of(context).push(const HelpRoute());
+                        },
+                        child: const Text(
+                          'Help',
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: 17.5,
                               fontWeight: FontWeight.w600,
-                              fontFamily: 'helves'))
+                              fontFamily: 'helves'),
+                        ),
+                      ),
+                      SizedBox(height: 10.h),
+                      GestureDetector(
+                        onTap: () {
+                          AutoRouter.of(context).push(const AboutUs());
+                        },
+                        child: const Text('About Us',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 17.5,
+                                fontWeight: FontWeight.w600,
+                                fontFamily: 'helves')),
+                      ),
+                      SizedBox(height: 30.h),
+                 const      SocialHandlesWidget()
                     ]),
               ),
             )),
@@ -95,3 +109,5 @@ class _TipsState extends State<Tips> {
     );
   }
 }
+
+

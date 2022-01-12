@@ -71,8 +71,12 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
             child: Column(
               children: [
                 InkWell(
-                  child: widget.product!.productimage == null
-                      ? Stack(
+                  child:
+                  //TODO:PRODUCT IMAGE
+                  //  widget.product!.productimage == null
+                  //     ? 
+                      
+                      Stack(
                           children: [
                             Padding(
                               padding: EdgeInsets.all(8.0.w),
@@ -83,64 +87,28 @@ class _SubCategoryItemState extends State<SubCategoryItem> {
                                       image: DecorationImage(
                                           fit: BoxFit.cover,
                                           image: AssetImage(
-                                            'assets/images/placeholder.jpg',
+                                            'assets/images/red.png',
                                           )))),
                             ),
-                            // Positioned(
-                            //   bottom: 0,
-                            //   // left: 100,
-                            //   right: 2,
-                            //   child: Material(
-                            //     color: Theme.of(context).primaryColor,
-                            //     shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(12.0),
-                            //     ),
-                            //     child: InkWell(
-                            //       borderRadius: BorderRadius.circular(26.0),
-                            //       onTap: () {
-                            //         // Get.dialog(Wishlist());
-                            //       },
-                            //       child: Icon(Icons.add,
-                            //           color: Colors.white, size: 15.0.h),
-                            //     ),
-                            //   ),
-                            // )
-                          ],
-                        )
-                      : Stack(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.all(8.0.w),
-                              child: Container(
-                                  height: 100.h,
-                                  width: 140.w,
-                                  decoration: BoxDecoration(
-                                      image: DecorationImage(
-                                          fit: BoxFit.cover,
-                                          image: NetworkImage(imagebaseUrl +
-                                              widget.product!.productimage!)))),
-                            ),
-                            // Positioned(
-                            //   bottom: 0,
-                            //   // left: 100,
-                            //   right: 2,
-                            //   child: Material(
-                            //     color: Theme.of(context).primaryColor,
-                            //     shape: RoundedRectangleBorder(
-                            //       borderRadius: BorderRadius.circular(12.0),
-                            //     ),
-                            //     child: InkWell(
-                            //       borderRadius: BorderRadius.circular(26.0),
-                            //       onTap: () {
-                            //         // Get.dialog(Wishlist());
-                            //       },
-                            //       child: Icon(Icons.add,
-                            //           color: Colors.white, size: 15.0.h),
-                            //     ),
-                            //   ),
-                            // )
+                   
                           ],
                         ),
+                      // : Stack(
+                      //     children: [
+                      //       Padding(
+                      //         padding: EdgeInsets.all(8.0.w),
+                      //         child: Container(
+                      //             height: 100.h,
+                      //             width: 140.w,
+                      //             decoration: BoxDecoration(
+                      //                 image: DecorationImage(
+                      //                     fit: BoxFit.cover,
+                      //                     image: NetworkImage(imagebaseUrl +
+                      //                         widget.product!.productimage!)))),
+                      //       ),
+                       
+                      //     ],
+                      //   ),
                   onTap: () {
                     // Get.to(() => ProductPage());
                     // print(product!.id);
