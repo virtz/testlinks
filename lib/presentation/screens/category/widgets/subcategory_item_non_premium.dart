@@ -1,6 +1,6 @@
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/routes/app_router.gr.dart';
-import 'package:ajeo/utils/constants.dart';
+
 // import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
 import 'package:auto_route/auto_route.dart';

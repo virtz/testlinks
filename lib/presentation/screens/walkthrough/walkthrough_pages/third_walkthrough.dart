@@ -29,7 +29,7 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          AutoRouter.of(context).replace(HomeNonPremium());
+                          AutoRouter.of(context).push(HomeNonPremium());
                         },
                         child: Text('Skip',
                             style: TextStyle(
@@ -65,7 +65,7 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                           color: Colors.grey,
                           fontSize: 17.sp,
                           fontWeight: FontWeight.w500)),
-                          
+
                               SizedBox(
                     height: 30.h,
                   ),

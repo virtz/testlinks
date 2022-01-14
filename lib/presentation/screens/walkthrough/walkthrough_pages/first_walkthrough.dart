@@ -31,7 +31,7 @@ class _FirstWalkthroughState extends State<FirstWalkthrough> {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          AutoRouter.of(context).replace(HomeNonPremium());
+                          AutoRouter.of(context).push(HomeNonPremium());
                         },
                         child: Text('Skip',
                             style: TextStyle(

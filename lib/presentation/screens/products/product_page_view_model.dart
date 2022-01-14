@@ -43,8 +43,11 @@ class ProductPageViewModel extends BaseViewModel {
   bool productFetched = false;
   bool creatingLink = false;
   Variety? dropdownValue;
+  int counter = 1;
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
-
+  int multipliedAvgPrice = 0;
+  int multipliedHighestPrice = 0;
+  int multipliedLowestPrice = 0;
   SubcategoryModel2 subcat = SubcategoryModel2();
   Product2 prdt = Product2();
   PriceOption? priceOption;
@@ -57,38 +60,38 @@ class ProductPageViewModel extends BaseViewModel {
   Uos? unitOfMeasurement;
 
   String shortUrl = "";
-  String linkMessage = "";
+  var linkMessage = "";
 
-  List<ChartModel> data = [
-    ChartModel(
-      date: "13th",
-      price: 40.0,
-    ),
-    ChartModel(
-      date: "14th",
-      price: 20.0,
-    ),
-    ChartModel(
-      date: "15th",
-      price: 100.0,
-    ),
-    ChartModel(
-      date: "16th",
-      price: 150.0,
-    ),
-    ChartModel(
-      date: "17th",
-      price: 230.0,
-    ),
-    ChartModel(
-      date: "18th",
-      price: 400.0,
-    ),
-    ChartModel(
-      date: "19th",
-      price: 55.0,
-    )
-  ];
+  incrementCounter() {
+    counter++;
+    notifyListeners();
+    mutipliAveragePrice();
+    multiplyHighestPrice();
+    multiplyLowestPrice();
+  }
+
+  mutipliAveragePrice() {
+    multipliedAvgPrice = counter * currentUosPrice!.average_price!.toInt();
+    notifyListeners();
+  }
+
+  multiplyHighestPrice() {
+    multipliedHighestPrice = counter * currentUosPrice!.maximum_price!.toInt();
+    notifyListeners();
+  }
+
+  multiplyLowestPrice() {
+    multipliedLowestPrice = counter * currentUosPrice!.minimum_price!.toInt();
+    notifyListeners();
+  }
+
+  decrementCounter() {
+    if (counter > 1) counter--;
+    notifyListeners();
+    mutipliAveragePrice();
+    multiplyHighestPrice();
+    multiplyLowestPrice();
+  }
 
   getSubcategory(String? id, productId) async {
     setBusy(true);
@@ -102,7 +105,7 @@ class ProductPageViewModel extends BaseViewModel {
       subcat = result.data;
       // print(subcat);
       notifyListeners();
-      await getProduct(productId);
+      getProduct(productId);
     }
   }
 
@@ -117,7 +120,7 @@ class ProductPageViewModel extends BaseViewModel {
       setBusy(false);
       prdt = result.data;
       notifyListeners();
-      getRelatedProducts(subcat.product!, prdt.productname!, prdt.id!);
+
       getRelatedProducts(subcat.product!, prdt.productname!, prdt.id!);
       sortList(prdt.variety!);
       if (prdt.variety!.isNotEmpty) {
@@ -162,6 +165,10 @@ class ProductPageViewModel extends BaseViewModel {
     if (result is SuccessModel) {
       setBusy(false);
       currentUosPrice = result.data;
+      notifyListeners();
+      multipliedAvgPrice = currentUosPrice!.average_price!.toInt();
+      multipliedHighestPrice = currentUosPrice!.maximum_price!.toInt();
+      multipliedLowestPrice = currentUosPrice!.minimum_price!.toInt();
       notifyListeners();
     }
   }
@@ -249,27 +256,28 @@ class ProductPageViewModel extends BaseViewModel {
     final DynamicLinkParameters params = DynamicLinkParameters(
       uriPrefix: 'https://ajeo.page.link',
       link: Uri.parse(
-          'https://ajeo.page.link/product?subcategoryId=$subcategoryId&productId=$productId&categoryName$categoryName&subcategoryName=$subcategoryName&isFromSearch=$isFromSearch'),
+          'https://ajeo.page.link/product/?subcategoryId=$subcategoryId&productId=$productId&categoryName$categoryName&subcategoryName=$subcategoryName&isFromSearch=$isFromSearch'),
       androidParameters: const AndroidParameters(
         packageName: 'com.example.ajeo',
-        minimumVersion: 0,
+        minimumVersion: 1,
       ),
       iosParameters: const IOSParameters(
         bundleId: 'com.example.ajeo',
-        minimumVersion: '0',
+        minimumVersion: '1',
       ),
     );
 
     Uri url;
-    if (short) {
-      final ShortDynamicLink shortLink =
-          await dynamicLinks.buildShortLink(params);
-      url = shortLink.shortUrl;
-      linkMessage = url.toString();
-      notifyListeners();
-    } else {
-      url = await dynamicLinks.buildLink(params);
-    }
+    // if (short) {
+    //   final ShortDynamicLink shortLink =
+    //       await dynamicLinks.buildShortLink(params);
+    //   url = shortLink.shortUrl;
+    //   linkMessage = url.toString();
+    //   notifyListeners();
+    // } else {
+    log(params.link.toString());
+    url = await dynamicLinks.buildLink(params);
+    // }
     creatingLink = false;
     linkMessage = url.toString();
 
@@ -288,13 +296,7 @@ class ProductPageViewModel extends BaseViewModel {
     }
     zones = result.data;
     notifyListeners();
-    // for (var zone in zones) {
-    //   getPricePerZone(zone.id);
-    //   log("from prodcut_view_Model :::: ${priceOption!.toJson()}");
-    //   zone.priceOption = priceOption;
-    //   notifyListeners();
-    // }
-    // notifyListeners();
+
     for (var zone in zones) {
       zone.areas = <AreaModel>[];
       getAreasInZone(zone.id).then((value) {
@@ -304,6 +306,13 @@ class ProductPageViewModel extends BaseViewModel {
         if (zone.areas == null) {
           zone.areas = <AreaModel>[];
           notifyListeners();
+        }
+        if (zone.areas != null && zone.areas!.isNotEmpty) {
+          getPricePerZone(zone.id, zone.areas![0].id!, unitOfMeasurement!.id!)
+              .then((value) {
+            zone.priceOption = value;
+            notifyListeners();
+          });
         }
         notifyListeners();
       });

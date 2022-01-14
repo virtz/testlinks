@@ -69,6 +69,7 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
       backgroundColor: const Color.fromRGBO(250, 250, 250, 1),
       body: SafeArea(
         child: SingleChildScrollView(
+          // physics:const  NeverScrollableScrollPhysics(),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -214,15 +215,14 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
                 child: TabBarView(
                     controller: tabController,
                     children: widget.subcategories!
-                        .map((e) => SingleChildScrollView(
-                            child: SizedBox(
-                                height: 500.h,
-                                child: SubCategoryWidget(
-                                  products: e.product,
-                                  subcategoryId:e.id,
-                                  subcategoryName: e.subcategoryName,
-                                  categoryName: widget.category!.categoryName,
-                                ))))
+                        .map((e) => SizedBox(
+                            height: 500.h,
+                            child: SubCategoryWidget(
+                              products: e.product,
+                              subcategoryId: e.id,
+                              subcategoryName: e.subcategoryName,
+                              categoryName: widget.category!.categoryName,
+                            )))
                         .toList()),
               )
             ],

@@ -76,7 +76,7 @@ class _FourthWalkthroughState extends State<FourthWalkthrough> {
                           style:
                               TextStyle(color: Colors.white, fontSize: 15.w)),
                       onPressed: () {
-                        AutoRouter.of(context).replace(HomeNonPremium());
+                        AutoRouter.of(context).push(HomeNonPremium());
                       },
                     ),
                   )

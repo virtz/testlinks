@@ -17,7 +17,7 @@ class HttpService {
 
   Future<dynamic> get(String path) async {
     final String url = baseUrl + path;
-    print('Request::URL: $url');
+    // print('Request::URL: $url');
     final response = await http
         .get(
           Uri.parse(url),
@@ -30,7 +30,7 @@ class HttpService {
 
   Future<dynamic> post(String path, Map<dynamic, dynamic> body) async {
     final String url = baseUrl + path;
-    print('URL:: $url, body:: ${json.encode(body)}');
+    // print('URL:: $url, body:: ${json.encode(body)}');
 
     final response = await http
         .post(Uri.parse(url),
@@ -43,7 +43,7 @@ class HttpService {
   Future<dynamic> postWithoutHeader(
       String path, Map<dynamic, dynamic> body, firebaseAuthToken) async {
     final String url = baseUrl + path;
-    print('URL:: $url, body:: ${json.encode(body)}');
+    // print('URL:: $url, body:: ${json.encode(body)}');
 
     final response = await http
         .post(Uri.parse(url),
@@ -59,7 +59,7 @@ class HttpService {
 
   Future<dynamic> patch(String path, Map<dynamic, dynamic> body) async {
     final String url = _baseUrl + path;
-    print('URL:: $url, body:: ${json.encode(body)}');
+    // print('URL:: $url, body:: ${json.encode(body)}');
 
     final response = await http
         .patch(Uri.parse(url),

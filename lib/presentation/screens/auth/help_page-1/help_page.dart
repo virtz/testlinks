@@ -8,6 +8,7 @@ import 'package:ajeo/presentation/widgets/social_handles_widget.dart';
 import 'package:ajeo/utils/constants.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_html/flutter_html.dart';
+import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class HelpPage extends StatefulWidget {
@@ -22,13 +23,8 @@ class _HelpPageState extends State<HelpPage> {
 
   @override
   Widget build(BuildContext context) {
-    var size = MediaQuery.of(context).size;
-    // final List<Widget> introWidgetList = [
-    //   FirstWalkthrough(controller: controller),
-    //   SecondWalkthrough(controller: controller),
-    //   ThirdWalkthrough(controller: controller),
-    //   FourthWalkthrough(controller: controller),
-    // ];
+    // var size = MediaQuery.of(context).size;
+
 //
     return Scaffold(
       appBar: AppBar(
@@ -68,7 +64,7 @@ class _HelpPageState extends State<HelpPage> {
       ),
       bottomSheet: Container(
           color: Colors.white,
-          height: 80.h,
+          height: 130.h,
           child: Center(
             child: Padding(
               padding:
@@ -77,7 +73,24 @@ class _HelpPageState extends State<HelpPage> {
                   // mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     SizedBox(height: 10.h),
-                    const SocialHandlesWidget()
+                    const SocialHandlesWidget(),
+                    SizedBox(height: 10.h),
+                    RatingBar.builder(
+                      initialRating: 3,
+                      minRating: 1,
+                      direction: Axis.horizontal,
+                      allowHalfRating: true,
+                      itemCount: 5,
+                      itemPadding: const EdgeInsets.symmetric(horizontal: 4.0),
+                      itemBuilder: (context, _) => const Icon(
+                        Icons.star,
+                        color: Colors.amber,
+                      ),
+                      onRatingUpdate: (rating) {
+                        print(rating);
+                      },
+                    ),
+                    SizedBox(height: 10.h),
                   ]),
             ),
           )),

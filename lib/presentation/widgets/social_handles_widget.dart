@@ -30,8 +30,12 @@ class _SocialHandlesWidgetState extends State<SocialHandlesWidget> {
             },
             child: Image.asset('assets/images/instagram.png', height: 30.h)),
         GestureDetector(
-            onTap: () {},
-            child: Image.asset('assets/images/whatsapp.png', height: 30.h)),
+            onTap: () {
+              _launchInBrowser(
+                  "https://www.linkedin.com/company/official-ajeo");
+            },
+            child:
+                Image.asset('assets/images/linkedin-logo.png', height: 30.h)),
         GestureDetector(
             onTap: () {
               _launchInBrowser("https://web.facebook.com/officialajeo");
@@ -48,7 +52,6 @@ class _SocialHandlesWidgetState extends State<SocialHandlesWidget> {
       forceWebView: false,
       headers: <String, String>{'my_header_key': 'my_header_value'},
     )) {
-      ;
       showErrorToast('Could not launch $url');
     }
   }

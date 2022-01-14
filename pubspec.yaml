@@ -48,8 +48,6 @@ dependencies:
   firebase_dynamic_links: ^4.0.3
   hive:
   fl_chart:
-  hive_flutter:
-  path_provider:
   font_awesome_flutter: ^9.2.0
   hexcolor: ^2.0.5
   flutter_animation_progress_bar: ^2.0.1
@@ -58,12 +56,13 @@ dependencies:
   firebase_core: ^1.10.6
   # device_preview: ^0.8.0
   flutter_screenutil: ^5.0.1
-  syncfusion_flutter_charts: ^19.3.59
+  # syncfusion_flutter_charts: ^19.3.59
   url_launcher: ^6.0.18
   # expandable: ^5.0.1
   share_plus: ^3.0.4
   flutter_html: ^2.2.1
   smooth_page_indicator: ^1.0.0+2
+  flutter_rating_bar: ^4.0.0
   # permission_handler:
 
 dev_dependencies:

@@ -1,6 +1,8 @@
 // import 'package:ajeo/core/models/chart_model/chart_model.dart';
 // import 'dart:developer';
 
+import 'dart:developer';
+
 import 'package:ajeo/core/models/product.dart';
 import 'package:ajeo/core/models/subcategory.dart';
 import 'package:ajeo/core/models/uos.dart';
@@ -20,7 +22,7 @@ import 'package:ajeo/routes/app_router.gr.dart';
 // import 'package:ajeo/presentation/widgets/signup_button.dart';
 // import 'package:ajeo/utils/colors.dart';
 
-import 'package:ajeo/utils/constants.dart';
+// import 'package:ajeo/utils/constants.dart';
 import 'package:ajeo/utils/custon_page_route.dart';
 import 'package:ajeo/utils/size_fit.dart';
 import 'package:ajeo/utils/utils.dart';
@@ -62,7 +64,7 @@ class ProductPage extends StatefulWidget {
 }
 
 class _ProductPageState extends State<ProductPage> {
-  int _counter = 2;
+  int _counter = 1;
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
   late NavigatorState _navigator;
   FirebaseDynamicLinks dynamicLinks = FirebaseDynamicLinks.instance;
@@ -72,28 +74,28 @@ class _ProductPageState extends State<ProductPage> {
     super.didChangeDependencies();
   }
 
-  Future<void> initDynamicLinks() async {
-    final PendingDynamicLinkData? data = await dynamicLinks.getInitialLink();
-    final Uri deepLink = data!.link;
-    if (deepLink.pathSegments.contains('product')) {
-      var queryparams = deepLink.queryParameters;
-      // print(queryparams);
-      SchedulerBinding.instance!.addPostFrameCallback((_) {
-        // AutoRouter.of(context).push();
-        _navigator.push(MaterialPageRoute(
-            builder: (BuildContext context) => ProductPage(
-                productId: queryparams['productId'],
-                subcategoryId: queryparams["subcategoryId"],
-                isFromSearch: false,
-                subcaegoryName: queryparams["subcategoryName"],
-                categoryName: queryparams["categoryName"])));
-      });
-    }
+  initDynamicLinks() async {
+    // final PendingDynamicLinkData? data = await dynamicLinks.getInitialLink();
+    // final Uri deepLink = data!.link;
+    // if (deepLink.pathSegments.contains('product')) {
+    //   var queryparams = deepLink.queryParameters;
+    //   // print(queryparams);
+    //   SchedulerBinding.instance!.addPostFrameCallback((_) {
+    //     // AutoRouter.of(context).push();
+    //     _navigator.push(MaterialPageRoute(
+    //         builder: (BuildContext context) => ProductPage(
+    //             productId: queryparams['productId'],
+    //             subcategoryId: queryparams["subcategoryId"],
+    //             isFromSearch: false,
+    //             subcaegoryName: queryparams["subcategoryName"],
+    //             categoryName: queryparams["categoryName"])));
+    //   });
+    // }
 
     dynamicLinks.onLink.listen((dynamicLinkData) {
       if (dynamicLinkData.link.pathSegments.contains('product')) {
         var queryparams = dynamicLinkData.link.queryParameters;
-        // print(queryparams);
+        log("data::::::" + queryparams.toString());
         SchedulerBinding.instance!.addPostFrameCallback((_) {
           // AutoRouter.of(context).push();
           _navigator.push(MaterialPageRoute(
@@ -114,6 +116,8 @@ class _ProductPageState extends State<ProductPage> {
   void initState() {
     super.initState();
     initDynamicLinks();
+    // ProductPageViewModel()
+    //     .getSubcategory(widget.subcategoryId, widget.productId);
   }
 
   @override
@@ -310,8 +314,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 : Text(
                                                     "\u20a6" +
                                                         model.formatPrice(model
-                                                            .currentUosPrice!
-                                                            .minimum_price),
+                                                            .multipliedLowestPrice),
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 1,
@@ -320,9 +323,7 @@ class _ProductPageState extends State<ProductPage> {
                                                           0XFF08F824),
                                                       fontSize: model
                                                           .determineSize(model
-                                                              .currentUosPrice!
-                                                              .maximum_price!
-                                                              .bitLength),
+                                                              .multipliedLowestPrice),
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       fontFamily: 'helves',
@@ -380,8 +381,7 @@ class _ProductPageState extends State<ProductPage> {
                                                 : Text(
                                                     "\u20a6" +
                                                         model.formatPrice(model
-                                                            .currentUosPrice!
-                                                            .maximum_price),
+                                                            .multipliedHighestPrice),
                                                     overflow:
                                                         TextOverflow.ellipsis,
                                                     maxLines: 1,
@@ -390,9 +390,7 @@ class _ProductPageState extends State<ProductPage> {
                                                           .primaryColor,
                                                       fontSize: model
                                                           .determineSize(model
-                                                              .currentUosPrice!
-                                                              .maximum_price!
-                                                              .bitLength),
+                                                              .multipliedHighestPrice),
                                                       fontWeight:
                                                           FontWeight.w700,
                                                       fontFamily: 'helves',
@@ -457,12 +455,11 @@ class _ProductPageState extends State<ProductPage> {
                                                       .average_price ==
                                                   null
                                           ? const Text(
-                                              'Please select unit of scale')
+                                              'Please select unit of sale')
                                           : Text(
                                               "\u20a6" +
-                                                  model.formatPrice(model
-                                                      .currentUosPrice!
-                                                      .average_price),
+                                                  model.formatPrice(
+                                                      model.multipliedAvgPrice),
                                               style: TextStyle(
                                                   color: Colors.black,
                                                   fontSize: 20.0.sp,
@@ -541,7 +538,8 @@ class _ProductPageState extends State<ProductPage> {
                                     onChanged: (newValue) {
                                       setState(() {
                                         model.dropdownValue = newValue!;
-                                        model.unitOfMeasurement = null;
+                                        model.unitOfMeasurement =
+                                            model.dropdownValue!.uos![0];
                                       });
                                     },
                                     items: model.prdt.variety != null
@@ -561,21 +559,6 @@ class _ProductPageState extends State<ProductPage> {
                                           }).toList()
                                         : null,
                                   ),
-
-                                  // Text(
-                                  //   'Free Range Eggs',
-                                  //   style: TextStyle(
-                                  //     color: Colors.black,
-                                  //     fontSize: 16.0,
-                                  //     fontFamily: 'helves',
-                                  //     fontWeight: FontWeight.w600,
-                                  //   ),
-                                  // ),
-                                  // Icon(
-                                  //   Icons.arrow_drop_down_outlined,
-                                  //   size: 20,
-                                  //   color: Color.fromRGBO(242, 39, 35, 1.0),
-                                  // )
                                 ],
                               ),
                             ),
@@ -602,9 +585,7 @@ class _ProductPageState extends State<ProductPage> {
                                         fontFamily: 'helves'),
                                   ),
                                   onTap: () {
-                                    setState(() {
-                                      if (_counter > 1) _counter--;
-                                    });
+                                    model.decrementCounter();
                                   },
                                 ),
                                 SizedBox(
@@ -640,7 +621,7 @@ class _ProductPageState extends State<ProductPage> {
                                                   mainAxisAlignment:
                                                       MainAxisAlignment.center,
                                                   children: [
-                                                    Text("$_counter"),
+                                                    Text("${model.counter}"),
                                                     SizedBox(
                                                         width:
                                                             size.width * 0.01),
@@ -664,9 +645,7 @@ class _ProductPageState extends State<ProductPage> {
                                         fontFamily: 'helves'),
                                   ),
                                   onTap: () {
-                                    setState(() {
-                                      _counter++;
-                                    });
+                                    model.incrementCounter();
                                   },
                                 ),
                               ],
@@ -734,28 +713,17 @@ class _ProductPageState extends State<ProductPage> {
                               height: 200.h,
                               child: ListView.builder(
                                   padding:
-                                      EdgeInsets.symmetric(horizontal: 10.w),
+                                      EdgeInsets.symmetric(horizontal: 5.w),
                                   shrinkWrap: true,
                                   physics: const BouncingScrollPhysics(),
                                   itemCount: model.zones.length,
                                   itemBuilder: (context, index) {
                                     Zone zone = model.zones[index];
                                     // print(zone.priceOption?.toJson());
-                                    // log(zone.priceOption.toString());
+                                    // // log(zone.priceOption.toString());
                                     // model.getAreasInZone(zone.id).then((value) {
                                     //   zone.areas = value;
                                     // });
-                                    if (zone.areas != null &&
-                                        zone.areas!.isNotEmpty) {
-                                      model
-                                          .getPricePerZone(
-                                              zone.id,
-                                              zone.areas![0].id!,
-                                              model.unitOfMeasurement!.id!)
-                                          .then((value) {
-                                        zone.priceOption = value;
-                                      });
-                                    }
 
                                     return Column(
                                       crossAxisAlignment:
@@ -763,26 +731,18 @@ class _ProductPageState extends State<ProductPage> {
                                       children: [
                                         CustomeExpansionTile(
                                             expandedCrossAxisAlignment:
-                                                CrossAxisAlignment.stretch,
+                                                CrossAxisAlignment.end,
                                             iconColor:
                                                 Theme.of(context).primaryColor,
                                             // trailing: const SizedBox.shrink(),
-                                            trailing: Container(
-                                                // color: Theme.of(context).primaryColor,
-                                                decoration: BoxDecoration(
-                                                    shape: BoxShape.circle,
-                                                    color: Theme.of(context)
-                                                        .primaryColor),
-                                                child: const Icon(
-                                                    Icons.arrow_drop_down,
-                                                    color: Colors.white)),
+                                            trailing: const Icon(Icons.add,
+                                                color: Colors.black),
                                             title: Row(
                                               mainAxisAlignment:
-                                                  MainAxisAlignment
-                                                      .spaceBetween,
+                                                  MainAxisAlignment.spaceAround,
                                               children: [
                                                 SizedBox(
-                                                  width: 110.w,
+                                                  width: 130.w,
                                                   child: Text(
                                                     zone.zonename ?? "",
                                                     overflow:
@@ -794,71 +754,77 @@ class _ProductPageState extends State<ProductPage> {
                                                         fontFamily: 'helves'),
                                                   ),
                                                 ),
-                                                Row(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceAround,
-                                                  children: [
-                                                    Text(
-                                                      // "\u20a6${zone.priceOption?.average_zonal_price??"N/A"}",
-                                                      zone.priceOption ==
-                                                                  null ||
-                                                              zone.priceOption!
-                                                                      .lowest_zonal_price ==
-                                                                  null
-                                                          ? 'N/A'
-                                                          : "\u20a6${zone.priceOption?.lowest_zonal_price!.toStringAsFixed(0)}",
-                                                      style: TextStyle(
-                                                          color: const Color
-                                                                  .fromRGBO(
-                                                              8, 248, 36, 1.0),
-                                                          fontSize: 12.sp,
-                                                          // fontWeight: FontWeight.w700,
-                                                          fontFamily: 'helves'),
-                                                    ),
-                                                    SizedBox(
-                                                        width: 8.w,
-                                                        height: 10.h,
-                                                        child:
-                                                            const VerticalDivider(
-                                                          color: Colors.brown,
-                                                        )),
-                                                    Text(
-                                                      zone.priceOption ==
-                                                                  null ||
-                                                              zone.priceOption!
-                                                                      .average_zonal_price ==
-                                                                  null
-                                                          ? 'N/A'
-                                                          : "\u20a6${zone.priceOption?.average_zonal_price!.toStringAsFixed(0)}",
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 12.sp,
-                                                          // fontWeight: FontWeight.w700,
-                                                          fontFamily: 'helves'),
-                                                    ),
-                                                    SizedBox(
-                                                        width: 8.w,
-                                                        height: 10.h,
-                                                        child:
-                                                            const VerticalDivider(
-                                                          color: Colors.brown,
-                                                        )),
-                                                    Text(
-                                                      zone.priceOption ==
-                                                                  null ||
-                                                              zone.priceOption!
-                                                                      .highest_zonal_price ==
-                                                                  null
-                                                          ? 'N/A'
-                                                          : "\u20a6${zone.priceOption?.highest_zonal_price}",
-                                                      style: TextStyle(
-                                                          color: Colors.red,
-                                                          fontSize: 12.sp,
-                                                          // fontWeight: FontWeight.w700,
-                                                          fontFamily: 'helves'),
-                                                    ),
-                                                  ],
+                                                SizedBox(width: 15.w),
+                                                SizedBox(
+                                                  child: Row(
+                                                    mainAxisAlignment:
+                                                        MainAxisAlignment
+                                                            .spaceEvenly,
+                                                    children: [
+                                                      Text(
+                                                        // "\u20a6${zone.priceOption?.average_zonal_price??"N/A"}",
+                                                        zone.priceOption ==
+                                                                    null ||
+                                                                zone.priceOption!
+                                                                        .lowest_zonal_price ==
+                                                                    null
+                                                            ? 'N/A'
+                                                            : "\u20a6${zone.priceOption?.lowest_zonal_price!.toStringAsFixed(0)}",
+                                                        style: TextStyle(
+                                                            color: const Color
+                                                                    .fromRGBO(8,
+                                                                248, 36, 1.0),
+                                                            fontSize: 12.sp,
+                                                            // fontWeight: FontWeight.w700,
+                                                            fontFamily:
+                                                                'helves'),
+                                                      ),
+                                                      SizedBox(
+                                                          width: 8.w,
+                                                          height: 10.h,
+                                                          child:
+                                                              const VerticalDivider(
+                                                            color: Colors.brown,
+                                                          )),
+                                                      Text(
+                                                        zone.priceOption ==
+                                                                    null ||
+                                                                zone.priceOption!
+                                                                        .average_zonal_price ==
+                                                                    null
+                                                            ? 'N/A'
+                                                            : "\u20a6${zone.priceOption?.average_zonal_price!.toStringAsFixed(0)}",
+                                                        style: TextStyle(
+                                                            color: Colors.black,
+                                                            fontSize: 12.sp,
+                                                            // fontWeight: FontWeight.w700,
+                                                            fontFamily:
+                                                                'helves'),
+                                                      ),
+                                                      SizedBox(
+                                                          width: 8.w,
+                                                          height: 10.h,
+                                                          child:
+                                                              const VerticalDivider(
+                                                            color: Colors.brown,
+                                                          )),
+                                                      Text(
+                                                        zone.priceOption ==
+                                                                    null ||
+                                                                zone.priceOption!
+                                                                        .highest_zonal_price ==
+                                                                    null
+                                                            ? 'N/A'
+                                                            : "\u20a6${zone.priceOption?.highest_zonal_price}",
+                                                        style: TextStyle(
+                                                            color: Colors.red,
+                                                            fontSize: 12.sp,
+                                                            // fontWeight: FontWeight.w700,
+                                                            fontFamily:
+                                                                'helves'),
+                                                      ),
+                                                    ],
+                                                  ),
                                                 ),
                                               ],
                                             ),
@@ -875,82 +841,6 @@ class _ProductPageState extends State<ProductPage> {
                                                           e.areaname ?? ""),
                                                     )))
                                                 .toList()),
-                                        // Row(
-                                        //   mainAxisAlignment:
-                                        //       MainAxisAlignment.spaceBetween,
-                                        //   children: [
-                                        //     Text(
-                                        //       zone.zonename ?? "",
-                                        //       style: TextStyle(
-                                        //           color: Colors.black,
-                                        //           fontSize: 14.sp,
-                                        //           // fontWeight: FontWeight.w700,
-                                        //           fontFamily: 'helves'),
-                                        //     ),
-                                        //     Row(
-                                        //       mainAxisAlignment:
-                                        //           MainAxisAlignment.spaceAround,
-                                        //       children: [
-                                        //         Text(
-                                        //           // "\u20a6${zone.priceOption?.average_zonal_price??"N/A"}",
-                                        //           zone.priceOption == null ||
-                                        //                   zone.priceOption!
-                                        //                           .average_zonal_price ==
-                                        //                       null
-                                        //               ? 'N/A'
-                                        //               : "\u20a6${zone.priceOption?.average_zonal_price}",
-                                        //           style: TextStyle(
-                                        //               color: Colors.black,
-                                        //               fontSize: 12.sp,
-                                        //               // fontWeight: FontWeight.w700,
-                                        //               fontFamily: 'helves'),
-                                        //         ),
-                                        //         SizedBox(
-                                        //             width: 8.w,
-                                        //             height: 10.h,
-                                        //             child:
-                                        //                 const VerticalDivider(
-                                        //               color: Colors.brown,
-                                        //             )),
-                                        //         Text(
-                                        //           zone.priceOption == null ||
-                                        //                   zone.priceOption!
-                                        //                           .highest_zonal_price ==
-                                        //                       null
-                                        //               ? 'N/A'
-                                        //               : "\u20a6${zone.priceOption?.highest_zonal_price}",
-                                        //           style: TextStyle(
-                                        //               color: Colors.redAccent,
-                                        //               fontSize: 12.sp,
-                                        //               // fontWeight: FontWeight.w700,
-                                        //               fontFamily: 'helves'),
-                                        //         ),
-                                        //         SizedBox(
-                                        //             width: 8.w,
-                                        //             height: 10.h,
-                                        //             child:
-                                        //                 const VerticalDivider(
-                                        //               color: Colors.brown,
-                                        //             )),
-                                        //         Text(
-                                        //           zone.priceOption == null ||
-                                        //                   zone.priceOption!
-                                        //                           .lowest_zonal_price ==
-                                        //                       null
-                                        //               ? 'N/A'
-                                        //               : "\u20a6${zone.priceOption?.lowest_zonal_price}",
-                                        //           style: TextStyle(
-                                        //               color:
-                                        //                   const Color.fromRGBO(
-                                        //                       8, 248, 36, 1.0),
-                                        //               fontSize: 12.sp,
-                                        //               // fontWeight: FontWeight.w700,
-                                        //               fontFamily: 'helves'),
-                                        //         ),
-                                        //       ],
-                                        //     ),
-                                        //   ],
-                                        // ),
                                         SizedBox(height: 10.h)
                                       ],
                                     );
