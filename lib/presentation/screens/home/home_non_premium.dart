@@ -446,6 +446,13 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                             );
                           },
                         ),
+              Center(
+                child: Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: Text("You've reached the end of this page.",
+                      style: TextStyle(fontSize: 14.sp, color: Colors.grey)),
+                ),
+              )
             ],
           )))),
     );

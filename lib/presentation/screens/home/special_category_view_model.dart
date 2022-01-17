@@ -10,10 +10,13 @@ class SpecialCategoryViewModel extends BaseViewModel {
   final CategoryService _categoryService = locator<CategoryService>();
 
   getSpecialCategory() async {
+    setBusy(true);
     final result = await _categoryService.getSpecialCategory();
     if (result is ErrorModel) {
+      setBusy(false);
       showErrorToast(result.error);
     }
+    setBusy(false);
     spc = result.data;
     notifyListeners();
   }

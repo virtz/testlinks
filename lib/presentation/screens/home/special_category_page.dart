@@ -66,6 +66,19 @@ class _SpecialCategoryPageState extends State<SpecialCategoryPage> {
           ),
           const CountDownClock(),
           SizedBox(height: 44.h),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: GestureDetector(
+                onTap: () {
+                  AutoRouter.of(context).push(HomeNonPremium());
+                },
+                child: Text('Go to HomePage',
+                    style: TextStyle(
+                        fontSize: 15.sp,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.grey))),
+          ),
+          SizedBox(height: 20.h),
           model.isBusy
               ? Center(
                   child: CircularProgressIndicator(

@@ -22,17 +22,17 @@ class ZoneService {
   }
 
 //localhost:4000/api/price/zone/:zoneId/:areaId/:uosId
-  getPricePerZone(String zoneId,String areaId,String uosId) async {
-    final result = await http.get(Paths.GET_PRICE_PER_ZONE + "/$zoneId/$areaId/$uosId");
+  getPricePerZone(String zoneId, String uosId) async {
+    final result = await http.get(Paths.GET_PRICE_PER_ZONE + "/$zoneId/$uosId");
     if (result is ErrorModel) {
       return ErrorModel(result.error);
     }
     if (result is SuccessModel) {
       var data = result.data['ZonalPriceOptions'];
       // print(" fron zone service ::::$data");
-      if(result.data !=null){
+      if (result.data != null) {
         PriceOption po = PriceOption.fromJson(data);
-      return SuccessModel(po);
+        return SuccessModel(po);
       }
     }
   }

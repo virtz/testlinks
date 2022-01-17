@@ -304,8 +304,7 @@ class ProductPageViewModel extends BaseViewModel {
           notifyListeners();
         }
         if (zone.areas != null && zone.areas!.isNotEmpty) {
-          getPricePerZone(zone.id, zone.areas![0].id!, unitOfMeasurement!.id!)
-              .then((value) {
+          getPricePerZone(zone.id, unitOfMeasurement!.id!).then((value) {
             zone.priceOption = value;
             notifyListeners();
           });
@@ -318,8 +317,7 @@ class ProductPageViewModel extends BaseViewModel {
   reloadPrice() {
     for (var zone in zones) {
       if (zone.areas != null && zone.areas!.isNotEmpty) {
-        getPricePerZone(zone.id, zone.areas![0].id!, unitOfMeasurement!.id!)
-            .then((value) {
+        getPricePerZone(zone.id, unitOfMeasurement!.id!).then((value) {
           zone.priceOption = value;
           notifyListeners();
         });
@@ -327,11 +325,10 @@ class ProductPageViewModel extends BaseViewModel {
     }
   }
 
-  Future<PriceOption> getPricePerZone(
-      String? zoneId, String areaId, String uosId) async {
+  Future<PriceOption> getPricePerZone(String? zoneId, String uosId) async {
     fetchingPrices = true;
     notifyListeners();
-    final result = await _zoneService.getPricePerZone(zoneId!, areaId, uosId);
+    final result = await _zoneService.getPricePerZone(zoneId!, uosId);
     if (result is ErrorModel) {
       fetchingPrices = false;
       notifyListeners();
