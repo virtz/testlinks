@@ -7,8 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FirstWalkthrough extends StatefulWidget {
   final PageController? controller;
+  final bool showButton;
 
-  const FirstWalkthrough({Key? key, this.controller}) : super(key: key);
+  const FirstWalkthrough({Key? key, this.controller,this.showButton = true}) : super(key: key);
 
   @override
   _FirstWalkthroughState createState() => _FirstWalkthroughState();
@@ -31,13 +32,13 @@ class _FirstWalkthroughState extends State<FirstWalkthrough> {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          AutoRouter.of(context).push(HomeNonPremium());
+                          AutoRouter.of(context).push( const SpecialCategoryRoute());
                         },
-                        child: Text('Skip',
+                        child: widget.showButton?Text('Skip',
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 17.sp,
-                                fontWeight: FontWeight.w700)),
+                                fontWeight: FontWeight.w700)):Container(),
                       )),
                   SizedBox(
                     height: 50.h,

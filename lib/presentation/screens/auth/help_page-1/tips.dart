@@ -67,7 +67,7 @@ class _TipsState extends State<Tips> {
         ])),
         bottomSheet: Container(
             color: Colors.white,
-            height: 150.h,
+            height: 170.h,
             child: Center(
               child: Padding(
                 padding: const EdgeInsets.symmetric(
@@ -100,8 +100,9 @@ class _TipsState extends State<Tips> {
                                 fontWeight: FontWeight.w600,
                                 fontFamily: 'helves')),
                       ),
-                      SizedBox(height: 30.h),
-                 const      SocialHandlesWidget()
+                      SizedBox(height: 10.h),
+                      const SocialHandlesWidget(),
+                      SizedBox(height: 10.h),
                     ]),
               ),
             )),
@@ -109,5 +110,3 @@ class _TipsState extends State<Tips> {
     );
   }
 }
-
-

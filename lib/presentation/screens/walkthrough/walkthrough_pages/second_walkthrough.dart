@@ -7,7 +7,10 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class SecondWalkthrough extends StatefulWidget {
   final PageController? controller;
-  const SecondWalkthrough({Key? key, this.controller}) : super(key: key);
+  final bool showButton;
+
+  const SecondWalkthrough({Key? key, this.controller, this.showButton = true})
+      : super(key: key);
 
   @override
   _SecondWalkthroughState createState() => _SecondWalkthroughState();
@@ -29,13 +32,15 @@ class _SecondWalkthroughState extends State<SecondWalkthrough> {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          AutoRouter.of(context).push(HomeNonPremium());
+                          AutoRouter.of(context).push( const SpecialCategoryRoute());
                         },
-                        child: Text('Skip',
-                            style: TextStyle(
-                                color: Theme.of(context).primaryColor,
-                                fontSize: 17.sp,
-                                fontWeight: FontWeight.w700)),
+                        child: widget.showButton
+                            ? Text('Skip',
+                                style: TextStyle(
+                                    color: Theme.of(context).primaryColor,
+                                    fontSize: 17.sp,
+                                    fontWeight: FontWeight.w700))
+                            : Container(),
                       )),
                   SizedBox(
                     height: 50.h,
@@ -51,8 +56,8 @@ class _SecondWalkthroughState extends State<SecondWalkthrough> {
                           fontSize: 22.sp,
                           fontWeight: FontWeight.w700)),
                   SizedBox(
-                     height: 300.h,
-                    child: Image.asset('assets/images/Group_1126.png')),
+                      height: 300.h,
+                      child: Image.asset('assets/images/Group_1126.png')),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -62,8 +67,7 @@ class _SecondWalkthroughState extends State<SecondWalkthrough> {
                           color: Colors.grey,
                           fontSize: 17.sp,
                           fontWeight: FontWeight.w500)),
-
-                         SizedBox(
+                  SizedBox(
                     height: 30.h,
                   ),
                 ])));

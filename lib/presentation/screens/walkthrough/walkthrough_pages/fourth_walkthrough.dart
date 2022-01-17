@@ -7,8 +7,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class FourthWalkthrough extends StatefulWidget {
   final PageController? controller;
+   final bool showButton;
 
-  const FourthWalkthrough({Key? key, this.controller}) : super(key: key);
+  const FourthWalkthrough({Key? key, this.controller, this.showButton= true}) : super(key: key);
 
   @override
   _FourthWalkthroughState createState() => _FourthWalkthroughState();
@@ -68,7 +69,7 @@ class _FourthWalkthroughState extends State<FourthWalkthrough> {
                   SizedBox(
                     width: size.width * 0.6,
                     height: 50.h,
-                    child: MaterialButton(
+                    child:widget.showButton? MaterialButton(
                       shape: RoundedRectangleBorder(
                           borderRadius: BorderRadius.circular(10)),
                       color: Theme.of(context).accentColor,
@@ -76,9 +77,9 @@ class _FourthWalkthroughState extends State<FourthWalkthrough> {
                           style:
                               TextStyle(color: Colors.white, fontSize: 15.w)),
                       onPressed: () {
-                        AutoRouter.of(context).push(HomeNonPremium());
+                        AutoRouter.of(context).push( const SpecialCategoryRoute());
                       },
-                    ),
+                    ):Container(),
                   )
                 ])));
   }

@@ -211,18 +211,16 @@ class _SubCategoryNonPremiumState extends State<SubCategoryNonPremium>
 //new henry begins here
 
               SizedBox(
-                height: 500.h,
+                height: 300.h,
                 child: TabBarView(
                     controller: tabController,
                     children: widget.subcategories!
-                        .map((e) => SizedBox(
-                            height: 500.h,
-                            child: SubCategoryWidget(
+                        .map((e) => SubCategoryWidget(
                               products: e.product,
                               subcategoryId: e.id,
                               subcategoryName: e.subcategoryName,
                               categoryName: widget.category!.categoryName,
-                            )))
+                            ))
                         .toList()),
               )
             ],

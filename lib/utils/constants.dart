@@ -133,3 +133,23 @@ Building Transparency
  </ul>
  </p>
  """;
+
+const question1 =
+    """Once you are on the product page there is a share button icon photo here please click the icon to share to any application you want
+ """;
+const question2 =
+    """You can navigate though the hierarchy of product to get to the list of our products. You could also make use of our search bar located at the top of each page. Simply click in the bar and type the name of the product you are interested in. If the product is amongst our list of product it will show up amongst the list of result. Please click on the product to view more details about it. If the product does not show up it means it is not amongst our product list. """;
+const question3 = """
+Subcategories are the second level in our hierarchy of categorization. Please click on the browse page at the top right side of our home page. On the browse page, you can navigate through the list of categories we have to expose the subcategories in each categories to see the subcategory you are interested in. You could also make use of our search bar located at the top of each page. Simply click in the bar and type the name of the subcategory you are interested in. If the subcategory is amongst our list of subcategory it will show up amongst the list of result under subcategory. Please click on the subcategory to view the products under the subcategory. If the subcategory name does not show up amongst the list of results it means it is not amongst our subcategory list.
+""";
+const question4 =
+    """ Yes. Please navigate to the bottom of our webpage where the footer is. Please click on the button that says to subscribe to our newsletter, put your email address and click subscribe. You are now subscribed to our monthly newsletter!""";
+const question5 = """"
+The products define the period of price update. We have carried out extensive research to understand when product prices change. If you want to check when a product price was last updated please navigate to the product page. The last time the product was updated will show at the bottom of the product page.
+""";
+const question6 =
+    """We love hearing from our customers, you can reach us on any of our social media platforms listed in the footer of our page. Simply click on any of the media icons to take you to our pages. Once you are on our page you can simply send us a message and we will reply
+ """;
+const question7 = """
+Currently, you can only give us feedback by sending a message to us privately through any of the channels listed in ur footer. We look forward to hearing from you.
+""";

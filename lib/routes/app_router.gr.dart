@@ -8,12 +8,12 @@
 // AutoRouteGenerator
 // **************************************************************************
 
-import 'package:auto_route/auto_route.dart' as _i33;
-import 'package:flutter/material.dart' as _i34;
+import 'package:auto_route/auto_route.dart' as _i34;
+import 'package:flutter/material.dart' as _i35;
 
-import '../core/models/category.dart' as _i35;
-import '../core/models/product.dart' as _i36;
-import '../core/models/subcategory.dart' as _i37;
+import '../core/models/category.dart' as _i36;
+import '../core/models/product.dart' as _i37;
+import '../core/models/subcategory.dart' as _i38;
 import '../presentation/screens/auth/auth_view/auth_view.dart' as _i3;
 import '../presentation/screens/auth/complete_account/complete_account.dart'
     as _i4;
@@ -37,6 +37,7 @@ import '../presentation/screens/help/help.dart' as _i28;
 import '../presentation/screens/help/subscriptions.dart' as _i29;
 import '../presentation/screens/home/home_non_premium.dart' as _i10;
 import '../presentation/screens/home/home_page_premium.dart' as _i13;
+import '../presentation/screens/home/special_category_page.dart' as _i33;
 import '../presentation/screens/products/product_page.dart' as _i22;
 import '../presentation/screens/products/product_page_2.dart' as _i23;
 import '../presentation/screens/products/product_page_premium_2.dart' as _i24;
@@ -55,63 +56,63 @@ import '../presentation/widgets/pop-ups/new_list.dart' as _i19;
 import '../presentation/widgets/pop-ups/review.dart' as _i15;
 import '../presentation/widgets/pop-ups/wish_list.dart' as _i18;
 
-class AppRouter extends _i33.RootStackRouter {
-  AppRouter([_i34.GlobalKey<_i34.NavigatorState>? navigatorKey])
+class AppRouter extends _i34.RootStackRouter {
+  AppRouter([_i35.GlobalKey<_i35.NavigatorState>? navigatorKey])
       : super(navigatorKey);
 
   @override
-  final Map<String, _i33.PageFactory> pagesMap = {
+  final Map<String, _i34.PageFactory> pagesMap = {
     SplashScreen.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i1.SplashScreen());
     },
     Register.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i2.Register());
     },
     AuthView.name: (routeData) {
       final args =
           routeData.argsAs<AuthViewArgs>(orElse: () => const AuthViewArgs());
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i3.AuthView(key: args.key, initialIndex: args.initialIndex));
     },
     CompleteAccount.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i4.CompleteAccount());
     },
     ConfirmationRoute.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i5.ConfirmationPage());
     },
     T12SignUp_2.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i6.T12SignUp_2());
     },
     T12SignUp_23.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i6.T12SignUp_23());
     },
     T12SignIn_23.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: _i7.T12SignIn_23());
     },
     T12SignIn_2.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i7.T12SignIn_2());
     },
     SignIn.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i8.SignIn());
     },
     SignUp.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i9.SignUp());
     },
     HomeNonPremium.name: (routeData) {
       final args = routeData.argsAs<HomeNonPremiumArgs>(
           orElse: () => const HomeNonPremiumArgs());
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i10.HomeNonPremium(
               key: args.key,
@@ -119,57 +120,57 @@ class AppRouter extends _i33.RootStackRouter {
               isFromSearch: args.isFromSearch));
     },
     Search.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i11.Search());
     },
     SettingsNonPremium.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i12.SettingsNonPremium());
     },
     HomeRoutePremium.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i13.HomePagePremium());
     },
     Settings.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i14.Settings());
     },
     Review.name: (routeData) {
       final args =
           routeData.argsAs<ReviewArgs>(orElse: () => const ReviewArgs());
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: _i15.Review(key: args.key));
     },
     Barcodes.name: (routeData) {
       final args =
           routeData.argsAs<BarcodesArgs>(orElse: () => const BarcodesArgs());
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: _i16.Barcodes(key: args.key));
     },
     WishListView.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i17.WishListView());
     },
     WishList.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i18.WishList());
     },
     NewList.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i19.NewList());
     },
     CategoryViewNonPremium.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i20.CategoryViewNonPremium());
     },
     CategoryViewPremium.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i21.CategoryViewPremium());
     },
     ProductRoute.name: (routeData) {
       final args = routeData.argsAs<ProductRouteArgs>(
           orElse: () => const ProductRouteArgs());
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i22.ProductPage(
               key: args.key,
@@ -179,24 +180,25 @@ class AppRouter extends _i33.RootStackRouter {
               isFromSearch: args.isFromSearch,
               products: args.products,
               productId: args.productId,
-              subcategoryId: args.subcategoryId));
+              subcategoryId: args.subcategoryId,
+              isFromSpecialCat: args.isFromSpecialCat));
     },
     ProductRoute2.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i23.ProductPage2());
     },
     ProductRoutePremium2.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i24.ProductPagePremium2());
     },
     ProductRouteUnitIncrease2.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i25.ProductPageUnitIncrease2());
     },
     SubCategoryNonPremium.name: (routeData) {
       final args = routeData.argsAs<SubCategoryNonPremiumArgs>(
           orElse: () => const SubCategoryNonPremiumArgs());
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData,
           child: _i26.SubCategoryNonPremium(
               key: args.key,
@@ -207,80 +209,86 @@ class AppRouter extends _i33.RootStackRouter {
               intialIndex: args.intialIndex));
     },
     DefaultSubscriptionPrompt.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i27.DefaultSubscriptionPrompt());
     },
     HelpScreen.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i28.HelpScreen());
     },
     Subscriptions.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i29.Subscriptions());
     },
     Walkthrough.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i30.Walkthrough());
     },
     HelpRoute.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i31.HelpPage());
     },
     AboutUs.name: (routeData) {
-      return _i33.MaterialPageX<dynamic>(
+      return _i34.MaterialPageX<dynamic>(
           routeData: routeData, child: const _i32.AboutUs());
+    },
+    SpecialCategoryRoute.name: (routeData) {
+      return _i34.MaterialPageX<dynamic>(
+          routeData: routeData, child: const _i33.SpecialCategoryPage());
     }
   };
 
   @override
-  List<_i33.RouteConfig> get routes => [
-        _i33.RouteConfig(SplashScreen.name, path: '/'),
-        _i33.RouteConfig(Register.name, path: '/Register'),
-        _i33.RouteConfig(AuthView.name, path: '/auth-view'),
-        _i33.RouteConfig(CompleteAccount.name, path: '/complete-account'),
-        _i33.RouteConfig(ConfirmationRoute.name, path: '/confirmation-page'),
-        _i33.RouteConfig(T12SignUp_2.name, path: '/t12-sign-up_2'),
-        _i33.RouteConfig(T12SignUp_23.name, path: '/t12-sign-up_23'),
-        _i33.RouteConfig(T12SignIn_23.name, path: '/t12-sign-in_23'),
-        _i33.RouteConfig(T12SignIn_2.name, path: '/t12-sign-in_2'),
-        _i33.RouteConfig(SignIn.name, path: '/sign-in'),
-        _i33.RouteConfig(SignUp.name, path: '/sign-up'),
-        _i33.RouteConfig(HomeNonPremium.name, path: '/home-non-premium'),
-        _i33.RouteConfig(Search.name, path: '/Search'),
-        _i33.RouteConfig(SettingsNonPremium.name,
+  List<_i34.RouteConfig> get routes => [
+        _i34.RouteConfig(SplashScreen.name, path: '/'),
+        _i34.RouteConfig(Register.name, path: '/Register'),
+        _i34.RouteConfig(AuthView.name, path: '/auth-view'),
+        _i34.RouteConfig(CompleteAccount.name, path: '/complete-account'),
+        _i34.RouteConfig(ConfirmationRoute.name, path: '/confirmation-page'),
+        _i34.RouteConfig(T12SignUp_2.name, path: '/t12-sign-up_2'),
+        _i34.RouteConfig(T12SignUp_23.name, path: '/t12-sign-up_23'),
+        _i34.RouteConfig(T12SignIn_23.name, path: '/t12-sign-in_23'),
+        _i34.RouteConfig(T12SignIn_2.name, path: '/t12-sign-in_2'),
+        _i34.RouteConfig(SignIn.name, path: '/sign-in'),
+        _i34.RouteConfig(SignUp.name, path: '/sign-up'),
+        _i34.RouteConfig(HomeNonPremium.name, path: '/home-non-premium'),
+        _i34.RouteConfig(Search.name, path: '/Search'),
+        _i34.RouteConfig(SettingsNonPremium.name,
             path: '/settings-non-premium'),
-        _i33.RouteConfig(HomeRoutePremium.name, path: '/home-page-premium'),
-        _i33.RouteConfig(Settings.name, path: '/Settings'),
-        _i33.RouteConfig(Review.name, path: '/Review'),
-        _i33.RouteConfig(Barcodes.name, path: '/Barcodes'),
-        _i33.RouteConfig(WishListView.name, path: '/wish-list-view'),
-        _i33.RouteConfig(WishList.name, path: '/wish-list'),
-        _i33.RouteConfig(NewList.name, path: '/new-list'),
-        _i33.RouteConfig(CategoryViewNonPremium.name,
+        _i34.RouteConfig(HomeRoutePremium.name, path: '/home-page-premium'),
+        _i34.RouteConfig(Settings.name, path: '/Settings'),
+        _i34.RouteConfig(Review.name, path: '/Review'),
+        _i34.RouteConfig(Barcodes.name, path: '/Barcodes'),
+        _i34.RouteConfig(WishListView.name, path: '/wish-list-view'),
+        _i34.RouteConfig(WishList.name, path: '/wish-list'),
+        _i34.RouteConfig(NewList.name, path: '/new-list'),
+        _i34.RouteConfig(CategoryViewNonPremium.name,
             path: '/category-view-non-premium'),
-        _i33.RouteConfig(CategoryViewPremium.name,
+        _i34.RouteConfig(CategoryViewPremium.name,
             path: '/category-view-premium'),
-        _i33.RouteConfig(ProductRoute.name, path: '/product-page'),
-        _i33.RouteConfig(ProductRoute2.name, path: '/product-page2'),
-        _i33.RouteConfig(ProductRoutePremium2.name,
+        _i34.RouteConfig(ProductRoute.name, path: '/product-page'),
+        _i34.RouteConfig(ProductRoute2.name, path: '/product-page2'),
+        _i34.RouteConfig(ProductRoutePremium2.name,
             path: '/product-page-premium2'),
-        _i33.RouteConfig(ProductRouteUnitIncrease2.name,
+        _i34.RouteConfig(ProductRouteUnitIncrease2.name,
             path: '/product-page-unit-increase2'),
-        _i33.RouteConfig(SubCategoryNonPremium.name,
+        _i34.RouteConfig(SubCategoryNonPremium.name,
             path: '/sub-category-non-premium'),
-        _i33.RouteConfig(DefaultSubscriptionPrompt.name,
+        _i34.RouteConfig(DefaultSubscriptionPrompt.name,
             path: '/default-subscription-prompt'),
-        _i33.RouteConfig(HelpScreen.name, path: '/help-screen'),
-        _i33.RouteConfig(Subscriptions.name, path: '/Subscriptions'),
-        _i33.RouteConfig(Walkthrough.name, path: '/Walkthrough'),
-        _i33.RouteConfig(HelpRoute.name, path: '/help-page'),
-        _i33.RouteConfig(AboutUs.name, path: '/about-us')
+        _i34.RouteConfig(HelpScreen.name, path: '/help-screen'),
+        _i34.RouteConfig(Subscriptions.name, path: '/Subscriptions'),
+        _i34.RouteConfig(Walkthrough.name, path: '/Walkthrough'),
+        _i34.RouteConfig(HelpRoute.name, path: '/help-page'),
+        _i34.RouteConfig(AboutUs.name, path: '/about-us'),
+        _i34.RouteConfig(SpecialCategoryRoute.name,
+            path: '/special-category-page')
       ];
 }
 
 /// generated route for
 /// [_i1.SplashScreen]
-class SplashScreen extends _i33.PageRouteInfo<void> {
+class SplashScreen extends _i34.PageRouteInfo<void> {
   const SplashScreen() : super(SplashScreen.name, path: '/');
 
   static const String name = 'SplashScreen';
@@ -288,7 +296,7 @@ class SplashScreen extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i2.Register]
-class Register extends _i33.PageRouteInfo<void> {
+class Register extends _i34.PageRouteInfo<void> {
   const Register() : super(Register.name, path: '/Register');
 
   static const String name = 'Register';
@@ -296,8 +304,8 @@ class Register extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i3.AuthView]
-class AuthView extends _i33.PageRouteInfo<AuthViewArgs> {
-  AuthView({_i34.Key? key, int initialIndex = 0})
+class AuthView extends _i34.PageRouteInfo<AuthViewArgs> {
+  AuthView({_i35.Key? key, int initialIndex = 0})
       : super(AuthView.name,
             path: '/auth-view',
             args: AuthViewArgs(key: key, initialIndex: initialIndex));
@@ -308,7 +316,7 @@ class AuthView extends _i33.PageRouteInfo<AuthViewArgs> {
 class AuthViewArgs {
   const AuthViewArgs({this.key, this.initialIndex = 0});
 
-  final _i34.Key? key;
+  final _i35.Key? key;
 
   final int initialIndex;
 
@@ -320,7 +328,7 @@ class AuthViewArgs {
 
 /// generated route for
 /// [_i4.CompleteAccount]
-class CompleteAccount extends _i33.PageRouteInfo<void> {
+class CompleteAccount extends _i34.PageRouteInfo<void> {
   const CompleteAccount()
       : super(CompleteAccount.name, path: '/complete-account');
 
@@ -329,7 +337,7 @@ class CompleteAccount extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i5.ConfirmationPage]
-class ConfirmationRoute extends _i33.PageRouteInfo<void> {
+class ConfirmationRoute extends _i34.PageRouteInfo<void> {
   const ConfirmationRoute()
       : super(ConfirmationRoute.name, path: '/confirmation-page');
 
@@ -338,7 +346,7 @@ class ConfirmationRoute extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.T12SignUp_2]
-class T12SignUp_2 extends _i33.PageRouteInfo<void> {
+class T12SignUp_2 extends _i34.PageRouteInfo<void> {
   const T12SignUp_2() : super(T12SignUp_2.name, path: '/t12-sign-up_2');
 
   static const String name = 'T12SignUp_2';
@@ -346,7 +354,7 @@ class T12SignUp_2 extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i6.T12SignUp_23]
-class T12SignUp_23 extends _i33.PageRouteInfo<void> {
+class T12SignUp_23 extends _i34.PageRouteInfo<void> {
   const T12SignUp_23() : super(T12SignUp_23.name, path: '/t12-sign-up_23');
 
   static const String name = 'T12SignUp_23';
@@ -354,7 +362,7 @@ class T12SignUp_23 extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.T12SignIn_23]
-class T12SignIn_23 extends _i33.PageRouteInfo<void> {
+class T12SignIn_23 extends _i34.PageRouteInfo<void> {
   const T12SignIn_23() : super(T12SignIn_23.name, path: '/t12-sign-in_23');
 
   static const String name = 'T12SignIn_23';
@@ -362,7 +370,7 @@ class T12SignIn_23 extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i7.T12SignIn_2]
-class T12SignIn_2 extends _i33.PageRouteInfo<void> {
+class T12SignIn_2 extends _i34.PageRouteInfo<void> {
   const T12SignIn_2() : super(T12SignIn_2.name, path: '/t12-sign-in_2');
 
   static const String name = 'T12SignIn_2';
@@ -370,7 +378,7 @@ class T12SignIn_2 extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i8.SignIn]
-class SignIn extends _i33.PageRouteInfo<void> {
+class SignIn extends _i34.PageRouteInfo<void> {
   const SignIn() : super(SignIn.name, path: '/sign-in');
 
   static const String name = 'SignIn';
@@ -378,7 +386,7 @@ class SignIn extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i9.SignUp]
-class SignUp extends _i33.PageRouteInfo<void> {
+class SignUp extends _i34.PageRouteInfo<void> {
   const SignUp() : super(SignUp.name, path: '/sign-up');
 
   static const String name = 'SignUp';
@@ -386,9 +394,9 @@ class SignUp extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i10.HomeNonPremium]
-class HomeNonPremium extends _i33.PageRouteInfo<HomeNonPremiumArgs> {
+class HomeNonPremium extends _i34.PageRouteInfo<HomeNonPremiumArgs> {
   HomeNonPremium(
-      {_i34.Key? key, _i35.CategoryModel? category, bool isFromSearch = false})
+      {_i35.Key? key, _i36.CategoryModel? category, bool isFromSearch = false})
       : super(HomeNonPremium.name,
             path: '/home-non-premium',
             args: HomeNonPremiumArgs(
@@ -401,9 +409,9 @@ class HomeNonPremiumArgs {
   const HomeNonPremiumArgs(
       {this.key, this.category, this.isFromSearch = false});
 
-  final _i34.Key? key;
+  final _i35.Key? key;
 
-  final _i35.CategoryModel? category;
+  final _i36.CategoryModel? category;
 
   final bool isFromSearch;
 
@@ -415,7 +423,7 @@ class HomeNonPremiumArgs {
 
 /// generated route for
 /// [_i11.Search]
-class Search extends _i33.PageRouteInfo<void> {
+class Search extends _i34.PageRouteInfo<void> {
   const Search() : super(Search.name, path: '/Search');
 
   static const String name = 'Search';
@@ -423,7 +431,7 @@ class Search extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i12.SettingsNonPremium]
-class SettingsNonPremium extends _i33.PageRouteInfo<void> {
+class SettingsNonPremium extends _i34.PageRouteInfo<void> {
   const SettingsNonPremium()
       : super(SettingsNonPremium.name, path: '/settings-non-premium');
 
@@ -432,7 +440,7 @@ class SettingsNonPremium extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i13.HomePagePremium]
-class HomeRoutePremium extends _i33.PageRouteInfo<void> {
+class HomeRoutePremium extends _i34.PageRouteInfo<void> {
   const HomeRoutePremium()
       : super(HomeRoutePremium.name, path: '/home-page-premium');
 
@@ -441,7 +449,7 @@ class HomeRoutePremium extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i14.Settings]
-class Settings extends _i33.PageRouteInfo<void> {
+class Settings extends _i34.PageRouteInfo<void> {
   const Settings() : super(Settings.name, path: '/Settings');
 
   static const String name = 'Settings';
@@ -449,8 +457,8 @@ class Settings extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i15.Review]
-class Review extends _i33.PageRouteInfo<ReviewArgs> {
-  Review({_i34.Key? key})
+class Review extends _i34.PageRouteInfo<ReviewArgs> {
+  Review({_i35.Key? key})
       : super(Review.name, path: '/Review', args: ReviewArgs(key: key));
 
   static const String name = 'Review';
@@ -459,7 +467,7 @@ class Review extends _i33.PageRouteInfo<ReviewArgs> {
 class ReviewArgs {
   const ReviewArgs({this.key});
 
-  final _i34.Key? key;
+  final _i35.Key? key;
 
   @override
   String toString() {
@@ -469,8 +477,8 @@ class ReviewArgs {
 
 /// generated route for
 /// [_i16.Barcodes]
-class Barcodes extends _i33.PageRouteInfo<BarcodesArgs> {
-  Barcodes({_i34.Key? key})
+class Barcodes extends _i34.PageRouteInfo<BarcodesArgs> {
+  Barcodes({_i35.Key? key})
       : super(Barcodes.name, path: '/Barcodes', args: BarcodesArgs(key: key));
 
   static const String name = 'Barcodes';
@@ -479,7 +487,7 @@ class Barcodes extends _i33.PageRouteInfo<BarcodesArgs> {
 class BarcodesArgs {
   const BarcodesArgs({this.key});
 
-  final _i34.Key? key;
+  final _i35.Key? key;
 
   @override
   String toString() {
@@ -489,7 +497,7 @@ class BarcodesArgs {
 
 /// generated route for
 /// [_i17.WishListView]
-class WishListView extends _i33.PageRouteInfo<void> {
+class WishListView extends _i34.PageRouteInfo<void> {
   const WishListView() : super(WishListView.name, path: '/wish-list-view');
 
   static const String name = 'WishListView';
@@ -497,7 +505,7 @@ class WishListView extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i18.WishList]
-class WishList extends _i33.PageRouteInfo<void> {
+class WishList extends _i34.PageRouteInfo<void> {
   const WishList() : super(WishList.name, path: '/wish-list');
 
   static const String name = 'WishList';
@@ -505,7 +513,7 @@ class WishList extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i19.NewList]
-class NewList extends _i33.PageRouteInfo<void> {
+class NewList extends _i34.PageRouteInfo<void> {
   const NewList() : super(NewList.name, path: '/new-list');
 
   static const String name = 'NewList';
@@ -513,7 +521,7 @@ class NewList extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i20.CategoryViewNonPremium]
-class CategoryViewNonPremium extends _i33.PageRouteInfo<void> {
+class CategoryViewNonPremium extends _i34.PageRouteInfo<void> {
   const CategoryViewNonPremium()
       : super(CategoryViewNonPremium.name, path: '/category-view-non-premium');
 
@@ -522,7 +530,7 @@ class CategoryViewNonPremium extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i21.CategoryViewPremium]
-class CategoryViewPremium extends _i33.PageRouteInfo<void> {
+class CategoryViewPremium extends _i34.PageRouteInfo<void> {
   const CategoryViewPremium()
       : super(CategoryViewPremium.name, path: '/category-view-premium');
 
@@ -531,16 +539,17 @@ class CategoryViewPremium extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i22.ProductPage]
-class ProductRoute extends _i33.PageRouteInfo<ProductRouteArgs> {
+class ProductRoute extends _i34.PageRouteInfo<ProductRouteArgs> {
   ProductRoute(
-      {_i34.Key? key,
-      _i36.Product? product,
+      {_i35.Key? key,
+      _i37.Product? product,
       String? categoryName,
       String? subcaegoryName,
       bool isFromSearch = false,
-      List<_i36.Product>? products,
+      List<_i37.Product>? products,
       String? productId,
-      String? subcategoryId})
+      String? subcategoryId,
+      bool isFromSpecialCat = false})
       : super(ProductRoute.name,
             path: '/product-page',
             args: ProductRouteArgs(
@@ -551,7 +560,8 @@ class ProductRoute extends _i33.PageRouteInfo<ProductRouteArgs> {
                 isFromSearch: isFromSearch,
                 products: products,
                 productId: productId,
-                subcategoryId: subcategoryId));
+                subcategoryId: subcategoryId,
+                isFromSpecialCat: isFromSpecialCat));
 
   static const String name = 'ProductRoute';
 }
@@ -565,11 +575,12 @@ class ProductRouteArgs {
       this.isFromSearch = false,
       this.products,
       this.productId,
-      this.subcategoryId});
+      this.subcategoryId,
+      this.isFromSpecialCat = false});
 
-  final _i34.Key? key;
+  final _i35.Key? key;
 
-  final _i36.Product? product;
+  final _i37.Product? product;
 
   final String? categoryName;
 
@@ -577,21 +588,23 @@ class ProductRouteArgs {
 
   final bool isFromSearch;
 
-  final List<_i36.Product>? products;
+  final List<_i37.Product>? products;
 
   final String? productId;
 
   final String? subcategoryId;
 
+  final bool isFromSpecialCat;
+
   @override
   String toString() {
-    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName, isFromSearch: $isFromSearch, products: $products, productId: $productId, subcategoryId: $subcategoryId}';
+    return 'ProductRouteArgs{key: $key, product: $product, categoryName: $categoryName, subcaegoryName: $subcaegoryName, isFromSearch: $isFromSearch, products: $products, productId: $productId, subcategoryId: $subcategoryId, isFromSpecialCat: $isFromSpecialCat}';
   }
 }
 
 /// generated route for
 /// [_i23.ProductPage2]
-class ProductRoute2 extends _i33.PageRouteInfo<void> {
+class ProductRoute2 extends _i34.PageRouteInfo<void> {
   const ProductRoute2() : super(ProductRoute2.name, path: '/product-page2');
 
   static const String name = 'ProductRoute2';
@@ -599,7 +612,7 @@ class ProductRoute2 extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i24.ProductPagePremium2]
-class ProductRoutePremium2 extends _i33.PageRouteInfo<void> {
+class ProductRoutePremium2 extends _i34.PageRouteInfo<void> {
   const ProductRoutePremium2()
       : super(ProductRoutePremium2.name, path: '/product-page-premium2');
 
@@ -608,7 +621,7 @@ class ProductRoutePremium2 extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i25.ProductPageUnitIncrease2]
-class ProductRouteUnitIncrease2 extends _i33.PageRouteInfo<void> {
+class ProductRouteUnitIncrease2 extends _i34.PageRouteInfo<void> {
   const ProductRouteUnitIncrease2()
       : super(ProductRouteUnitIncrease2.name,
             path: '/product-page-unit-increase2');
@@ -619,13 +632,13 @@ class ProductRouteUnitIncrease2 extends _i33.PageRouteInfo<void> {
 /// generated route for
 /// [_i26.SubCategoryNonPremium]
 class SubCategoryNonPremium
-    extends _i33.PageRouteInfo<SubCategoryNonPremiumArgs> {
+    extends _i34.PageRouteInfo<SubCategoryNonPremiumArgs> {
   SubCategoryNonPremium(
-      {_i34.Key? key,
-      List<_i37.SubcategoryModel>? subcategories,
-      _i35.CategoryModel? category,
+      {_i35.Key? key,
+      List<_i38.SubcategoryModel>? subcategories,
+      _i36.CategoryModel? category,
       bool isFromSearch = false,
-      _i37.SubcategoryModel? subactegory,
+      _i38.SubcategoryModel? subactegory,
       int? intialIndex})
       : super(SubCategoryNonPremium.name,
             path: '/sub-category-non-premium',
@@ -649,15 +662,15 @@ class SubCategoryNonPremiumArgs {
       this.subactegory,
       this.intialIndex});
 
-  final _i34.Key? key;
+  final _i35.Key? key;
 
-  final List<_i37.SubcategoryModel>? subcategories;
+  final List<_i38.SubcategoryModel>? subcategories;
 
-  final _i35.CategoryModel? category;
+  final _i36.CategoryModel? category;
 
   final bool isFromSearch;
 
-  final _i37.SubcategoryModel? subactegory;
+  final _i38.SubcategoryModel? subactegory;
 
   final int? intialIndex;
 
@@ -669,7 +682,7 @@ class SubCategoryNonPremiumArgs {
 
 /// generated route for
 /// [_i27.DefaultSubscriptionPrompt]
-class DefaultSubscriptionPrompt extends _i33.PageRouteInfo<void> {
+class DefaultSubscriptionPrompt extends _i34.PageRouteInfo<void> {
   const DefaultSubscriptionPrompt()
       : super(DefaultSubscriptionPrompt.name,
             path: '/default-subscription-prompt');
@@ -679,7 +692,7 @@ class DefaultSubscriptionPrompt extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i28.HelpScreen]
-class HelpScreen extends _i33.PageRouteInfo<void> {
+class HelpScreen extends _i34.PageRouteInfo<void> {
   const HelpScreen() : super(HelpScreen.name, path: '/help-screen');
 
   static const String name = 'HelpScreen';
@@ -687,7 +700,7 @@ class HelpScreen extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i29.Subscriptions]
-class Subscriptions extends _i33.PageRouteInfo<void> {
+class Subscriptions extends _i34.PageRouteInfo<void> {
   const Subscriptions() : super(Subscriptions.name, path: '/Subscriptions');
 
   static const String name = 'Subscriptions';
@@ -695,7 +708,7 @@ class Subscriptions extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i30.Walkthrough]
-class Walkthrough extends _i33.PageRouteInfo<void> {
+class Walkthrough extends _i34.PageRouteInfo<void> {
   const Walkthrough() : super(Walkthrough.name, path: '/Walkthrough');
 
   static const String name = 'Walkthrough';
@@ -703,7 +716,7 @@ class Walkthrough extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i31.HelpPage]
-class HelpRoute extends _i33.PageRouteInfo<void> {
+class HelpRoute extends _i34.PageRouteInfo<void> {
   const HelpRoute() : super(HelpRoute.name, path: '/help-page');
 
   static const String name = 'HelpRoute';
@@ -711,8 +724,17 @@ class HelpRoute extends _i33.PageRouteInfo<void> {
 
 /// generated route for
 /// [_i32.AboutUs]
-class AboutUs extends _i33.PageRouteInfo<void> {
+class AboutUs extends _i34.PageRouteInfo<void> {
   const AboutUs() : super(AboutUs.name, path: '/about-us');
 
   static const String name = 'AboutUs';
+}
+
+/// generated route for
+/// [_i33.SpecialCategoryPage]
+class SpecialCategoryRoute extends _i34.PageRouteInfo<void> {
+  const SpecialCategoryRoute()
+      : super(SpecialCategoryRoute.name, path: '/special-category-page');
+
+  static const String name = 'SpecialCategoryRoute';
 }

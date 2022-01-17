@@ -48,6 +48,7 @@ class ProductPage extends StatefulWidget {
   final String? subcategoryId;
   final String? subcaegoryName;
   final List<Product>? products;
+  final bool isFromSpecialCat;
   const ProductPage(
       {Key? key,
       this.product,
@@ -56,7 +57,7 @@ class ProductPage extends StatefulWidget {
       this.isFromSearch = false,
       this.products,
       this.productId,
-      this.subcategoryId})
+      this.subcategoryId, this.isFromSpecialCat = false})
       : super(key: key);
 
   @override
@@ -75,22 +76,22 @@ class _ProductPageState extends State<ProductPage> {
   }
 
   initDynamicLinks() async {
-    // final PendingDynamicLinkData? data = await dynamicLinks.getInitialLink();
-    // final Uri deepLink = data!.link;
-    // if (deepLink.pathSegments.contains('product')) {
-    //   var queryparams = deepLink.queryParameters;
-    //   // print(queryparams);
-    //   SchedulerBinding.instance!.addPostFrameCallback((_) {
-    //     // AutoRouter.of(context).push();
-    //     _navigator.push(MaterialPageRoute(
-    //         builder: (BuildContext context) => ProductPage(
-    //             productId: queryparams['productId'],
-    //             subcategoryId: queryparams["subcategoryId"],
-    //             isFromSearch: false,
-    //             subcaegoryName: queryparams["subcategoryName"],
-    //             categoryName: queryparams["categoryName"])));
-    //   });
-    // }
+    final PendingDynamicLinkData? data = await dynamicLinks.getInitialLink();
+    final Uri deepLink = data!.link;
+    if (deepLink.pathSegments.contains('product')) {
+      var queryparams = deepLink.queryParameters;
+      // print(queryparams);
+      SchedulerBinding.instance!.addPostFrameCallback((_) {
+        // AutoRouter.of(context).push();
+        _navigator.push(MaterialPageRoute(
+            builder: (BuildContext context) => ProductPage(
+                productId: queryparams['productId'],
+                subcategoryId: queryparams["subcategoryId"],
+                isFromSearch: false,
+                subcaegoryName: queryparams["subcategoryName"],
+                categoryName: queryparams["categoryName"])));
+      });
+    }
 
     dynamicLinks.onLink.listen((dynamicLinkData) {
       if (dynamicLinkData.link.pathSegments.contains('product')) {
@@ -127,7 +128,7 @@ class _ProductPageState extends State<ProductPage> {
     return ViewModelBuilder<ProductPageViewModel>.reactive(
       viewModelBuilder: () => ProductPageViewModel(),
       onModelReady: (h) async {
-        await h.getSubcategory(widget.subcategoryId, widget.productId);
+     widget.isFromSpecialCat? h.getProduct(widget.productId):  await h.getSubcategory(widget.subcategoryId, widget.productId);
         h.getZones();
         // h.getProduct(widget.productId);
         // h.initializeDynamicLinks(context);
@@ -608,8 +609,9 @@ class _ProductPageState extends State<ProductPage> {
                                           fontFamily: 'helves',
                                           fontWeight: FontWeight.w600,
                                         ),
-                                        onChanged: (value) =>
-                                            model.changeUnit(value!),
+                                        onChanged: (value) => model.changeUnit(
+                                              value!,
+                                            ),
                                         items: model.dropdownValue?.uos!
                                             .map<DropdownMenuItem<Uos>>(
                                                 (Uos value) {
@@ -756,75 +758,92 @@ class _ProductPageState extends State<ProductPage> {
                                                 ),
                                                 SizedBox(width: 15.w),
                                                 SizedBox(
-                                                  child: Row(
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceEvenly,
-                                                    children: [
-                                                      Text(
-                                                        // "\u20a6${zone.priceOption?.average_zonal_price??"N/A"}",
-                                                        zone.priceOption ==
-                                                                    null ||
-                                                                zone.priceOption!
-                                                                        .lowest_zonal_price ==
-                                                                    null
-                                                            ? 'N/A'
-                                                            : "\u20a6${zone.priceOption?.lowest_zonal_price!.toStringAsFixed(0)}",
-                                                        style: TextStyle(
-                                                            color: const Color
-                                                                    .fromRGBO(8,
-                                                                248, 36, 1.0),
-                                                            fontSize: 12.sp,
-                                                            // fontWeight: FontWeight.w700,
-                                                            fontFamily:
-                                                                'helves'),
-                                                      ),
-                                                      SizedBox(
-                                                          width: 8.w,
-                                                          height: 10.h,
-                                                          child:
-                                                              const VerticalDivider(
-                                                            color: Colors.brown,
-                                                          )),
-                                                      Text(
-                                                        zone.priceOption ==
-                                                                    null ||
-                                                                zone.priceOption!
-                                                                        .average_zonal_price ==
-                                                                    null
-                                                            ? 'N/A'
-                                                            : "\u20a6${zone.priceOption?.average_zonal_price!.toStringAsFixed(0)}",
-                                                        style: TextStyle(
-                                                            color: Colors.black,
-                                                            fontSize: 12.sp,
-                                                            // fontWeight: FontWeight.w700,
-                                                            fontFamily:
-                                                                'helves'),
-                                                      ),
-                                                      SizedBox(
-                                                          width: 8.w,
-                                                          height: 10.h,
-                                                          child:
-                                                              const VerticalDivider(
-                                                            color: Colors.brown,
-                                                          )),
-                                                      Text(
-                                                        zone.priceOption ==
-                                                                    null ||
-                                                                zone.priceOption!
-                                                                        .highest_zonal_price ==
-                                                                    null
-                                                            ? 'N/A'
-                                                            : "\u20a6${zone.priceOption?.highest_zonal_price}",
-                                                        style: TextStyle(
-                                                            color: Colors.red,
-                                                            fontSize: 12.sp,
-                                                            // fontWeight: FontWeight.w700,
-                                                            fontFamily:
-                                                                'helves'),
-                                                      ),
-                                                    ],
-                                                  ),
+                                                  child: model.fetchingPrices
+                                                      ? CircularProgressIndicator(
+                                                          valueColor:
+                                                              AlwaysStoppedAnimation<
+                                                                  Color>(Theme.of(
+                                                                      context)
+                                                                  .primaryColor))
+                                                      : Row(
+                                                          mainAxisAlignment:
+                                                              MainAxisAlignment
+                                                                  .spaceEvenly,
+                                                          children: [
+                                                            Text(
+                                                              // "\u20a6${zone.priceOption?.average_zonal_price??"N/A"}",
+                                                              zone.priceOption ==
+                                                                          null ||
+                                                                      zone.priceOption!
+                                                                              .lowest_zonal_price ==
+                                                                          null
+                                                                  ? 'N/A'
+                                                                  : "\u20a6${zone.priceOption?.lowest_zonal_price!.toStringAsFixed(0)}",
+                                                              style: TextStyle(
+                                                                  color: const Color
+                                                                          .fromRGBO(
+                                                                      8,
+                                                                      248,
+                                                                      36,
+                                                                      1.0),
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  // fontWeight: FontWeight.w700,
+                                                                  fontFamily:
+                                                                      'helves'),
+                                                            ),
+                                                            SizedBox(
+                                                                width: 8.w,
+                                                                height: 10.h,
+                                                                child:
+                                                                    const VerticalDivider(
+                                                                  color: Colors
+                                                                      .brown,
+                                                                )),
+                                                            Text(
+                                                              zone.priceOption ==
+                                                                          null ||
+                                                                      zone.priceOption!
+                                                                              .average_zonal_price ==
+                                                                          null
+                                                                  ? 'N/A'
+                                                                  : "\u20a6${zone.priceOption?.average_zonal_price!.toStringAsFixed(0)}",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .black,
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  // fontWeight: FontWeight.w700,
+                                                                  fontFamily:
+                                                                      'helves'),
+                                                            ),
+                                                            SizedBox(
+                                                                width: 8.w,
+                                                                height: 10.h,
+                                                                child:
+                                                                    const VerticalDivider(
+                                                                  color: Colors
+                                                                      .brown,
+                                                                )),
+                                                            Text(
+                                                              zone.priceOption ==
+                                                                          null ||
+                                                                      zone.priceOption!
+                                                                              .highest_zonal_price ==
+                                                                          null
+                                                                  ? 'N/A'
+                                                                  : "\u20a6${zone.priceOption?.highest_zonal_price}",
+                                                              style: TextStyle(
+                                                                  color: Colors
+                                                                      .red,
+                                                                  fontSize:
+                                                                      12.sp,
+                                                                  // fontWeight: FontWeight.w700,
+                                                                  fontFamily:
+                                                                      'helves'),
+                                                            ),
+                                                          ],
+                                                        ),
                                                 ),
                                               ],
                                             ),

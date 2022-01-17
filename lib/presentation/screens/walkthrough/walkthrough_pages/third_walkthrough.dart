@@ -7,7 +7,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ThirdWalkthrough extends StatefulWidget {
   final PageController? controller;
-  const ThirdWalkthrough({Key? key, this.controller}) : super(key: key);
+  final bool showButton;
+  const ThirdWalkthrough({Key? key, this.controller,this.showButton = true}) : super(key: key);
 
   @override
   _ThirdWalkthroughState createState() => _ThirdWalkthroughState();
@@ -29,13 +30,13 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                       alignment: Alignment.topRight,
                       child: GestureDetector(
                         onTap: () {
-                          AutoRouter.of(context).push(HomeNonPremium());
+                         AutoRouter.of(context).push( const SpecialCategoryRoute());
                         },
-                        child: Text('Skip',
+                        child:widget.showButton? Text('Skip',
                             style: TextStyle(
                                 color: Theme.of(context).primaryColor,
                                 fontSize: 17.sp,
-                                fontWeight: FontWeight.w700)),
+                                fontWeight: FontWeight.w700)):Container(),
                       )),
                   SizedBox(
                     height: 50.h,
@@ -54,8 +55,8 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                     height: 10.h,
                   ),
                   SizedBox(
-                    height:300.h,
-                    child: Image.asset('assets/images/Group_1125.png')),
+                      height: 300.h,
+                      child: Image.asset('assets/images/Group_1125.png')),
                   SizedBox(
                     height: 30.h,
                   ),
@@ -65,8 +66,7 @@ class _ThirdWalkthroughState extends State<ThirdWalkthrough> {
                           color: Colors.grey,
                           fontSize: 17.sp,
                           fontWeight: FontWeight.w500)),
-
-                              SizedBox(
+                  SizedBox(
                     height: 30.h,
                   ),
                 ])));

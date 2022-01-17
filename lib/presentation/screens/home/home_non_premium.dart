@@ -285,10 +285,9 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                       cm.categoryName!,
                                       style: TextStyle(
                                         fontSize: 20.0.sp,
-                                        color:
-                                            const Color.fromRGBO(47, 47, 52, 1),
+                                        color: Theme.of(context).accentColor,
                                         fontFamily: 'helves',
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.w700,
                                       ),
                                     ),
                                   ),
@@ -340,15 +339,15 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                                             left: 7.0,
                                                           ),
                                                           child: SizedBox(
-                                                            width: 150.w,
+                                                            width: 135.w,
                                                             height: 35.5.h,
                                                             child: Padding(
                                                               padding:
                                                                   EdgeInsets
                                                                       .only(
                                                                 top: subCat.subcategoryName!
-                                                                            .length >
-                                                                        18
+                                                                            .length >=
+                                                                        17
                                                                     ? 0.0
                                                                     : 15.5.w,
                                                               ),
@@ -411,19 +410,7 @@ class _HomeNonPremiumState extends State<HomeNonPremium> {
                                                                             image: AssetImage(
                                                                               'assets/images/subcat.jpeg',
                                                                             )))),
-                                                              )
-                                                                  // : Padding(
-                                                                  //     padding:
-                                                                  //         EdgeInsets.all(8.0.w),
-                                                                  //     child: Container(
-                                                                  //         decoration: BoxDecoration(
-                                                                  //             image: DecorationImage(
-                                                                  //                 fit: BoxFit.cover,
-                                                                  //                 image: NetworkImage(
-                                                                  //                   imagebaseUrl + subCat.subcategoryimage!,
-                                                                  //                 )))),
-                                                                  //   ),
-                                                                  ),
+                                                              )),
                                                               onTap: () {
                                                                 // Get.to(
                                                                 //   () => SubCategoryViewNonPremium(),

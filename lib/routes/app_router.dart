@@ -16,6 +16,7 @@ import 'package:ajeo/presentation/screens/help/help.dart';
 import 'package:ajeo/presentation/screens/help/subscriptions.dart';
 import 'package:ajeo/presentation/screens/home/home_non_premium.dart';
 import 'package:ajeo/presentation/screens/home/home_page_premium.dart';
+import 'package:ajeo/presentation/screens/home/special_category_page.dart';
 // import 'package:ajeo/presentation/screens/products/product_Page_unit_increase.dart';
 import 'package:ajeo/presentation/screens/products/product_page.dart';
 import 'package:ajeo/presentation/screens/products/product_page_2.dart';
@@ -139,6 +140,10 @@ import 'package:auto_route/auto_route.dart';
   ),
       AutoRoute(
     page: AboutUs,
+  ),
+
+        AutoRoute(
+    page: SpecialCategoryPage,
   ),
   //
 ])

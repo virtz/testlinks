@@ -38,7 +38,7 @@ class ProductPageViewModel extends BaseViewModel {
   final CategoryService _categoryService = locator<CategoryService>();
   final ProductService _productService = locator<ProductService>();
   final ZoneService _zoneService = locator<ZoneService>();
-
+  bool fetchingPrices = false;
   PriceModel? currentUosPrice;
   bool productFetched = false;
   bool creatingLink = false;
@@ -142,6 +142,7 @@ class ProductPageViewModel extends BaseViewModel {
 
     notifyListeners();
     getPriceRange(value.id!);
+    reloadPrice();
   }
 
   getCategory() async {
@@ -237,11 +238,6 @@ class ProductPageViewModel extends BaseViewModel {
     });
   }
 
-//  final bool isFromSearch;
-//   final Product? product;
-//   final String? categoryName;
-//   final String? subcaegoryName;
-//   final List<Product>? products;
   Future<void> createDynamicLinks(
     bool short, {
     bool? isFromSearch,
@@ -319,18 +315,35 @@ class ProductPageViewModel extends BaseViewModel {
     }
   }
 
+  reloadPrice() {
+    for (var zone in zones) {
+      if (zone.areas != null && zone.areas!.isNotEmpty) {
+        getPricePerZone(zone.id, zone.areas![0].id!, unitOfMeasurement!.id!)
+            .then((value) {
+          zone.priceOption = value;
+          notifyListeners();
+        });
+      }
+    }
+  }
+
   Future<PriceOption> getPricePerZone(
       String? zoneId, String areaId, String uosId) async {
+    fetchingPrices = true;
+    notifyListeners();
     final result = await _zoneService.getPricePerZone(zoneId!, areaId, uosId);
     if (result is ErrorModel) {
+      fetchingPrices = false;
+      notifyListeners();
       // showErrorToast(result.error);
       // return ErrorModel(result.error;)
     }
     if (result is SuccessModel) {
       // priceOption = result.data;
-
+      fetchingPrices = false;
+      notifyListeners();
       // notifyListeners();
-      print(result.data);
+      // print(result.data);
       return result.data;
     }
     return result.data;

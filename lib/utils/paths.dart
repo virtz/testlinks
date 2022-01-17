@@ -9,4 +9,5 @@ class Paths {
       '/location/zone/state/61b35f8c01e636b678237368';
   static const String GET_PRICE_PER_ZONE = '/price/zone';
   static const String GET_AREAS_IN_ZONE = "/location/zone";
+    static const String GET_SPECIAL_CATEGORY = "/specialcategory";
 }
