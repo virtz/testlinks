@@ -46,12 +46,12 @@ class _MyAppState extends State<MyApp> with WidgetsBindingObserver {
     super.didChangeAppLifecycleState(state);
     if (state == AppLifecycleState.resumed) {
       timerLink = Timer(const Duration(milliseconds: 1000), () {
-        dms.initDynamicLinks(context);
+        dms.initializeAppsflyer();
       });
     }
     if (state == AppLifecycleState.detached) {
       timerLink = Timer(const Duration(milliseconds: 1000), () async {
-        await dms.initDynamicLinks(context);
+        dms.initializeAppsflyer();
       });
     }
   }

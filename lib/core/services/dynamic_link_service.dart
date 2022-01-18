@@ -1,7 +1,10 @@
 // ignore_for_file: unnecessary_null_comparison
 
+import 'dart:io';
+
 import 'package:ajeo/presentation/screens/products/product_page.dart';
 import 'package:ajeo/presentation/widgets/utils.dart';
+import 'package:appsflyer_sdk/appsflyer_sdk.dart';
 import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/material.dart';
 // import 'package:flutter/scheduler.dart';
@@ -49,6 +52,34 @@ class DynamicLinkService {
       }
     }).onError((error) {
       showErrorToast(error.message);
+    });
+  }
+
+    void initializeAppsflyer() {
+    AppsflyerSdk _appsflyerSdk;
+    final AppsFlyerOptions options = AppsFlyerOptions(
+        afDevKey: "RGXrfEkecbH3P5yByu4wwV",
+        appId: Platform.isIOS ? "iosId" : "com.example.ajeo",
+        showDebug: true,
+        disableAdvertisingIdentifier: true);
+    _appsflyerSdk = AppsflyerSdk(options);
+    _appsflyerSdk.initSdk(
+        registerConversionDataCallback: true,
+        registerOnAppOpenAttributionCallback: true,
+        registerOnDeepLinkingCallback: true);
+    _appsflyerSdk.onDeepLinking((DeepLinkResult dp) {
+      switch (dp.status) {
+        case Status.FOUND:
+          //this where you have your deeplink value
+          print("deep link value: ${dp.deepLink?.deepLinkValue}");
+          break;
+        case Status.NOT_FOUND:
+          break;
+        case Status.ERROR:
+          break;
+        case Status.PARSE_ERROR:
+          break;
+      }
     });
   }
 }
